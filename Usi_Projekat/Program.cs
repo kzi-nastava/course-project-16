@@ -1,104 +1,93 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Channels;
-using Newtonsoft.Json;
+
+using Usi_Projekat.Methods;
+using Usi_Projekat.Users;
+
 namespace Usi_Projekat
 {
     class Program
     {
         static void Main(string[] args)
         {
+           IOController.Factory  factory = new IOController.Factory();
+           Utills utills = new Utills(factory);
+           utills.readUsers("./../../../users.json", "", "", "");
 
-            string fileName = "./../../../users.json";
-            JsonSerializerSettings json = new JsonSerializerSettings
-                {PreserveReferencesHandling = PreserveReferencesHandling.Objects};
-            List<User> patients = JsonConvert.DeserializeObject<List<User>>(File.ReadAllText(fileName), json);
             while (true)
             {
                 var ind = 0;
-                Console.WriteLine("Enter email:");
-                string username = Console.ReadLine();
-                Console.WriteLine("Enter password:");
-                string password = Console.ReadLine();
                 Console.WriteLine("Enter role:");
                 Console.WriteLine("1) - Director");
                 Console.WriteLine("2) - Doctor");
                 Console.WriteLine("3) - Patient");
                 Console.WriteLine("4) - Secretary");
+                Console.WriteLine("Enter email:");
+                string username = Console.ReadLine();
+                Console.WriteLine("Enter password:");
+                string password = Console.ReadLine();
                 string role = Console.ReadLine();
                 switch (role)
                 {
                     case "1":
-                            foreach (var director in Utills.directors)
-                            {
-                                if (username == director.email && password == director.password)
-                                {
-                                    ind = 1;
-                                    break;
-                                }
-                            }
+                    {
+                        if (username == factory.director.email && password == factory.director.password)
+                        {
+                            Message();
+                            // factory.director.printMenu();
+                            break;
+                        }
+                    }
                         break;
-                        
+
                     case "2":
-                            foreach (var doctor in doctors)
+                        foreach (var doctor in factory.doctors)
+                        {
+                            if (username == doctor.email && password == doctor.password)
                             {
-                                if (username == doctor.email && password == doctor.password)
-                                {
-                                    ind = 1;
-                                    break;
-                                }
+                                Message();
+                                // doctor.printMenu();
+                                break;
                             }
+                        }
+
                         break;
 
                     case "3":
-                            foreach (var patient in patients)
+                        foreach (var patient in factory.patients)
+                        {
+                            if (username == patient.email && password == patient.password && patient.Blocked == 0)
                             {
-                                if (username == patient.email && password == patient.password)
-                                {
-                                    ind = 1;
-                                    break;
-                                }
+                                Message();
+                                // patient.PrintMenu();
+                                Console.WriteLine(patient.name);
+                                break;
                             }
+                        }
+
                         break;
 
                     case "4":
-                            foreach (var secretary in secretaries)
+                        foreach (var secretary in factory.secretaries)
+                        {
+                            if (username == secretary.email && password == secretary.password)
                             {
-                                if (username == secretary.email && password == secretary.password)
-                                {
-                                    ind = 1;
-                                    break;
-                                }
+                                Message();
+                                //  secretary.PrintMenu();
+                                break;
                             }
+                        }
+
                         break;
                     default:
                         Console.WriteLine("Invalid Input, try again:");
-                            break;
-                        
-
-
-
-                }
-                foreach (var g in patients)
-                {
-                    if (username == g.email && password == g.password)
-                    {
-                        ind = 1;
                         break;
-                    }
-                }
-
-                if (ind == 1)
-                {
-                    Console.WriteLine("Uspesno ste se ulogovali");
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Pokusajte ponovo");
                 }
             }
+        }
+
+        public static void Message()
+        {
+            Console.WriteLine("Uspesno ste se ulogovali");
         }
     }
 }

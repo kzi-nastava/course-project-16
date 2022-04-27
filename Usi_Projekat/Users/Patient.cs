@@ -1,4 +1,4 @@
-namespace Usi_Projekat.Doctor
+namespace Usi_Projekat.Users
 {
     public class Patient : User
     {

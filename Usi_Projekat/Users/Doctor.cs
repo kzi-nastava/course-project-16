@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace Usi_Projekat.Doctor
+namespace Usi_Projekat.Users
 {
     public class Doctor:User
     {
