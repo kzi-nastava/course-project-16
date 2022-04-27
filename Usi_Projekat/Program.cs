@@ -9,15 +9,43 @@ namespace Usi_Projekat
     {
         static void Main(string[] args)
         {
-            string fileName = "/Users/bane/Desktop/prazan/Usi_Projekat/users.json";
+            string fileName = "./../../../users.json";
             JsonSerializerSettings json = new JsonSerializerSettings
                 {PreserveReferencesHandling = PreserveReferencesHandling.Objects};
-             List<User> patients = JsonConvert.DeserializeObject<List<User>>(File.ReadAllText(fileName), json);
-             foreach (var g in patients)
-                 Console.WriteLine(g.email);
-             {
-                 
-             }
+            List<User> patients = JsonConvert.DeserializeObject<List<User>>(File.ReadAllText(fileName), json);
+            while (true)
+            {
+                var ind = 0;
+                Console.WriteLine("Enter email");
+                string username = Console.ReadLine();
+                Console.WriteLine("Enter password");
+                string password = Console.ReadLine();
+                foreach (var g in patients)
+                {
+                    if (username == g.email && password == g.password)
+                    {
+                        ind = 1;
+                        break;
+                    }
+                }
+
+                if (ind == 1)
+                {
+                    Console.WriteLine("Uspesno ste se ulogovali");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Pokusajte ponovo");
+                }
+            }
         }
     }
 }
+
+
+
+
+
+
+            

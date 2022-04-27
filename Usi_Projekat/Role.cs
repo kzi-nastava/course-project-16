@@ -2,7 +2,7 @@ namespace Usi_Projekat
 {
     public enum Role
     {
-        Boss,
+        Director,
         Secretary,
         Patient,
         Doctor

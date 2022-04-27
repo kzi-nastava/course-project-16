@@ -11,13 +11,13 @@ namespace Usi_Projekat
         public string adress;
         public string phone;
         public string id;
-        public string role;
+        public Role role;
 
         public User()
         {
         }
 
-        public User(string email, string password, string name, string lastName, string adress, string phone, string id, string role)
+        public User(string email, string password, string name, string lastName, string adress, string phone, string id, Role role)
         {
             this.email = email;
             this.password = password;
