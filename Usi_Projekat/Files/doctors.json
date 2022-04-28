@@ -1,0 +1,11 @@
+[{
+  "email": "veljkobubnjevic001@gmail.com",
+  "pass": "vekapass01",
+  "name": "Veljko",
+  "lastName":"Bubnjevic",
+  "adress": "Narodnog fronta 65",
+  "phone": "065734133",
+  "operationroom": ["A2","A3","A4"],
+  "overview room": ["B1","B2","B3"]
+}
+]
