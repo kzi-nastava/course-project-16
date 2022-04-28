@@ -13,7 +13,7 @@ namespace Usi_Projekat.Manage
 
         public PatientManager()
         {
-            this._patients = new List<Patient>();
+            _patients = new List<Patient>();
         }
         public PatientManager(string patientFile, Factory manager)
         {

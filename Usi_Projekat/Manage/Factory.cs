@@ -25,6 +25,26 @@ namespace Usi_Projekat.Manage
             _secretaryManager.loadData();
             _doctorManager.loadData();
         }
-        
+
+        public FileSettings FileSettings
+        {
+            get => _fileSettings;
+        }
+        public DirectorManager DirectorManager
+        {
+            get => _directorManager;
+        }
+        public PatientManager PatientManager
+        {
+            get => _patientManager;
+        }
+        public SecretaryManager SecretaryManager
+        {
+            get => _secretaryManager;
+        }
+        public DoctorManager DoctorManager
+        {
+            get => _doctorManager; 
+        }
     }
 }
