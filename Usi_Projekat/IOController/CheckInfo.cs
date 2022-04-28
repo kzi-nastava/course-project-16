@@ -28,7 +28,7 @@ namespace Usi_Projekat.IOController
                     Director director = _factory.DirectorManager.checkPersonalInfo(enteredEmail, enteredPassword);
                     if (director != null)
                     {
-                        director.Menu();
+                       // director.Menu();
                         break;
                     }
 
@@ -36,7 +36,7 @@ namespace Usi_Projekat.IOController
                         Doctor doctor = _factory.DoctorManager.checkPersonalInfo(enteredEmail, enteredPassword);
                         if (doctor != null)
                         {
-                            doctor.Menu();
+                         //   doctor.Menu();
                             break;
                         }
 
@@ -45,7 +45,7 @@ namespace Usi_Projekat.IOController
                             Patient patient = _factory.PatientManager.checkPersonalInfo(enteredEmail, enteredPassword);
                             if (patient != null)
                             {
-                                patient.Menu();
+                             //   patient.Menu();
                                 break;
                             }
 

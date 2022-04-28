@@ -29,5 +29,23 @@ namespace Usi_Projekat.Manage
             }
             return null;
         }
+        public bool checkEmail(string email)
+        {
+            if (email == _director.email)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        
+        public bool checkPassword(string password)
+        {
+            if (password == _director.password)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

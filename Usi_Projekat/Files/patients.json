@@ -1,15 +1,1 @@
-[
-  {
-    "email": "milton122@gmail.com",
-    "password":"mile33111",
-    "name":"Milenko",
-    "lastName":"Dzejmison",
-    "adress":"Brabam31",
-    "phone":"034933133"
-  }
-]
-
-
-
-
-  
+[{"email":"milton122@gmail.com","password":"mile33111","name":"Milenko","lastName":"Dzejmison","adress":"Brabam31","phone":"034933133","role":2,"Blocked":0},{"email":"miki@gmail.com","password":"miki123","name":"Milan","lastName":"Milanic","adress":"Mikijeva 12","phone":"067777535","role":2,"Blocked":2},{"email":"Bore","password":"bore123","name":"Biki","lastName":"Boric","adress":"Boretova 22","phone":"065654645","role":2,"Blocked":0},{"email":"Gigi@gmail.com","password":"gigi123","name":"Goran","lastName":"Goranic","adress":"Goranova 22","phone":"065463452","role":2,"Blocked":2},{"email":"Mare@gmail.com","password":"mile331","name":"Markic","lastName":"Markovic","adress":"Markova 66","phone":"065474576","role":2,"Blocked":0}]

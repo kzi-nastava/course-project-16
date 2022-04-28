@@ -38,6 +38,43 @@ namespace Usi_Projekat.Manage
             }
             return null;
         }
+
+        public bool checkEmail(string email)
+        {
+            foreach (Patient patient in _patients)
+            {
+                if (email == patient.email)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        public bool checkPassword(string password)
+        {
+            foreach (Patient patient in _patients)
+            {
+                if (password == patient.password)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<Patient> Patients
+        {
+            get => _patients;
+        }
+
+        public string patientFileName
+        {
+            get => _patientFileName;
+        }
+        
+        
+        
         
     }
 }

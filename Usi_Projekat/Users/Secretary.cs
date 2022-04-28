@@ -9,9 +9,8 @@ namespace Usi_Projekat.Users
     public class Secretary : User
     {
 
-        public Secretary(string email, string password, string name, string lastName, string adress, string phone,
-            string id)
-            : base(email, password, name, lastName, adress, phone, id, Role.Secretary)
+        public Secretary(string email, string password, string name, string lastName, string adress, string phone)
+            : base(email, password, name, lastName, adress, phone, Role.Secretary)
         {
         }
         
@@ -59,114 +58,173 @@ namespace Usi_Projekat.Users
                 
                 default:
                     Console.WriteLine("Invalid option entered, try again");
-                    Meni(patients);
+                    Menu(factory);
                     break;
             }
         }
 
-        public void CreatingPatientProfile(List<Patient> patients)
+        public void CreatingPatientProfile(Factory factory)
         {
-            int validMail = 1;
-            int validPassword = 1;
+           
+            
             Console.WriteLine("Enter the Email of the patient:");
             string patientEmail = Console.ReadLine();
-            foreach (Patient patient in patients)
-            {
-                if (patient.email == patientEmail)
-                {
-                    validMail = 0;
-                    break;
-                }
-            }
-
-            if (validMail == 0)
+            if (factory.DirectorManager.checkEmail(patientEmail))
             {
                 Console.WriteLine("Entered mail already exists, try again.");
-                CreatingPatientProfile(patients);
-
+                CreatingPatientProfile(factory);
             }
             else
             {
-                Console.WriteLine("Enter the password of the patient:");
-                string patientPassword = Console.ReadLine();
-                foreach (Patient patient in patients)
+                if (factory.DoctorManager.checkEmail(patientEmail))
                 {
-                    if (patient.password == patientPassword)
-                    {
-                        validPassword = 0;
-                        break;
-                    }
-                }
-                if (validPassword == 0)
-                {
-                    Console.WriteLine("Entered password already exists, try again");
-                    CreatingPatientProfile(patients);
+                    Console.WriteLine("Entered mail already exists, try again.");
+                    CreatingPatientProfile(factory);
                 }
                 else
                 {
-                    Console.WriteLine("Enter the name of the patient:");
-                    string patientName = Console.ReadLine();
-                    Console.WriteLine("Enter the lastname of the patient:");
-                    string patientLastname = Console.ReadLine();
-                    Console.WriteLine("Enter the address of the patient:");
-                    string patientAddress = Console.ReadLine();
-                    Console.WriteLine("Enter the phone number of the patient:");
-                    string patientPhone = Console.ReadLine();
-                    Console.WriteLine("Enter the Id of the patient:");
-                    string patientId = Console.ReadLine();
-                    Patient patient = new Patient(patientEmail, patientPassword, patientName, patientLastname,
-                        patientAddress, patientPhone, patientId);
-                    // string json = JsonConvert.SerializeObject(patient, Formatting.Indented);
-                    patients.Add(patient);
-                    using (StreamWriter file = File.CreateText("../patients.json"))
+                    if (factory.SecretaryManager.checkEmail(patientEmail))
                     {
-                        JsonSerializer serializer = new JsonSerializer();
-                        serializer.Serialize(file, patients);
+                        Console.WriteLine("Entered mail already exists, try again.");
+                        CreatingPatientProfile(factory);
                     }
+                    else
+                    {
+                        if (factory.PatientManager.checkEmail(patientEmail))
+                        {
+                            Console.WriteLine("Entered mail already exists, try again.");
+                            CreatingPatientProfile(factory);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter the password of the patient:");
+                            string patientPassword = Console.ReadLine();
+                            if (factory.DirectorManager.checkPassword(patientPassword))
+                            {
+                                Console.WriteLine("Entered password already exists, try again.");
+                                CreatingPatientProfile(factory);
+                            }
+                            else
+                            {
+                                if (factory.DoctorManager.checkPassword(patientPassword))
+                                {
+                                    Console.WriteLine("Entered password already exists, try again.");
+                                    CreatingPatientProfile(factory);
+                                }
+                                else
+                                {
+                                    if (factory.SecretaryManager.checkPassword(patientEmail))
+                                    {
+                                        Console.WriteLine("Entered password already exists, try again.");
+                                        CreatingPatientProfile(factory);
+                                    }
+                                    else
+                                    {
+                                        if (factory.PatientManager.checkPassword(patientEmail))
+                                        {
+                                            Console.WriteLine("Entered password already exists, try again.");
+                                            CreatingPatientProfile(factory); 
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Enter the name of the patient:");
+                                            string patientName = Console.ReadLine();
+                                            Console.WriteLine("Enter the lastname of the patient:");
+                                            string patientLastname = Console.ReadLine();
+                                            Console.WriteLine("Enter the address of the patient:");
+                                            string patientAddress = Console.ReadLine();
+                                            Console.WriteLine("Enter the phone number of the patient:");
+                                            string patientPhone = Console.ReadLine();
+                                            Patient patient = new Patient(patientEmail, patientPassword, patientName, patientLastname,
+                                                patientAddress, patientPhone);
+                                            // string json = JsonConvert.SerializeObject(patient, Formatting.Indented);
+                                            factory.PatientManager.Patients.Add(patient);
+                                            using (StreamWriter file = File.CreateText(factory.PatientManager.patientFileName))
+                                            {
+                                                JsonSerializer serializer = new JsonSerializer();
+                                                serializer.Serialize(file, factory.PatientManager.Patients);
+                                            }
 
-                    Meni(patients);
+                                            Menu(factory);
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
                 }
             }
         }
 
-        public void ChangingPatientProfile(List<Patient> patients)
+        public void ChangingPatientProfile(Factory factory)
         {
-            
-                foreach (Patient patient in patients)
-                {
-                    Console.WriteLine(patient.email);
-                }
-                int validPassword = 1;
-                int validEmail = 1;
+            int validEmail = 1;
+            int validPassword = 1;
 
-                Console.WriteLine("Enter the email of the patient that you want to change: ");
-                string enteredEmail = Console.ReadLine();
+            foreach (Patient patient in factory.PatientManager.Patients)
+            {
+                Console.WriteLine("Email: " + patient.email);
+            }
+            Console.WriteLine("Enter the email(x for exit) of the patient that you want to change: ");
+            string enteredEmail = Console.ReadLine();
+            if (enteredEmail == "x")
+            {
+                Menu(factory);
+            }
+            else if (!factory.PatientManager.checkEmail(enteredEmail))
+            {
+                Console.WriteLine("Invalid email entered, try again");
+                ChangingPatientProfile(factory);
+            }
+            else
+            {
                 Console.WriteLine("1) - Email");
                 Console.WriteLine("2) - Password");
                 Console.WriteLine("3) - Name");
                 Console.WriteLine("4) - Lastname");
                 Console.WriteLine("5) - Address");
                 Console.WriteLine("6) - Phone");
-                Console.WriteLine("7) - Id");
                 Console.WriteLine("x) - Exit");
                 Console.WriteLine("Enter what information you want to change: ");
                 string enteredOption = Console.ReadLine();
-                foreach (Patient patient in patients)
+                foreach (Patient patient in factory.PatientManager.Patients)
                 {
                     if (patient.email == enteredEmail)
                     {
                         switch (enteredOption)
                         {
                             case "1":
-                                
                                 Console.WriteLine("Enter the new email of the patient: ");
                                 string changedEmail = Console.ReadLine();
-                                foreach (Patient patientCheck in patients)
+                                if (factory.DirectorManager.checkEmail(changedEmail))
                                 {
-                                    if (patientCheck.email == changedEmail)
+                                    validEmail = 0;
+
+                                }
+                                else
+                                {
+                                    if (factory.DoctorManager.checkEmail(changedEmail))
                                     {
                                         validEmail = 0;
-                                        break;
+
+                                    }
+                                    else
+                                    {
+                                        if (factory.SecretaryManager.checkEmail(changedEmail))
+                                        {
+                                            validEmail = 0;
+
+                                        }
+                                        else
+                                        {
+                                            if (factory.PatientManager.checkEmail(changedEmail))
+                                            {
+                                                validEmail = 0;
+
+                                            }
+                                        }
                                     }
                                 }
 
@@ -174,20 +232,39 @@ namespace Usi_Projekat.Users
                                 {
                                     patient.email = changedEmail;
                                 }
+
                                 break;
-                                
-
-
+                            
                             case "2":
-                                
                                 Console.WriteLine("Enter the new password of the patient: ");
                                 string changedPassword = Console.ReadLine();
-                                foreach (Patient patientCheck in patients)
+                                if (factory.DirectorManager.checkPassword(changedPassword))
                                 {
-                                    if (patientCheck.password == changedPassword)
+                                    validPassword = 0;
+
+                                }
+                                else
+                                {
+                                    if (factory.DoctorManager.checkPassword(changedPassword))
                                     {
                                         validPassword = 0;
-                                        break;
+
+                                    }
+                                    else
+                                    {
+                                        if (factory.SecretaryManager.checkPassword(changedPassword))
+                                        {
+                                            validPassword = 0;
+
+                                        }
+                                        else
+                                        {
+                                            if (factory.PatientManager.checkPassword(changedPassword))
+                                            {
+                                                validPassword = 0;
+
+                                            }
+                                        }
                                     }
                                 }
 
@@ -195,30 +272,31 @@ namespace Usi_Projekat.Users
                                 {
                                     patient.password = changedPassword;
                                 }
+
                                 break;
-                                
-                                
+
+
                             case "3":
                                 Console.WriteLine("Enter the new name of the patient");
                                 string changedName = Console.ReadLine();
                                 patient.name = changedName;
                                 break;
-                                
-                                
+
+
                             case "4":
                                 Console.WriteLine("Enter the new lastname of the patient");
                                 string changedLastname = Console.ReadLine();
                                 patient.lastName = changedLastname;
                                 break;
-                                
-                                
+
+
                             case "5":
                                 Console.WriteLine("Enter the new address of the patient");
                                 string changedAddress = Console.ReadLine();
                                 patient.adress = changedAddress;
                                 break;
-                                
-                                
+
+
                             case "6":
                                 Console.WriteLine("Enter the new Phone of the patient");
                                 string changedPhone = Console.ReadLine();
@@ -227,12 +305,12 @@ namespace Usi_Projekat.Users
 
                             case "x":
                                 break;
-                            
+
                             default:
                                 Console.WriteLine("Invalid option entered, try again");
-                                ChangingPatientProfile(patients);
+                                ChangingPatientProfile(factory);
                                 break;
-                                
+
                         }
                     }
                 }
@@ -240,50 +318,69 @@ namespace Usi_Projekat.Users
                 if (validEmail == 0 || validPassword == 0)
                 {
                     Console.WriteLine(" Enetered email or password already exists, try again");
-                    ChangingPatientProfile(patients);
+                    ChangingPatientProfile(factory);
                 }
                 else
                 {
-                    using (StreamWriter file = File.CreateText("../patients.json"))
+                    using (StreamWriter file = File.CreateText(factory.PatientManager.patientFileName))
                     {
                         JsonSerializer serializer = new JsonSerializer();
-                        serializer.Serialize(file, patients);
-                        Meni(patients);
+                        serializer.Serialize(file, factory.PatientManager.Patients);
+
                     }
+
+                    Menu(factory);
                 }
+            }
         }
 
 
-        public void DeletingPatientProfile(List<Patient> patients)
+        public void DeletingPatientProfile(Factory factory)
         {
-            foreach (Patient patient in patients)
+            foreach (Patient patient in factory.PatientManager.Patients)
                 {
-                    Console.WriteLine(patient.email);
+                    Console.WriteLine("Email: " + patient.email);
                 }
-                Console.WriteLine("Enter the email of the patient that you want to delete: ");
+            Console.WriteLine("Enter the email(x for exit) of the patient that you want to delete: ");
                 string enteredEmail = Console.ReadLine();
-                for (int i = 0; i < patients.Count; i++)
+                if (enteredEmail == "x")
                 {
-                    if (patients[i].email == enteredEmail)
+                    Menu(factory);
+                }
+                else if (!factory.PatientManager.checkEmail(enteredEmail))
+                {
+                    Console.WriteLine("Invalid email entered, try again");
+                    DeletingPatientProfile(factory);
+                }
+                else
+                {
+
+
+                    for (int i = 0; i < factory.PatientManager.Patients.Count; i++)
                     {
-                        patients.Remove(patients[i]);
+                        if (factory.PatientManager.Patients[i].email == enteredEmail)
+                        {
+                            factory.PatientManager.Patients.Remove(factory.PatientManager.Patients[i]);
+                        }
                     }
+
+                    using (StreamWriter file = File.CreateText(factory.PatientManager.patientFileName))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        serializer.Serialize(file, factory.PatientManager.Patients);
+                    }
+
+                    Menu(factory);
                 }
                 
-                using (StreamWriter file = File.CreateText("../patients.json"))
-                {
-                    JsonSerializer serializer = new JsonSerializer();
-                    serializer.Serialize(file, patients);
-                }
-                Meni(patients);
         }
         
-        public void BlockingPatientProfile(List<Patient> patients)
+        public void BlockingPatientProfile(Factory factory)
         {
-            foreach (Patient patient in patients)
+            foreach (Patient patient in factory.PatientManager.Patients)
             {
                 if (patient.Blocked == 0){
-                    Console.WriteLine(patient.email);
+                    Console.WriteLine("Email: " + patient.email);
                 }
             }
 
@@ -291,80 +388,75 @@ namespace Usi_Projekat.Users
             string enteredEmail = Console.ReadLine();
             if (enteredEmail == ("x"))
             {
-                
+                Menu(factory);
+            }
+            else if (!factory.PatientManager.checkEmail(enteredEmail))
+            {
+                Console.WriteLine("Invalid email entered, try again");
+                BlockingPatientProfile(factory);
             }
             else{
-                int found = 0;
-                foreach (Patient patient in patients)
+                
+                foreach (Patient patient in factory.PatientManager.Patients)
                 {
                     if (enteredEmail == patient.email && patient.Blocked == 0)
                     {
                         patient.Blocked = 2;
-                        found = 1;
 
                     }
                 }
-
-                if (found == 0)
-                {
-                    Console.WriteLine("You did not enter a existing email.");
-                }
-                else
-                {
-                    using (StreamWriter file = File.CreateText("../patients.json"))
+                using (StreamWriter file = File.CreateText(factory.PatientManager.patientFileName))
                     {
                         JsonSerializer serializer = new JsonSerializer();
-                        serializer.Serialize(file, patients);
+                        serializer.Serialize(file, factory.PatientManager.Patients);
                     }
-                }
+                Menu(factory);
             }
-            Meni(patients);
+            
         }
         
-        public void UnblockingPatientProfile(List<Patient> patients)
+        public void UnblockingPatientProfile(Factory factory)
         {
-            foreach (Patient patient in patients)
+            foreach (Patient patient in factory.PatientManager.Patients)
             {
                 if (patient.Blocked == 1){
-                    Console.WriteLine(patient.email + " Blocked by System");
+                    Console.WriteLine("Email: " + patient.email + " Blocked by System");
                     
                 }
                 else if (patient.Blocked == 2)
                 {
-                    Console.WriteLine(patient.email + " Blocked by Secretary");
+                    Console.WriteLine("Email: " + patient.email + " Blocked by Secretary");
                 }
             }
             Console.WriteLine("Enter the email (x for exit) of the patient that you want to unblock:");
             string enteredEmail = Console.ReadLine();
             if (enteredEmail == ("x"))
             {
+                Menu(factory);
+            }
+            else if (!factory.PatientManager.checkEmail(enteredEmail))
+            {
+                Console.WriteLine("Invalid email entered, try again");
+                UnblockingPatientProfile(factory);
             }
             else{
-                int found = 0;
-                foreach (Patient patient in patients)
+                foreach (Patient patient in factory.PatientManager.Patients)
                 {
                     if (enteredEmail == patient.email && patient.Blocked != 0)
                     {
                         patient.Blocked = 0;
-                        found = 1;
 
                     }
                 }
-
-                if (found == 0)
-                {
-                    Console.WriteLine("You did not enter a existing email.");
-                }
-                else
-                {
-                    using (StreamWriter file = File.CreateText("../patients.json"))
+                using (StreamWriter file = File.CreateText(factory.PatientManager.patientFileName))
                     {
                         JsonSerializer serializer = new JsonSerializer();
-                        serializer.Serialize(file, patients);
+                        serializer.Serialize(file, factory.PatientManager.Patients);
                     }
+                Menu(factory);
                 }
-            }
-            Meni(patients);
+            
+            
         }
         void ConfirmationOfRequests()
         {

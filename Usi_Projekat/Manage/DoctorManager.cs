@@ -33,5 +33,29 @@ namespace Usi_Projekat.Manage
             }
             return null;
         }
+        
+        public bool checkEmail(string email)
+        {
+            foreach (Doctor doctor in _doctors)
+            {
+                if (email == doctor.email)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        public bool checkPassword(string password)
+        {
+            foreach (Doctor doctor in _doctors)
+            {
+                if (password == doctor.password)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

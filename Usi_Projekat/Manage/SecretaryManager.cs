@@ -37,5 +37,29 @@ namespace Usi_Projekat.Manage
             }
             return null;
         }
+        
+        public bool checkEmail(string email)
+        {
+            foreach (Secretary secretary in _secretaries)
+            {
+                if (email == secretary.email)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        public bool checkPassword(string password)
+        {
+            foreach (Secretary secretary in _secretaries)
+            {
+                if (password == secretary.password)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

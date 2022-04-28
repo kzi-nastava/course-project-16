@@ -10,14 +10,13 @@ namespace Usi_Projekat
         public string lastName;
         public string adress;
         public string phone;
-        public string id;
         public Role role;
 
         public User()
         {
         }
 
-        public User(string email, string password, string name, string lastName, string adress, string phone, string id, Role role)
+        public User(string email, string password, string name, string lastName, string adress, string phone, Role role)
         {
             this.email = email;
             this.password = password;
@@ -25,7 +24,6 @@ namespace Usi_Projekat
             this.lastName = lastName;
             this.adress = adress;
             this.phone = phone;
-            this.id = id;
             this.role = role;
         }
 

@@ -9,8 +9,9 @@ namespace Usi_Projekat
     {
         static void Main(string[] args)
         {
-            FileSettings fileSettings = new FileSettings("doctorFilename", "patientFilename",
-                "directorFilename", "secretaryFilename");
+            
+            FileSettings fileSettings = new FileSettings("../../../Files/doctors.json", "../../../Files/patients.json",
+                "../../../Files/director.json", "../../../Files/secretaries.json");
             Factory factory = new Factory(fileSettings);
             factory.loadData();
             CheckInfo checkInfo = new CheckInfo(factory);
