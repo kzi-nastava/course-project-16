@@ -22,5 +22,16 @@ namespace Usi_Projekat.Manage
             _doctors = JsonConvert.DeserializeObject<List<Doctor>>(File.ReadAllText(_doctorFilename), json);
 
         }
+        public Doctor checkPersonalInfo(string email, string password)
+        {
+            foreach (Doctor doctor in _doctors)
+            {
+                if (email == doctor.email && password == doctor.password)
+                {
+                    return doctor;
+                }
+            }
+            return null;
+        }
     }
 }

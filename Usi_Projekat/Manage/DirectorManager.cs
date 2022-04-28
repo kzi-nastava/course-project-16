@@ -21,5 +21,13 @@ namespace Usi_Projekat.Manage
                 {PreserveReferencesHandling = PreserveReferencesHandling.Objects};
             _director = JsonConvert.DeserializeObject<Director>(File.ReadAllText(_directorFilename), json);
         }
+        public Director checkPersonalInfo(string email, string password)
+        {
+            if (email == _director.email && password == _director.password)
+            {
+                return _director;
+            }
+            return null;
+        }
     }
 }

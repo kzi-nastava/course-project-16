@@ -24,5 +24,18 @@ namespace Usi_Projekat.Manage
             _secretaries = JsonConvert.DeserializeObject<List<Secretary>>(File.ReadAllText(_secretaryFilename), json);
 
         }
+
+        public Secretary checkPersonalInfo(string email, string password)
+        {
+            foreach (Secretary secretary in _secretaries)
+            {
+                if (email == secretary.email && password == secretary.password) 
+                {
+                    return secretary;
+                }
+               
+            }
+            return null;
+        }
     }
 }

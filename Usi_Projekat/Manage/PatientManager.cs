@@ -26,6 +26,18 @@ namespace Usi_Projekat.Manage
                 {PreserveReferencesHandling = PreserveReferencesHandling.Objects};
             _patients = JsonConvert.DeserializeObject<List<Patient>>(File.ReadAllText(_patientFileName), json);
         }
+        public Patient checkPersonalInfo(string email, string password)
+        {
+            foreach (Patient patient in _patients)
+            {
+                if (email == patient.email && password == patient.password)
+                {
+                    return patient;
+                }
+               
+            }
+            return null;
+        }
         
     }
 }
