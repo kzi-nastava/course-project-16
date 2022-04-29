@@ -15,13 +15,13 @@ namespace Usi_Projekat.Manage
             _directorFilename = directorFilename;
             _manager = factory;
         }
-        public void loadData()
+        public void LoadData()
         {
             JsonSerializerSettings json = new JsonSerializerSettings
                 {PreserveReferencesHandling = PreserveReferencesHandling.Objects};
             _director = JsonConvert.DeserializeObject<Director>(File.ReadAllText(_directorFilename), json);
         }
-        public Director checkPersonalInfo(string email, string password)
+        public Director CheckPersonalInfo(string email, string password)
         {
             if (email == _director.email && password == _director.password)
             {
@@ -29,23 +29,9 @@ namespace Usi_Projekat.Manage
             }
             return null;
         }
-        public bool checkEmail(string email)
+        public bool CheckEmail(string email)
         {
-            if (email == _director.email)
-            {
-                return true;
-            }
-
-            return false;
-        }
-        
-        public bool checkPassword(string password)
-        {
-            if (password == _director.password)
-            {
-                return true;
-            }
-            return false;
+            return (email == _director.email);
         }
     }
 }

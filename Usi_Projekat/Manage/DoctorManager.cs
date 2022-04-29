@@ -15,14 +15,14 @@ namespace Usi_Projekat.Manage
             _doctorFilename = doctorFilename;
             _manager = manager;
         }
-        public void loadData()
+        public void LoadData()
         {
             JsonSerializerSettings json = new JsonSerializerSettings
                 {PreserveReferencesHandling = PreserveReferencesHandling.Objects};
             _doctors = JsonConvert.DeserializeObject<List<Doctor>>(File.ReadAllText(_doctorFilename), json);
 
         }
-        public Doctor checkPersonalInfo(string email, string password)
+        public Doctor CheckPersonalInfo(string email, string password)
         {
             foreach (Doctor doctor in _doctors)
             {
@@ -34,23 +34,11 @@ namespace Usi_Projekat.Manage
             return null;
         }
         
-        public bool checkEmail(string email)
+        public bool CheckEmail(string email)
         {
             foreach (Doctor doctor in _doctors)
             {
                 if (email == doctor.email)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        
-        public bool checkPassword(string password)
-        {
-            foreach (Doctor doctor in _doctors)
-            {
-                if (password == doctor.password)
                 {
                     return true;
                 }

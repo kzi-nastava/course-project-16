@@ -18,12 +18,12 @@ namespace Usi_Projekat.Manage
             _secretaryManager = new SecretaryManager(_fileSettings.SecretaryFilename, this);
             _doctorManager = new DoctorManager(_fileSettings.DoctorFilename, this);
         }
-        public void loadData()
+        public void LoadData()
         {
-            _directorManager.loadData();
-            _patientManager.loadData();
-            _secretaryManager.loadData();
-            _doctorManager.loadData();
+            _directorManager.LoadData();
+            _patientManager.LoadData();
+            _secretaryManager.LoadData();
+            _doctorManager.LoadData();
         }
 
         public FileSettings FileSettings

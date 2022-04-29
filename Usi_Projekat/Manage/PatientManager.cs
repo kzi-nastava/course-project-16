@@ -20,13 +20,13 @@ namespace Usi_Projekat.Manage
             _patientFileName = patientFile;
             this.manager = manager;
         }
-        public void loadData()
+        public void LoadData()
         {
             JsonSerializerSettings json = new JsonSerializerSettings
                 {PreserveReferencesHandling = PreserveReferencesHandling.Objects};
             _patients = JsonConvert.DeserializeObject<List<Patient>>(File.ReadAllText(_patientFileName), json);
         }
-        public Patient checkPersonalInfo(string email, string password)
+        public Patient CheckPersonalInfo(string email, string password)
         {
             foreach (Patient patient in _patients)
             {
@@ -39,7 +39,7 @@ namespace Usi_Projekat.Manage
             return null;
         }
 
-        public bool checkEmail(string email)
+        public bool CheckEmail(string email)
         {
             foreach (Patient patient in _patients)
             {
@@ -51,17 +51,6 @@ namespace Usi_Projekat.Manage
             return false;
         }
         
-        public bool checkPassword(string password)
-        {
-            foreach (Patient patient in _patients)
-            {
-                if (password == patient.password)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
         public List<Patient> Patients
         {

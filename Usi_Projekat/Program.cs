@@ -13,7 +13,7 @@ namespace Usi_Projekat
             FileSettings fileSettings = new FileSettings("../../../Files/doctors.json", "../../../Files/patients.json",
                 "../../../Files/director.json", "../../../Files/secretaries.json");
             Factory factory = new Factory(fileSettings);
-            factory.loadData();
+            factory.LoadData();
             CheckInfo checkInfo = new CheckInfo(factory);
             checkInfo.PrintMenu();
         }

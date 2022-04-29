@@ -18,14 +18,13 @@ namespace Usi_Projekat.IOController
 
         public void PrintMenu()
         {
-            
             while (true)
                 {
                     Console.WriteLine("Enter email: ");
                     string enteredEmail = Console.ReadLine();
                     Console.WriteLine("Enter password: ");
                     string enteredPassword = Console.ReadLine();
-                    Director director = _factory.DirectorManager.checkPersonalInfo(enteredEmail, enteredPassword);
+                    Director director = _factory.DirectorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
                     if (director != null)
                     {
                        // director.Menu();
@@ -33,7 +32,7 @@ namespace Usi_Projekat.IOController
                     }
 
                     else {
-                        Doctor doctor = _factory.DoctorManager.checkPersonalInfo(enteredEmail, enteredPassword);
+                        Doctor doctor = _factory.DoctorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
                         if (doctor != null)
                         {
                          //   doctor.Menu();
@@ -42,7 +41,7 @@ namespace Usi_Projekat.IOController
 
                         else
                         {
-                            Patient patient = _factory.PatientManager.checkPersonalInfo(enteredEmail, enteredPassword);
+                            Patient patient = _factory.PatientManager.CheckPersonalInfo(enteredEmail, enteredPassword);
                             if (patient != null)
                             {
                              //   patient.Menu();
@@ -51,10 +50,10 @@ namespace Usi_Projekat.IOController
 
                             else
                             {
-                                Secretary secretary = _factory.SecretaryManager.checkPersonalInfo(enteredEmail, enteredPassword);
+                                Secretary secretary = _factory.SecretaryManager.CheckPersonalInfo(enteredEmail, enteredPassword);
                                 if (secretary != null)
                                 {
-                                    secretary.Menu(_factory);
+                                    _factory.SecretaryManager.Menu();
                                     break;
                                 }
                             }

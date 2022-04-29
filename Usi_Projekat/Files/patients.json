@@ -1,1 +1,34 @@
-[{"email":"MilosK@gmail.com","password":"Miki123","name":"Milos","lastName":"Kicic","adress":"Branka Radicevica 32","phone":"0652789563","role":2,"Blocked":0,"MedicalRecord":{"height":"177","weight":"68","diseases":"No diseases","allergens":"No allergens"}}]
+[
+  {
+    "email": "MilosK@gmail.com",
+    "password": "Miki123",
+    "name": "Milos",
+    "lastName": "Kicic",
+    "adress": "Branka Radicevica 32",
+    "phone": "0652789563",
+    "role": 2,
+    "Blocked": 0,
+    "MedicalRecord": {
+      "height": "177",
+      "weight": "68",
+      "diseases": "No diseases",
+      "allergens": "No allergens"
+    }
+  },
+  {
+    "email": "Mirko@gmail.com",
+    "password": "hehe",
+    "name": "Mirko",
+    "lastName": "Miric",
+    "adress": "Marjanoviceva 14",
+    "phone": "0652716893",
+    "role": 2,
+    "Blocked": 2,
+    "MedicalRecord": {
+      "height": "170",
+      "weight": "65",
+      "diseases": "No diseases",
+      "allergens": "No allergens"
+    }
+  }
+]
