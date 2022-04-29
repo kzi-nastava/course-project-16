@@ -1,20 +1,16 @@
 using Newtonsoft.Json;
 using System;
 using System.IO;
-using System.Collections.Generic;
 using Usi_Projekat.Manage;
 
 namespace Usi_Projekat.Users
 {
     public class Secretary : User
     {
-
-        public Secretary(string email, string password, string name, string lastName, string adress, string phone)
-            : base(email, password, name, lastName, adress, phone, Role.Secretary)
+        public Secretary(string email, string password, string name, string lastName, string address, string phone)
+            : base(email, password, name, lastName, address, phone, Role.Secretary)
         {
         }
-        
-        
 
         public void Menu(Factory factory)
         {
@@ -50,7 +46,7 @@ namespace Usi_Projekat.Users
                     break;
                 
                 case "6":
-                    ConfirmationOfRequests();
+                    //ConfirmationOfRequests();
                     break;
                 
                 case "x":
@@ -65,8 +61,6 @@ namespace Usi_Projekat.Users
 
         public void CreatingPatientProfile(Factory factory)
         {
-           
-            
             Console.WriteLine("Enter the Email of the patient:");
             string patientEmail = Console.ReadLine();
             if (factory.DirectorManager.checkEmail(patientEmail))
@@ -135,18 +129,25 @@ namespace Usi_Projekat.Users
                                             string patientAddress = Console.ReadLine();
                                             Console.WriteLine("Enter the phone number of the patient:");
                                             string patientPhone = Console.ReadLine();
+                                            Console.WriteLine("Enter your height:");
+                                            string patientHeight = Console.ReadLine();
+                                            Console.WriteLine("Enter your weight:");
+                                            string patientWeight = Console.ReadLine();
+                                            Console.WriteLine("Enter your previous diseases:");
+                                            string patientDiseases = Console.ReadLine();
+                                            Console.WriteLine("Enter your allergens:");
+                                            string patientAllergens = Console.ReadLine();
+                                            MedicalRecord medicalRecord = new MedicalRecord(patientHeight,
+                                                patientWeight, patientDiseases, patientAllergens);
                                             Patient patient = new Patient(patientEmail, patientPassword, patientName, patientLastname,
-                                                patientAddress, patientPhone);
-                                            // string json = JsonConvert.SerializeObject(patient, Formatting.Indented);
+                                                patientAddress, patientPhone, medicalRecord);
                                             factory.PatientManager.Patients.Add(patient);
                                             using (StreamWriter file = File.CreateText(factory.PatientManager.patientFileName))
                                             {
                                                 JsonSerializer serializer = new JsonSerializer();
                                                 serializer.Serialize(file, factory.PatientManager.Patients);
                                             }
-
                                             Menu(factory);
-                                            
                                         }
                                     }
                                 }
@@ -227,12 +228,10 @@ namespace Usi_Projekat.Users
                                         }
                                     }
                                 }
-
                                 if (validEmail == 1)
                                 {
                                     patient.email = changedEmail;
                                 }
-
                                 break;
                             
                             case "2":
@@ -262,7 +261,6 @@ namespace Usi_Projekat.Users
                                             if (factory.PatientManager.checkPassword(changedPassword))
                                             {
                                                 validPassword = 0;
-
                                             }
                                         }
                                     }
@@ -272,7 +270,6 @@ namespace Usi_Projekat.Users
                                 {
                                     patient.password = changedPassword;
                                 }
-
                                 break;
 
 
@@ -303,21 +300,21 @@ namespace Usi_Projekat.Users
                                 patient.phone = changedPhone;
                                 break;
 
+                            
                             case "x":
                                 break;
 
+                            
                             default:
                                 Console.WriteLine("Invalid option entered, try again");
                                 ChangingPatientProfile(factory);
                                 break;
-
                         }
                     }
                 }
-
                 if (validEmail == 0 || validPassword == 0)
                 {
-                    Console.WriteLine(" Enetered email or password already exists, try again");
+                    Console.WriteLine("Entered email or password already exists, try again");
                     ChangingPatientProfile(factory);
                 }
                 else
@@ -326,53 +323,48 @@ namespace Usi_Projekat.Users
                     {
                         JsonSerializer serializer = new JsonSerializer();
                         serializer.Serialize(file, factory.PatientManager.Patients);
-
                     }
-
                     Menu(factory);
                 }
             }
         }
 
-
         public void DeletingPatientProfile(Factory factory)
         {
             foreach (Patient patient in factory.PatientManager.Patients)
-                {
-                    Console.WriteLine("Email: " + patient.email);
-                }
+            {
+                Console.WriteLine("Email: " + patient.email);
+            }
+
             Console.WriteLine("Enter the email(x for exit) of the patient that you want to delete: ");
-                string enteredEmail = Console.ReadLine();
-                if (enteredEmail == "x")
+            string enteredEmail = Console.ReadLine();
+            if (enteredEmail == "x")
+            {
+                Menu(factory);
+            }
+            else if (!factory.PatientManager.checkEmail(enteredEmail))
+            {
+                Console.WriteLine("Invalid email entered, try again");
+                DeletingPatientProfile(factory);
+            }
+            else
+            {
+                for (int i = 0; i < factory.PatientManager.Patients.Count; i++)
                 {
-                    Menu(factory);
-                }
-                else if (!factory.PatientManager.checkEmail(enteredEmail))
-                {
-                    Console.WriteLine("Invalid email entered, try again");
-                    DeletingPatientProfile(factory);
-                }
-                else
-                {
-
-
-                    for (int i = 0; i < factory.PatientManager.Patients.Count; i++)
+                    if (factory.PatientManager.Patients[i].email == enteredEmail)
                     {
-                        if (factory.PatientManager.Patients[i].email == enteredEmail)
-                        {
-                            factory.PatientManager.Patients.Remove(factory.PatientManager.Patients[i]);
-                        }
+                        factory.PatientManager.Patients.Remove(factory.PatientManager.Patients[i]);
                     }
-
-                    using (StreamWriter file = File.CreateText(factory.PatientManager.patientFileName))
-                    {
-                        JsonSerializer serializer = new JsonSerializer();
-                        serializer.Serialize(file, factory.PatientManager.Patients);
-                    }
-
-                    Menu(factory);
                 }
-                
+
+                using (StreamWriter file = File.CreateText(factory.PatientManager.patientFileName))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.Serialize(file, factory.PatientManager.Patients);
+                }
+
+                Menu(factory);
+            }
         }
         
         public void BlockingPatientProfile(Factory factory)
@@ -396,7 +388,6 @@ namespace Usi_Projekat.Users
                 BlockingPatientProfile(factory);
             }
             else{
-                
                 foreach (Patient patient in factory.PatientManager.Patients)
                 {
                     if (enteredEmail == patient.email && patient.Blocked == 0)
@@ -406,13 +397,12 @@ namespace Usi_Projekat.Users
                     }
                 }
                 using (StreamWriter file = File.CreateText(factory.PatientManager.patientFileName))
-                    {
-                        JsonSerializer serializer = new JsonSerializer();
-                        serializer.Serialize(file, factory.PatientManager.Patients);
-                    }
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.Serialize(file, factory.PatientManager.Patients);
+                }
                 Menu(factory);
             }
-            
         }
         
         public void UnblockingPatientProfile(Factory factory)
@@ -421,7 +411,6 @@ namespace Usi_Projekat.Users
             {
                 if (patient.Blocked == 1){
                     Console.WriteLine("Email: " + patient.email + " Blocked by System");
-                    
                 }
                 else if (patient.Blocked == 2)
                 {
@@ -445,22 +434,35 @@ namespace Usi_Projekat.Users
                     if (enteredEmail == patient.email && patient.Blocked != 0)
                     {
                         patient.Blocked = 0;
-
                     }
                 }
                 using (StreamWriter file = File.CreateText(factory.PatientManager.patientFileName))
-                    {
+                {
                         JsonSerializer serializer = new JsonSerializer();
                         serializer.Serialize(file, factory.PatientManager.Patients);
-                    }
-                Menu(factory);
                 }
-            
-            
+                Menu(factory);
+            }
         }
-        void ConfirmationOfRequests()
+       /* void ConfirmationOfRequests(List<Request> requests)
         {
-            
-        }
+            foreach (Request request in requests)
+            {
+                Console.WriteLine(request.id);
+            }
+            Console.WriteLine("Unesite id zahteva koji zelite da odobrite/odbijete");
+            string requestId = Console.ReadLine();
+            Console.WriteLine("1) - Confirm a request");
+            Console.WriteLine("2) - Deny a request");
+            string requestConfirmation = Console.ReadLine();
+            switch (requestConfirmation)
+            {
+                case "1":
+                    request.confirmed = 1;
+                    break;
+                case "2":
+                    request.confirmed = 2;
+            }
+        }*/
     }
 }
