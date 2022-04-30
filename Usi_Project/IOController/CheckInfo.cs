@@ -28,15 +28,15 @@ namespace Usi_Project.IOController
                         string enteredEmail = Console.ReadLine();
                         Console.WriteLine("Enter password: ");
                         string enteredPassword = Console.ReadLine();
-                        Director director = _factory.DirectorManager.CheckPersonalInfo(enteredEmail,enteredPassword);
+                        Director director = _factory.DirectorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
                         if (director != null)
                         {
                             DirectorManager.Menu();
                             break;
                         }
-
-
-
+                        else
+                        {
+                            
                         Doctor doctor =
                             _factory.DoctorManager.CheckPersonalInfo(enteredEmail,enteredPassword);
                         if (doctor != null)
@@ -44,26 +44,31 @@ namespace Usi_Project.IOController
                             _factory.DoctorManager.Menu(doctor);
                             break;
                         }
-
-
-
-                        Patient patient = _factory.PatientManager.CheckPersonalInfo(enteredEmail,enteredPassword);
-                        if (patient != null)
+                        else
                         {
-                            _factory.PatientManager.Menu(patient);
-                            break;
+                            Patient patient =_factory.PatientManager.CheckPersonalInfo(enteredEmail, enteredPassword);
+                                       if (patient != null)
+                                       {
+                                           _factory.PatientManager.Menu(patient);
+                                           break;
+                                       }
+
+                                       else
+                                       {
+                                           Secretary secretary =
+                                               _factory.SecretaryManager.CheckPersonalInfo(enteredEmail,
+                                                   enteredPassword);
+                                           if (secretary != null)
+                                           {
+                                               _factory.SecretaryManager.Menu();
+                                               break;
+                                           }
+                                       }
                         }
-
-
-
-                        Secretary secretary =
-                            _factory.SecretaryManager.CheckPersonalInfo(enteredEmail, enteredPassword);
-                        if (secretary != null)
-                        {
-                            _factory.SecretaryManager.Menu();
-                            break;
-                        }
+                              }
+                        Console.WriteLine("Not valid email/password combination, try again");
                     }
+
                 }
             }
 

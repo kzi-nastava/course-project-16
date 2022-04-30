@@ -27,26 +27,29 @@ namespace Usi_Project
         {
             _surgeryEquipments = surgeryEquipments;
         }
-        
-        
-
+ 
         public Dictionary<SurgeryTool, int> SurgeryEquipments
         {
             get => _surgeryEquipments;
             set => _surgeryEquipments = value;
         }
 
-        public void printRoom()
+        public void PrintRoom()
         {
-            Console.WriteLine("-----------------------");
+            Console.WriteLine("=========================");
             Console.WriteLine("ID: " + Id); 
             Console.WriteLine("Name: " + Name);
+            Console.WriteLine("-------------------------");
             Console.WriteLine("Surgery Equipments:");
+            Console.WriteLine("-------------------------");
             foreach (var tools in _surgeryEquipments)
-            {
                 Console.WriteLine("\t" + tools.Key + ": " + tools.Value);
-            }
-            Console.WriteLine("-----------------------");
+            Console.WriteLine("-------------------------");
+            Console.WriteLine("Furniture:");
+            Console.WriteLine("-------------------------");
+            foreach (var tools in Furniture)
+                Console.WriteLine("\t" + tools.Key + ": " + tools.Value);
+            Console.WriteLine("=========================");
             
         }
   

@@ -1,9 +1,13 @@
-﻿using System;
+﻿
+using Newtonsoft.Json;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using Usi_Project.DataSaver;
+using Usi_Project.IOController;
 using Usi_Project.Manage;
 using Usi_Project.Settings;
-using Usi_Project.IOController;
-
 
 namespace Usi_Project
 {
@@ -14,21 +18,13 @@ namespace Usi_Project
             FileSettings fileSettings = new FileSettings("../../../Files/doctors.json", "../../../Files/patients.json",
                 "../../../Files/director.json", "../../../Files/secretaries.json",
                 "../../../Files/operatingRooms.json", "../../../Files/overviewRooms.json",
-                "../../../Files/retiringRooms.json", "../../../Files/appointments.json","../../../Files/anamnesa.json","../../../Files/requested.json");
+                "../../../Files/retiringRooms.json", "../../../Files/appointments.json","../../../Files/anamnesa.json","../../../Files/requested.json",
+                "../../../Files/stockRoom.json", "../../../Files/timer.json");
             Saver saver = new Saver(fileSettings);
             Factory factory = new Factory(fileSettings, saver);
             factory.LoadData();
             CheckInfo checkInfo = new CheckInfo(factory);
             checkInfo.PrintMenu();
-            // var startTime = new DateTime(2022, 12, 12, 12, 45, 0);
-            // var endTime = new DateTime(2022, 12, 12, 13, 0, 0);
-            //
-            // Appointment appointment = new Appointment("veljkobubnjevic@gmail.com", "bangiekg@gmail.com", startTime,
-            //     endTime, "OV","op1");
-            // factory.AppointmentManager.Appointment.Add(appointment);
-            // factory.AppointmentManager.serialize();
-            // CheckInfo checkInfo = new CheckInfo(factory);
-            // checkInfo.PrintMenu();
         }
     }
 }

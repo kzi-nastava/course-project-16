@@ -49,10 +49,6 @@ namespace Usi_Project.Manage
                 serializer.Serialize(file, _appointment);
             }
         }
-
-
-
-
         public string AppointmentFilename
         {
             get => _appointmentFilename;

@@ -14,10 +14,14 @@ namespace Usi_Project.Settings
         private readonly string _appointmentsFn;
         private readonly string _anamnesaFn;
         private readonly string _requestedFn;
+        private readonly string _stockRoomFn;
+        private readonly string _timerFn;
 
-        public FileSettings(string doctorFilename, string patientFilename, string directorFilename, 
-            string secretaryFilename,string operatingRoomsFn, string overviewRoomsFn, string retiringRoomsFn, string appointmentsFn,string anamnesaFn
-            ,string requestedFn)
+        public FileSettings(string doctorFilename, string patientFilename, string directorFilename,
+            string secretaryFilename, string operatingRoomsFn, string overviewRoomsFn, string retiringRoomsFn,
+            string appointmentsFn, string anamnesaFn, string requestedFn, 
+            string stockRoomFn, string timerFn)
+        
         {
             _doctorFilename = doctorFilename;
             _patientFilename = patientFilename;
@@ -29,12 +33,17 @@ namespace Usi_Project.Settings
             _retiringRoomsFn = retiringRoomsFn;
             _anamnesaFn = anamnesaFn;
             _requestedFn = requestedFn;
+            _stockRoomFn = stockRoomFn;
+            _timerFn = timerFn;
 
         }
 
         public string RequestedFn => _requestedFn;
 
         public string AnamnesaFn => _anamnesaFn;
+    
+
+        public string TimerFn => _timerFn;
 
         public string OperatingRoomsFn => _operatingRoomsFn;
 
@@ -49,6 +58,8 @@ namespace Usi_Project.Settings
         public string PatientFilename => _patientFilename;
 
         public string DirectorFilename => _directorFilename;
+
+        public string StockRoomFn => _stockRoomFn;
 
         public string SecretaryFilename => _secretaryFilename;
     }

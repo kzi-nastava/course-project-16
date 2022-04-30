@@ -1,4 +1,6 @@
-﻿using Usi_Project.Settings;
+﻿using System.IO;
+using Newtonsoft.Json;
+using Usi_Project.Settings;
 using Usi_Project.Manage;
 using Newtonsoft.Json;
 using Usi_Project.DataSaver;
@@ -15,6 +17,7 @@ namespace Usi_Project.Manage
         private AppointmentManager _appointmentManager;
         private AnamnesaManager _anamnesaManager;
         private RequestManager _requestManager;
+        private TimerManager _timerManager;
         private Saver _saver;
 
         public Factory()
@@ -26,19 +29,21 @@ namespace Usi_Project.Manage
             get => _saver;
             set => _saver = value;
         }
+        
+        public Factory(FileSettings fileSettings, Saver saver)
 
-        public Factory(FileSettings fileSettings,Saver saver)
         {
             _directorManager = new DirectorManager(fileSettings.DirectorFilename, this);
             _patientManager = new PatientManager(fileSettings.PatientFilename, this);
             _secretaryManager = new SecretaryManager(fileSettings.SecretaryFilename, this);
             _doctorManager = new DoctorManager(fileSettings.DoctorFilename, this);
             _roomManager = new RoomManager(fileSettings.OperatingRoomsFn, fileSettings.OverviewRoomsFn,
-                fileSettings.RetiringRoomsFn, this);
+                fileSettings.RetiringRoomsFn, fileSettings.StockRoomFn, this);
             _appointmentManager = new AppointmentManager(fileSettings.AppointmentsFn, this);
             _anamnesaManager = new AnamnesaManager(fileSettings.AnamnesaFn, this);
             _requestManager = new RequestManager(fileSettings.RequestedFn, this);
             _saver = saver;
+            _timerManager = new TimerManager(fileSettings.TimerFn, this);
         }
 
         public RequestManager RequestManager
@@ -51,6 +56,8 @@ namespace Usi_Project.Manage
         {
             get => _anamnesaManager;
             set => _anamnesaManager = value;
+           
+        
         }
 
         public AppointmentManager AppointmentManager
@@ -70,6 +77,13 @@ namespace Usi_Project.Manage
             _appointmentManager.LoadData();
             _anamnesaManager.LoadData();
             _requestManager.LoadData();
+            _timerManager.LoadData();
+            
+        }
+        public TimerManager TimerManager
+        {
+            get => _timerManager;
+            set => _timerManager = value;
 
         }
 
