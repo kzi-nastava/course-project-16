@@ -429,7 +429,7 @@ namespace Usi_Projekat.Manage
             }
         }
         
-      /*   void ConfirmationOfRequests()
+       /*  void ConfirmationOfRequests()
         {
             int noChanges = 0;
             foreach (Request request in _manager.RequestManager.Requests)
@@ -456,11 +456,23 @@ namespace Usi_Projekat.Manage
                 switch (requestConfirmation)
                 {
                     case "1":
-                        request.confirmed = 1;
+                        foreach (Request request in _manager.RequestManager.Requests)
+                        {
+                            if (requestId == request.id)
+                            {
+                                request.confirmed = 1;
+                            }
+                        }
                         break;
 
                     case "2":
-                        request.confirmed = 2;
+                        foreach (Request request in _manager.RequestManager.Requests)
+                        {
+                            if (requestId == request.id)
+                            {
+                                request.confirmed = 2;
+                            }
+                        }
                         break;
 
                     case "x":
