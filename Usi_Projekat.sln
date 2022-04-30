@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Usi_Projekat", "Usi_Projekat\Usi_Projekat.csproj", "{489C0469-DABB-4156-AFB9-577903532324}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Usi_Project", "Usi_Project\Usi_Project.csproj", "{489C0469-DABB-4156-AFB9-577903532324}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
