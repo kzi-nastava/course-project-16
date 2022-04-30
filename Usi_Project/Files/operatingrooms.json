@@ -10,8 +10,8 @@
       "Closet": 1,
       "Bad": 1
     },
-    "Id": "532",
-    "Name": "Operaciona sala 1"
+    "Id": "A2",
+    "Name": "Operating room 2"
   },
   {
     "SurgeryEquipments": {
@@ -24,7 +24,21 @@
       "Closet": 1,
       "Bad": 1
     },
-    "Id": "965",
-    "Name": "Operaciona sala 2"
+    "Id": "A3",
+    "Name": "Operating room 3"
+  },
+  {
+    "SurgeryEquipments": {
+      "Clamps": 2,
+      "Table": 3,
+      "Defibrillator": 1,
+      "CottonWool": 2
+    },
+    "Furniture": {
+      "Closet": 4,
+      "Bad": 3
+    },
+    "Id": "A4",
+    "Name": "Operating room 4"
   }
 ]

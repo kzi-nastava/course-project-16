@@ -24,55 +24,57 @@ namespace Usi_Project.IOController
                     while (true)
                     {
 
-                        Console.WriteLine("Enter email: ");
-                        string enteredEmail = Console.ReadLine();
-                        Console.WriteLine("Enter password: ");
-                        string enteredPassword = Console.ReadLine();
-                        Director director = _factory.DirectorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
+                        // Console.WriteLine("Enter email: ");
+                        // string enteredEmail = Console.ReadLine();
+                        // Console.WriteLine("Enter password: ");
+                        // string enteredPassword = Console.ReadLine();
+                        Director director = _factory.DirectorManager.CheckPersonalInfo("rock@gmail.com",
+                            "rock");
                         if (director != null)
                         {
                             DirectorManager.Menu();
                             break;
                         }
 
-                        else
-                        {
-                            Doctor doctor = _factory.DoctorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
-                            if (doctor != null)
-                            {
-                                //DoctorManager.Menu();
-                                break;
-                            }
+                        //       else
+                        //       {
+                        //            Doctor doctor = _factory.DoctorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
+                        //            if (doctor != null)
+                        //         {
+                        //             //DoctorManager.Menu();
+                        //             break;
+                        //         }
+                        //
+                        //         else
+                        //         {
+                        //             Patient patient =
+                        //                 _factory.PatientManager.CheckPersonalInfo(enteredEmail, enteredPassword);
+                        //             if (patient != null)
+                        //             {
+                        //                 //patient.Menu();
+                        //                 break;
+                        //             }
+                        //
+                        //             else
+                        //             {
+                        //                 Secretary secretary =
+                        //                     _factory.SecretaryManager.CheckPersonalInfo(enteredEmail, enteredPassword);
+                        //                 if (secretary != null)
+                        //                 {
+                        //                     _factory.SecretaryManager.Menu();
+                        //                     break;
+                        //                 }
+                        //             }
+                        //
+                        //         }
+                        //
+                        //
+                        //     }
+                        //
+                        //     Console.WriteLine("Not valid email/password combination, try again");
+                        // }
 
-                            else
-                            {
-                                Patient patient =
-                                    _factory.PatientManager.CheckPersonalInfo(enteredEmail, enteredPassword);
-                                if (patient != null)
-                                {
-                                    //patient.Menu();
-                                    break;
-                                }
-
-                                else
-                                {
-                                    Secretary secretary =
-                                        _factory.SecretaryManager.CheckPersonalInfo(enteredEmail, enteredPassword);
-                                    if (secretary != null)
-                                    {
-                                        _factory.SecretaryManager.Menu();
-                                        break;
-                                    }
-                                }
-
-                            }
-
-
-                        }
-
-                        Console.WriteLine("Not valid email/password combination, try again");
                     }
-
                 }
             }
         }

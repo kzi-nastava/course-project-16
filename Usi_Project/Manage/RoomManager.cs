@@ -10,7 +10,7 @@ namespace Usi_Project.Manage
         private readonly string _operatingRoomsFn;
         private readonly string _overviewRoomsFn;
         private readonly string _retiringRoomsFn;
-        private Factory _manager;
+        private static Factory _manager;
         private List<OverviewRoom> _overviewRooms;
         private List<OperatingRoom> _operatingRooms;
         private List<RetiringRoom> _retiringRooms;
@@ -49,7 +49,8 @@ namespace Usi_Project.Manage
             
             _overviewRooms = JsonConvert.DeserializeObject<List<OverviewRoom>>(File.ReadAllText(_overviewRoomsFn), json);
             _operatingRooms = JsonConvert.DeserializeObject<List<OperatingRoom>>(File.ReadAllText(_operatingRoomsFn), json);
-          //  _retiringRooms = JsonConvert.DeserializeObject<List<RetiringRoom>>(File.ReadAllText(_retiringRoomsFn), json);
+            _retiringRooms = JsonConvert.DeserializeObject<List<RetiringRoom>>(File.ReadAllText(_retiringRoomsFn), json);
+            
         }
 
         public OperatingRoom OperatingRoomById(string id)
@@ -61,37 +62,172 @@ namespace Usi_Project.Manage
                     return room;
                 }
             }
-
             return null;
 
         }
         public OverviewRoom OverviewRoomById(string id) {
         foreach (var room in _overviewRooms)
+        {
+                if (room.Id == id)
+                {
+                    return room;
+                }
+        }
+        return null;
+        }
+
+        public RetiringRoom RetiringRoomById(string id) {
+            foreach (var room in _retiringRooms)
             {
                 if (room.Id == id)
                 {
                     return room;
                 }
             }
-
             return null;
         }
-                
-                
-                
-                
 
+        public void ViewOperatingRooms()
+        {
+            int i = 1;
+            Dictionary<int, OperatingRoom> dictionary = new Dictionary<int, OperatingRoom>();
+            foreach (var opp in _operatingRooms)
+            {
+                dictionary[i] = opp;
+                Console.WriteLine(i.ToString() + ")  " + opp.Name);
+                i++;
+            }
 
-        // public void seriazlize()
-        // {
-        //     using (StreamWriter file = File.CreateText(_retiringRoomsFn))
-        //     {
-        //         JsonSerializer serializer = new JsonSerializer();
-        //         serializer.Formatting = Formatting.Indented;
-        //         serializer.Serialize(file, _retiringRooms);
-        //     }
-        // }
+            while (true)
+            {
+                Console.WriteLine("Choose the number to see operating room: ");
+                int p = Convert.ToInt32(Console.ReadLine());
+                if (dictionary.ContainsKey(p))
+                {
+                    ViewOpRoom(dictionary[p]);
+                    break;
+                }
+                {
+                    Console.WriteLine("Wrong input! Try again.");
+                }
+            }
+        }
+        
+        public void ViewOverviewRooms()
+        {
+            int i = 1;
+            Dictionary<int, OverviewRoom> dictionary = new Dictionary<int, OverviewRoom>();
+            foreach (var opp in _overviewRooms)
+            {
+                dictionary[i] = opp;
+                Console.WriteLine(i.ToString() + ")  " + opp.Name);
+                i++;
+            }
 
+            while (true)
+            {
+                Console.WriteLine("Choose the number to see operating room: ");
+                int p = Convert.ToInt32(Console.ReadLine());
+                if (dictionary.ContainsKey(p))
+                {
+                    ViewOvRoom(dictionary[p]);
+                    break;
+                }
+                {
+                    Console.WriteLine("Wrong input! Try again.");
+                }
+            }
+        }
+
+        private static string GetOption()
+        {
+            Console.WriteLine("Choose option or x for exit:");
+            Console.WriteLine("1) Delete room");
+            Console.WriteLine("2) Change room");
+            Console.Write(">> ");
+            string option = Console.ReadLine();
+            return option;
+
+        }
+
+        private static void ViewOpRoom(OperatingRoom room)
+        {
+           room.printRoom();
+           switch (GetOption())
+           {
+               case "1":
+               {
+                   _manager.RoomManager._operatingRooms.Remove(room);
+                   break;
+               }
+               case "2":
+               {
+                ChangeOpRoom(room);   
+                break;
+               }
+               default:
+                   return;
+           }
+
+        }
+        
+        private static void ViewOvRoom(OverviewRoom room)
+        {
+            room.printRoom();
+            switch (GetOption())
+            {
+                case "1":
+                {
+                    _manager.RoomManager._overviewRooms.Remove(room);
+                    break;
+                }
+                case "2":
+                {
+                    ChangeOvRoom(room);   
+                    break;
+                }
+                default:
+                    return;
+            }
+
+        }
+        
+        private static void ViewRetiringRoom(RetiringRoom room)
+        {
+            room.printRoom();
+            switch (GetOption())
+            {
+                case "1":
+                {
+                    _manager.RoomManager._retiringRooms.Remove(room);
+                    break;
+                }
+                case "2":
+                {
+                    ChangeRetiringRoom(room);   
+                    break;
+                }
+                default:
+                    return;
+            }
+
+        }
+        
+        private static void ChangeRetiringRoom(RetiringRoom operatingRoom)
+        {
+            //TODO: CHANGE ROOM AND EQUIPMENTS
+        }
+
+        private static void ChangeOvRoom(OverviewRoom operatingRoom)
+        {
+            //TODO: CHANGE ROOM AND EQUIPMENTS
+        }
+
+        private static void ChangeOpRoom(OperatingRoom operatingRoom)
+        {
+            //TODO: CHANGE ROOM AND EQUIPMENTS
+        }
+            
         public Factory Manager
         {
             get => _manager;

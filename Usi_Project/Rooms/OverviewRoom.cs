@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using System;
 namespace Usi_Project
 
 {
@@ -32,6 +32,20 @@ namespace Usi_Project
         {
             get => _tools;
             set => _tools = value;
+        }
+        
+        public void printRoom()
+        {
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("ID: " + Id); 
+            Console.WriteLine("Name: " + Name);
+            Console.WriteLine("Medical Equipments:");
+            foreach (var tools in _tools)
+            {
+                Console.WriteLine("\t" + tools.Key + ": " + tools.Value);
+            }
+            Console.WriteLine("-----------------------");
+            
         }
     }
     

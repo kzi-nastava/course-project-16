@@ -4,15 +4,15 @@
       "Closet": 3,
       "Bad": 25
     },
-    "Id": "123",
-    "Name": "Soba za odmor 1"
+    "Id": "C1",
+    "Name": "Retiring room 1"
   },
   {
     "Furniture": {
       "Closet": 3,
       "Bad": 20
     },
-    "Id": "842",
-    "Name": "Soba za odmor 2"
+    "Id": "C2",
+    "Name": "Retiring room 2"
   }
 ]

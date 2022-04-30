@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 namespace Usi_Project
 
@@ -26,11 +27,28 @@ namespace Usi_Project
         {
             _surgeryEquipments = surgeryEquipments;
         }
+        
+        
 
         public Dictionary<SurgeryTool, int> SurgeryEquipments
         {
             get => _surgeryEquipments;
             set => _surgeryEquipments = value;
         }
+
+        public void printRoom()
+        {
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("ID: " + Id); 
+            Console.WriteLine("Name: " + Name);
+            Console.WriteLine("Surgery Equipments:");
+            foreach (var tools in _surgeryEquipments)
+            {
+                Console.WriteLine("\t" + tools.Key + ": " + tools.Value);
+            }
+            Console.WriteLine("-----------------------");
+            
+        }
+  
     }
 }

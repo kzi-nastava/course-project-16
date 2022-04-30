@@ -10,15 +10,40 @@ namespace Usi_Project.Manage
     {
         private string _directorFilename;
         private Director _director;
-        private Factory _manager;
+        private static Factory _factory;
         private RoomManager _roomManager;
 
         public DirectorManager(string directorFilename, Factory factory)
         {
             _directorFilename = directorFilename;
-            _manager = factory;
+            _factory = factory;
             _roomManager = new RoomManager();
         }
+
+        public string DirectorFilename
+        {
+            get => _directorFilename;
+            set => _directorFilename = value;
+        }
+
+        public Director Director
+        {
+            get => _director;
+            set => _director = value;
+        }
+
+        public Factory Factory
+        {
+            get => _factory;
+            set => _factory = value;
+        }
+
+        public RoomManager RoomManager
+        {
+            get => _roomManager;
+            set => _roomManager = value;
+        }
+
         public void LoadData()
         {
             JsonSerializerSettings json = new JsonSerializerSettings
@@ -38,7 +63,7 @@ namespace Usi_Project.Manage
                 switch (option)
                 {
                     case "1":
-                        ViewHospitalRooms();
+                        ViewHospitalRooms(_factory);
                         break;
 
                     case "2":
@@ -65,11 +90,31 @@ namespace Usi_Project.Manage
             }
         }
 
-        public static void  ViewHospitalRooms()
+        public static void ViewHospitalRooms(Factory factory)
         {
-            
-            
+            Console.WriteLine("Choose one of the options below: ");
+            Console.WriteLine("1. View Operating rooms");
+            Console.WriteLine("2. View Overview rooms");
+            Console.WriteLine("3. View Stock room");
+            Console.Write(">> ");
+            string option = Console.ReadLine();
+            switch (option)
+            {
+                case "1":
+                {
+                    factory.RoomManager.ViewOperatingRooms();
+                    break;
+                }
+                case "2":
+                {
+                    factory.RoomManager.ViewOverviewRooms();
+                    break;
+                }
+                case "3":
+                    break;
+            }
         }
+
         public Director CheckPersonalInfo(string email, string password)
         {
             if (email == _director.email && password == _director.password)
@@ -81,21 +126,11 @@ namespace Usi_Project.Manage
         public bool CheckEmail(string email)
         {
             return (email == _director.email);
-            if (email == _director.email)
-            {
-                return true;
-            }
-
-            return false;
         }
         
         public bool CheckPassword(string password)
         {
-            if (password == _director.password)
-            {
-                return true;
-            }
-            return false;
+            return password == _director.password;
 
         }
     }
