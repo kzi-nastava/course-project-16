@@ -12,7 +12,7 @@ namespace Usi_Projekat
             FileSettings fileSettings = new FileSettings("../../../Files/doctors.json", "../../../Files/patients.json",
                "../../../Files/director.json", "../../../Files/secretaries.json",
                "../../../Files/operatingRooms.json", "../../../Files/overviewRooms.json",
-               "../../../Files/retiringRooms.json");
+               "../../../Files/retiringRooms.json", "../../../Files/appointments.json");
            Factory factory = new Factory(fileSettings);
            factory.LoadData();
            CheckInfo checkInfo = new CheckInfo(factory);

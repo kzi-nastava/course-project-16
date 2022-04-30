@@ -9,6 +9,7 @@ namespace Usi_Projekat.Manage
         private SecretaryManager _secretaryManager;
         private DoctorManager _doctorManager;
         private RoomManager _roomManager;
+        private AppointmentManager _appointmentManager;
 
         public Factory(FileSettings fileSettings)
         {

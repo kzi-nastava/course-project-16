@@ -11,9 +11,10 @@ namespace Usi_Projekat.Settings
         private readonly string _operatingRoomsFn;
         private readonly string _overviewRoomsFn;
         private readonly string _retiringRoomsFn;
+        private readonly string _appointmentsFn;
 
         public FileSettings(string doctorFilename, string patientFilename, string directorFilename, 
-            string secretaryFilename,string operatingRoomsFn, string overviewRoomsFn, string retiringRoomsFn)
+            string secretaryFilename,string operatingRoomsFn, string overviewRoomsFn, string retiringRoomsFn, string appointmentsFn)
         {
             _doctorFilename = doctorFilename;
             _patientFilename = patientFilename;
@@ -21,7 +22,9 @@ namespace Usi_Projekat.Settings
             _secretaryFilename = secretaryFilename;
             _operatingRoomsFn = operatingRoomsFn;
             _overviewRoomsFn = overviewRoomsFn;
+            _appointmentsFn = appointmentsFn;
             _retiringRoomsFn = retiringRoomsFn;
+            
         }
 
         public string OperatingRoomsFn => _operatingRoomsFn;
