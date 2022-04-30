@@ -11,6 +11,11 @@
 
     <ItemGroup>
       <None Remove="Files\medicalrecords.json" />
+      <None Remove="Files\medicalrecord.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Files\medicalRecord.json.cs" />
     </ItemGroup>
 
 </Project>

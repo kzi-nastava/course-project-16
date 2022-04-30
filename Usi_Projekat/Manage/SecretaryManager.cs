@@ -169,6 +169,7 @@ namespace Usi_Projekat.Manage
         
         public void ChangingPatientProfile()
         {
+            int noChanges = 0;
             int validEmail = 1;
             foreach (Patient patient in _manager.PatientManager.Patients)
             {
@@ -281,6 +282,7 @@ namespace Usi_Projekat.Manage
                             
                             default:
                                 Console.WriteLine("Invalid option entered, try again");
+                                noChanges = 1;
                                 ChangingPatientProfile();
                                 break;
                         }
@@ -293,13 +295,17 @@ namespace Usi_Projekat.Manage
                 }
                 else
                 {
-                    using (StreamWriter file = File.CreateText(_manager.PatientManager.patientFileName))
+                    if (noChanges == 0)
                     {
-                        JsonSerializer serializer = new JsonSerializer();
-                        serializer.Formatting = Formatting.Indented;
-                        serializer.Serialize(file, _manager.PatientManager.Patients);
+                        using (StreamWriter file = File.CreateText(_manager.PatientManager.patientFileName))
+                        {
+                            JsonSerializer serializer = new JsonSerializer();
+                            serializer.Formatting = Formatting.Indented;
+                            serializer.Serialize(file, _manager.PatientManager.Patients);
+                        }
+
+                        Menu();
                     }
-                    Menu();
                 }
             }
         }
@@ -423,26 +429,61 @@ namespace Usi_Projekat.Manage
             }
         }
         
-        /* void ConfirmationOfRequests(List<Request> requests)
+      /*   void ConfirmationOfRequests()
         {
-            foreach (Request request in requests)
+            int noChanges = 0;
+            foreach (Request request in _manager.RequestManager.Requests)
             {
                 Console.WriteLine(request.id);
             }
-            Console.WriteLine("Unesite id zahteva koji zelite da odobrite/odbijete");
+            Console.WriteLine("Enter id (x for exit) of the request you want to confirm/deny:");
             string requestId = Console.ReadLine();
-            Console.WriteLine("1) - Confirm a request");
-            Console.WriteLine("2) - Deny a request");
-            string requestConfirmation = Console.ReadLine();
-            switch (requestConfirmation)
+            if (requestId == ("x"))
             {
-                case "1":
-                    request.confirmed = 1;
-                    break;
-                case "2":
-                    request.confirmed = 2;
+                Menu();
             }
-        }*/
+            else if (!_manager.RequestManager.CheckId(requestId))
+            {
+                Console.WriteLine("Invalid id entered, try again");
+                ConfirmationOfRequests();
+            }
+            else
+            {
+                Console.WriteLine("1) - Confirm a request");
+                Console.WriteLine("2) - Deny a request");
+                Console.WriteLine("x) - Exit");
+                string requestConfirmation = Console.ReadLine();
+                switch (requestConfirmation)
+                {
+                    case "1":
+                        request.confirmed = 1;
+                        break;
+
+                    case "2":
+                        request.confirmed = 2;
+                        break;
+
+                    case "x":
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid option entered, try again");
+                        noChanges = 1;
+                        ConfirmationOfRequests();
+                        break;
+                }
+                if (noChanges == 0)
+                {
+                    using (StreamWriter file = File.CreateText(_manager.RequestManager.requestFileName))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        serializer.Formatting = Formatting.Indented;
+                        serializer.Serialize(file, _manager.RequestManager.Requests);
+                    }
+                    Menu();
+                }
+            }
+        } */
         
         
     }
