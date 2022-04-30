@@ -7,7 +7,11 @@ namespace Usi_Project.Users
     {
         public List<OperatingRoom> operating;
         public List<OverviewRoom> overview;
-        
+
+        public Doctor()
+        {
+        }
+
         public Doctor(string email, string password, string name, string lastName, string adress, string phone)
             : base(email, password, name, lastName, adress, phone, Role.Doctor)
         {

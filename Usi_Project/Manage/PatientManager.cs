@@ -67,7 +67,7 @@ namespace Usi_Project.Manage
         public void Menu(Patient patient)
         {
             bool flag, flagIner = true;
-            flag = AntiTrol(patient);
+            flag = AntiTroll(patient);
             while (flag && flagIner)
             {
                 string inp;
@@ -117,22 +117,22 @@ namespace Usi_Project.Manage
                         break;
                 }
 
-                flag = AntiTrol(patient);
+                flag = AntiTroll(patient);
             }
         }
 
         public bool CheckBlockedStatus(Patient patient)
         {
             if (patient.Blocked == 2)
-                {
-                    Console.WriteLine("Sorry, Your Account Has Been Blocked" +
-                                      "Contact Support, Much Luck!");
-                    return false;
-                }
+            {
+                Console.WriteLine("Sorry, Your Account Has Been Blocked" +
+                                  "Contact Support, Much Luck!");
+                return false;
+            }
 
-                return true;
+            return true;
         }
-        public bool AntiTrol(Patient patient)
+        public bool AntiTroll(Patient patient)
         {
             bool flag;
             flag = CheckBlockedStatus(patient);
@@ -143,19 +143,23 @@ namespace Usi_Project.Manage
 
             int changed = 0, deleted = 0, created = 0;
             //Brojanje promena, brisanja i zakazivanja
-            //foreach (var VARIABLE in COLLECTION)
-            //{
-            //if()
-            //{
-            //created += 1;    
-            //} else if()
-            //{
-            //deleted += 1;    
-            //} else if()
-            //{
-            //changed += 1;
-            //}
-            //}
+            foreach (Requested req in _factory.RequestManager.Requested)
+            {
+                if (req.EmailPatient == patient.email)
+                {
+                    if (req.Operation == "1")
+                    {
+                        changed++;
+                    } 
+                    else if (req.Operation == "2")
+                    {
+                        deleted++;
+                    } 
+                    else if (req.Operation == "3"){ 
+                        created++;
+                    }
+                }
+            }
             if(changed > 4){
                 Console.WriteLine("U prethodnih mesec ste promenili termin vise od 4 puta!");
                 flag = false;
@@ -176,7 +180,7 @@ namespace Usi_Project.Manage
             }
 
             return true;
-        }   //Todo
+        }
         public void ShowAppointments(Patient patient)
         {
             int i = 1;
@@ -187,7 +191,8 @@ namespace Usi_Project.Manage
             {
                 if (appointment.EmailPatient == patient.email)
                 {
-                    Console.WriteLine("[" + i + "] " + appointment);
+                    Console.Write("[" + i + "]");
+                    appointment.PrintAppointment();
                     Console.WriteLine("---------------------");
                     i =+ 1;
                 }
@@ -218,7 +223,7 @@ namespace Usi_Project.Manage
                 }
             }
 
-            Doctor doctorForAppoint;
+            Doctor doctorForAppoint = new Doctor();
             int j = 0;
             foreach (Doctor doctor in _factory.DoctorManager.Doctors)
             {
@@ -226,36 +231,71 @@ namespace Usi_Project.Manage
                 {
                     doctorForAppoint = doctor;
                 }
+
             }
 
+            if (doctorForAppoint is null)
+            {
+                doctorForAppoint = _factory.DoctorManager.Doctors[0];
+            }
+            DateTime appointTime;
+            while (true)
+            {
+                appointTime = ShowDateTimeUserInput();
+                DateTime currentDate = DateTime.Now;
+                if (appointTime < currentDate.AddHours(12))
+                {
+                    Console.WriteLine("To Soon For Making an Appointment, try again.");
+                }
+                else if (!_factory.DoctorManager.checkTime(appointTime,appointTime.AddMinutes(15), doctorForAppoint))
+                {
+                    Console.WriteLine("Doctor Will Be Busy At This Moment!");
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            while (true)
+            {
+                var roomId = _factory.DoctorManager.CheckRoomOverview(appointTime, appointTime.AddMinutes(15));
+                Console.WriteLine("fun_expected");
+                if (roomId != null)
+                {
+                    
+                    _factory.AppointmentManager.Appointment.Add(new Appointment(doctorForAppoint.email, patient.email, appointTime, appointTime.AddMinutes(15), "OV", roomId,"0"));
+                    break;
+                }
+                
+            }
+            
+            Requested requested = new Requested(patient.email, appointTime, appointTime.AddMinutes(15), "3");
+            _factory.RequestManager.Serialize(requested);
         }   
-        //TODO fja pribavlja doktora, pacijenta, vreme pocetka,
-        //TODO trajanje=15min, i nasumicnu sobu
+
         public void UpdateAppointment(Patient patient)
             {
-                int inp;
+                string opt;   //1-cancel  2-change
                 while (true)
                 {
                     ShowAppointments(patient);
-                    Console.WriteLine("Do You Wish To Cancel " +
-                                      "Appointment[1] || To Change Time[2]\t(Else-Abort)");
-                    string opt = Console.ReadLine();
-                    if (opt != "1" || opt != "2")
+                    Console.WriteLine("Do You Wish To Change Time[1] || " +
+                                      "Do You Wish To Cancel Appointment[2]\t(Else-Abort)");
+                    opt = Console.ReadLine();
+                    if (opt!= "1" || opt != "2")
                     {
-                        Console.WriteLine("Invalid Input, try again!");
+                        break;
                     }
                     else
                     {
-                        inp = Convert.ToInt32(opt);
-                        break;
+                        Console.WriteLine("Invalid Input, try again!");
                     }
                 }
 
                 DateTime startTime, newTime;
                 while (true)
                 {
-                    Console.WriteLine("\nEnter NEW Date & Time Of an Appoint ");
-                    newTime = ShowDateTimeUserInput();
 
                     Console.WriteLine("\nEnter Date & Time Of Appoint " +
                                       "You Want To Change");
@@ -268,8 +308,19 @@ namespace Usi_Project.Manage
                     }
                     else
                     {
-                        Console.WriteLine("Filing request...");      
-                        //startTime, newTime, patient.email, inp
+                        if (opt != "2")
+                        {
+                            Console.WriteLine("\nEnter NEW Date & Time Of an Appoint ");
+                            newTime = ShowDateTimeUserInput();
+                        }
+                        else
+                        {
+                            newTime = startTime;
+                        }
+
+                        Console.WriteLine("Filing request...");
+                        Requested requested = new Requested(patient.email, startTime, newTime, opt);
+                        _factory.RequestManager.Serialize(requested);
                     }
                 }
             }
@@ -311,4 +362,5 @@ namespace Usi_Project.Manage
 
 
     }
+
 }

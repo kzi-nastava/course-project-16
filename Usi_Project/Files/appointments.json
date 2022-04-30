@@ -1,26 +1,20 @@
 [
   {
-    "IdRoom": "op1",
-    "EmailDoctor": "veljkobubnjevic@gmail.com",
-    "EmailPatient": "bangiekg@gmail.com",
-    "StartTime": "2022-12-12T12:45:00",
-    "EndTime": "2022-12-12T13:00:00",
-    "Type": "OV"
+    "IdRoom": "B1",
+    "EmailDoctor": "veljkobubnjevic001@gmail.com",
+    "EmailPatient": "MilosK@gmail.com",
+    "StartTime": "2022-05-01T12:00:00",
+    "EndTime": "2022-05-01T12:15:00",
+    "Type": "OV",
+    "Status": "0"
   },
   {
-    "IdRoom": "op1",
-    "EmailDoctor": "veljkobubnjevic@gmail.com",
-    "EmailPatient": "rocky@gmail.com",
-    "StartTime": "2022-12-12T13:45:00",
-    "EndTime": "2022-12-12T14:00:00",
-    "Type": "OV"
-  },
-  {
-    "IdRoom": "op1",
-    "EmailDoctor": "veljkobubnjevic@gmail.com",
-    "EmailPatient": "kiki@gmail.com",
-    "StartTime": "2022-12-12T14:45:00",
-    "EndTime": "2022-12-12T15:00:00",
-    "Type": "OV"
+    "IdRoom": "B1",
+    "EmailDoctor": "veljkobubnjevic001@gmail.com",
+    "EmailPatient": "MilosK@gmail.com",
+    "StartTime": "2022-04-30T20:40:00",
+    "EndTime": "2022-04-30T20:55:00",
+    "Type": "OV",
+    "Status": "0"
   }
 ]

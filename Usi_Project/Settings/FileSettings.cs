@@ -12,9 +12,12 @@ namespace Usi_Project.Settings
         private readonly string _overviewRoomsFn;
         private readonly string _retiringRoomsFn;
         private readonly string _appointmentsFn;
+        private readonly string _anamnesaFn;
+        private readonly string _requestedFn;
 
         public FileSettings(string doctorFilename, string patientFilename, string directorFilename, 
-            string secretaryFilename,string operatingRoomsFn, string overviewRoomsFn, string retiringRoomsFn, string appointmentsFn)
+            string secretaryFilename,string operatingRoomsFn, string overviewRoomsFn, string retiringRoomsFn, string appointmentsFn,string anamnesaFn
+            ,string requestedFn)
         {
             _doctorFilename = doctorFilename;
             _patientFilename = patientFilename;
@@ -24,8 +27,14 @@ namespace Usi_Project.Settings
             _overviewRoomsFn = overviewRoomsFn;
             _appointmentsFn = appointmentsFn;
             _retiringRoomsFn = retiringRoomsFn;
-            
+            _anamnesaFn = anamnesaFn;
+            _requestedFn = requestedFn;
+
         }
+
+        public string RequestedFn => _requestedFn;
+
+        public string AnamnesaFn => _anamnesaFn;
 
         public string OperatingRoomsFn => _operatingRoomsFn;
 

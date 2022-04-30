@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using Usi_Project.Users;
+using Usi_Project.Appointments;
 
 namespace Usi_Project.Manage
 {
@@ -84,7 +85,7 @@ namespace Usi_Project.Manage
                     break;
                 
                 case "6":
-                    //ConfirmationOfRequests();
+                    ConfirmationOfRequests();
                     break;
                 
                 case "x":
@@ -428,111 +429,115 @@ namespace Usi_Project.Manage
                 Menu();
             }
         }
-        
-      /*   void ConfirmationOfRequests()
+        void ConfirmationOfRequests()
         {
-            int noChanges = 0;
-            foreach (Request request in _manager.RequestManager.Requests)
+            List<Requested> forDeletion = new List<Requested>();
+            List<Requested> forChanging = new List<Requested>();
+            string inp;
+            while (true)
             {
-            (if request.confirmed == 0)
-            {
-                Console.WriteLine("request id: " + request.id);
-            }
-            }
-            Console.WriteLine("Enter id (x for exit) of the request you want to confirm/deny:");
-            string requestId = Console.ReadLine();
-            if (requestId == ("x"))
-            {
-                Menu();
-            }
-            else if (!_manager.RequestManager.CheckId(requestId))
-                //checkId(requestId) should check if request.confirmed is 0 too
-            {
-                Console.WriteLine("Invalid id entered, try again");
-                ConfirmationOfRequests();
-            }
-            else
-            {
-                Console.WriteLine("1) - Confirm a request");
-                Console.WriteLine("2) - Deny a request");
-                Console.WriteLine("x) - Exit");
-                string requestConfirmation = Console.ReadLine();
-                switch (requestConfirmation)
+                Console.WriteLine("Du you wish to review requests for changes[1] or " +
+                                  "requests for deletion[2](X-Exit)");
+                inp = Console.ReadLine();
+                if (inp != "1" || inp != "2")
                 {
-                    case "1":
-                        foreach (Request request in _manager.RequestManager.Requests)
+                    Console.WriteLine("Invalid Input, try again...");
+                }
+                else if (inp == "x" || inp == "X")
+                {
+                    break;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            switch (inp)
+            {
+                case "1":
+                    foreach (Requested req in _manager.RequestManager.Requested)
+                    {
+                        if (req.Operation == "1")
                         {
-                            if (requestId == request.id)
+                            Console.WriteLine("Patient: " + req.EmailPatient);
+                            Console.WriteLine("Old Time: " + req.StartTime);
+                            Console.WriteLine("New Time: " + req.NewTime);
+                            while (true)
                             {
-                                request.confirmed = 1;
-                                //status 1 - changing the appointment
-                                if (request.status == 1)
+                                Console.Write("Approve[y/n]: ");
+                                string opt = Console.ReadLine().ToLower();
+                                if (opt == "y")
                                 {
-                                    foreach (Appointment appointment in _manager.AppointmentManager.Appointments)
-                                    {
-                                        if (appointment.startTime == request.startTime &&
-                                            appointment.EndTime == request.endTime)
-                                        {
-                                            appointment.StartTime = request.changedStartTime;
-                                            appointment.EndTime = request.changedEndTime;
-                                        }
-                                    }
+                                    forChanging.Add(req);
                                 }
-                                else
-                                //status 2 - deleteing
+                            }
+
+                        }
+                    }
+                    ResolveApproved(forChanging);
+                    
+                    break;
+                case "2":
+                    foreach (Requested req in _manager.RequestManager.Requested)
+                    {
+                        if (req.Operation == "2")
+                        {
+                            Console.WriteLine("Patient: " + req.EmailPatient);
+                            Console.WriteLine("Start Time: " + req.StartTime);
+                            while (true)
+                            {
+                                Console.Write("Approve[y/n]: ");
+                                string opt = Console.ReadLine().ToLower();
+                                if (opt == "y")
                                 {
-                                    for (int i = 0; i < _manager.AppointmentManager.Appointments.Count; i++)
-                                    {
-                                        if (_manager.AppointmentManager.Appointments[i].startTime == request.startTime &&
-                                            _manager.AppointmentManager.Appointments[i].EndTime == request.endTime)
-                                        {
-                                            _manager.AppointmentManager.Appointments.Remove(_manager.AppointmentManager.Appointments[i]);
-                                        }
-                                    }
+                                    forDeletion.Add(req);
                                 }
                             }
                         }
-                        break;
-
-                    case "2":
-                        foreach (Request request in _manager.RequestManager.Requests)
-                        {
-                            if (requestId == request.id)
-                            {
-                                request.confirmed = 2;
-                            }
-                        }
-                        break;
-
-                    case "x":
-                        break;
-
-                    default:
-                        Console.WriteLine("Invalid option entered, try again");
-                        noChanges = 1;
-                        ConfirmationOfRequests();
-                        break;
-                }
-                if (noChanges == 0)
+                    }
+                    
+                    ResolveDeleted(forDeletion);
+                    break;
+                default:
+                    Console.WriteLine("Aborting...");
+                    break;
+            }
+            
+        } 
+        // 0-Zakazan, 1-Odradjen, 2-Obrisan
+        public void ResolveApproved(List<Requested> approved)
+        {
+            List<Appointment> appointmentList = _manager.AppointmentManager.Appointment;
+            foreach (Requested request in approved)
+            {
+                foreach (Appointment appointment in appointmentList)
                 {
-                    using (StreamWriter file = File.CreateText(_manager.AppointmentManager.requestFileName))
+                    if (request.EmailPatient == appointment.EmailPatient &&
+                        request.StartTime == appointment.StartTime)
                     {
-                        JsonSerializer serializer = new JsonSerializer();
-                        serializer.Formatting = Formatting.Indented;
-                        serializer.Serialize(file, _manager.AppointmentManager.Appointments);
+                        appointment.StartTime = request.NewTime;
+                        appointment.EndTime = request.NewTime.AddMinutes(15);
                     }
-                    using (StreamWriter file = File.CreateText(_manager.RequestManager.requestFileName))
-                    {
-                        JsonSerializer serializer = new JsonSerializer();
-                        serializer.Formatting = Formatting.Indented;
-                        serializer.Serialize(file, _manager.RequestManager.Requests);
-                    }
-                    Menu();
                 }
             }
-        } */
-       
-        
-        
+            
+        }
+        // 0-Zakazan, 1-Odradjen, 2-Obrisan
+        public void ResolveDeleted(List<Requested> deleted)
+        {
+            List<Appointment> appointmentList = _manager.AppointmentManager.Appointment;
+            foreach (Requested request in _manager.RequestManager.Requested)
+            {
+                foreach (Appointment appointment in appointmentList)
+                {
+                    if (appointment.EmailPatient == request.EmailPatient &&
+                        appointment.StartTime == request.StartTime)
+                    {
+                        appointment.Status= "2";
+                    }
+                }
+            }
+        }
     }
 }
