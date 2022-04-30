@@ -1,8 +1,5 @@
 using Usi_Projekat.Manage;
 using System;
-using System.Reflection;
-using System.Reflection.Metadata;
-using Usi_Projekat.IOController;
 using Usi_Projekat.Users;
 
 namespace Usi_Projekat.IOController
@@ -18,8 +15,13 @@ namespace Usi_Projekat.IOController
 
         public void PrintMenu()
         {
+
             while (true)
+            {
+
+                while (true)
                 {
+
                     Console.WriteLine("Enter email: ");
                     string enteredEmail = Console.ReadLine();
                     Console.WriteLine("Enter password: ");
@@ -27,15 +29,16 @@ namespace Usi_Projekat.IOController
                     Director director = _factory.DirectorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
                     if (director != null)
                     {
-                       // director.Menu();
+                        DirectorManager.Menu();
                         break;
                     }
 
-                    else {
+                    else
+                    {
                         Doctor doctor = _factory.DoctorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
                         if (doctor != null)
                         {
-                         //   doctor.Menu();
+                            //DoctorManager.Menu();
                             break;
                         }
 
@@ -44,13 +47,14 @@ namespace Usi_Projekat.IOController
                             Patient patient = _factory.PatientManager.CheckPersonalInfo(enteredEmail, enteredPassword);
                             if (patient != null)
                             {
-                             //   patient.Menu();
+                                //patient.Menu();
                                 break;
                             }
 
                             else
                             {
-                                Secretary secretary = _factory.SecretaryManager.CheckPersonalInfo(enteredEmail, enteredPassword);
+                                Secretary secretary =
+                                    _factory.SecretaryManager.CheckPersonalInfo(enteredEmail, enteredPassword);
                                 if (secretary != null)
                                 {
                                     _factory.SecretaryManager.Menu();
@@ -62,9 +66,11 @@ namespace Usi_Projekat.IOController
 
 
                     }
+
                     Console.WriteLine("Not valid email/password combination, try again");
                 }
 
+            }
         }
     }
 }

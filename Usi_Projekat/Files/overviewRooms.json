@@ -1,0 +1,39 @@
+[
+  {
+    "Tools": {
+      "Ekg": 1,
+      "Thermometer": 12
+    },
+    "Furniture": {
+      "Table": 5,
+      "Chair": 3
+    },
+    "Id": "op1",
+    "Name": "Soba za preglede 1"
+  },
+  {
+    "Tools": {
+      "Generator": 10,
+      "Stethoscope": 3
+    },
+    "Furniture": {
+      "Closet": 2,
+      "Bad": 40
+    },
+    "Id": "op2",
+    "Name": "Soba za preglede 2"
+  },
+  {
+    "Tools": {
+      "Monitor": 2,
+      "Xray": 1
+    },
+    "Furniture": {
+      "Table": 3,
+      "Chair": 5
+    },
+    "Id": "op3",
+    "Name": "Soba za preglede 3"
+  }
+
+]

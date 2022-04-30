@@ -1,28 +1,38 @@
+using System.Collections.Generic;
+
 namespace Usi_Projekat
+
 {
     public class OverviewRoom : HospitalRoom
     {
-        private MedicalEquipment _medicalEquipment;
-        
-        protected OverviewRoom(string id, string name) : base(id, name) {}
+        private Dictionary<MedicalTool, int> _tools;
 
-        public OverviewRoom(string id, string name, RoomFurniture furniture, MedicalEquipment medicalEquipment) : base(id, name, furniture)
+        public OverviewRoom()
         {
-            _medicalEquipment = medicalEquipment;
-        }
-        
-        protected OverviewRoom(string id, string name, MedicalEquipment medicalEquipment) : base(id, name)
-        {
-            _medicalEquipment = medicalEquipment;
+            _tools = new Dictionary<MedicalTool, int>();
         }
 
-        public MedicalEquipment MedicalEquipment
+        public OverviewRoom(string id, string name, Dictionary<Furniture, int> furniture) : base(id, name, furniture)
         {
-            get => _medicalEquipment;
-            set => _medicalEquipment = value;
+            _tools = new Dictionary<MedicalTool, int>();
         }
 
+        public OverviewRoom(Dictionary<MedicalTool, int> tools)
+        {
+            _tools = tools;
+        }
 
+        public OverviewRoom(string id, string name, Dictionary<MedicalTool, int> tools,  Dictionary<Furniture, int> furniture) 
+            : base(id, name, furniture)
+        {
+            _tools = tools;
+        }
+
+        public Dictionary<MedicalTool, int> Tools
+        {
+            get => _tools;
+            set => _tools = value;
+        }
     }
     
 }

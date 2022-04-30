@@ -4,37 +4,38 @@ namespace Usi_Projekat.Settings
 {
     public class FileSettings
     {
-        private string _doctorFilename;
-        private string _patientFilename;
-        private string _directorFilename;
-        private string _secretaryFilename;
+        private readonly string _doctorFilename;
+        private readonly string _patientFilename;
+        private readonly string _directorFilename;
+        private readonly string _secretaryFilename;
+        private readonly string _operatingRoomsFn;
+        private readonly string _overviewRoomsFn;
+        private readonly string _retiringRoomsFn;
 
-        public FileSettings(string doctorFilename, string patientFilename, string directorFilename, string secretaryFilename)
+        public FileSettings(string doctorFilename, string patientFilename, string directorFilename, 
+            string secretaryFilename,string operatingRoomsFn, string overviewRoomsFn, string retiringRoomsFn)
         {
             _doctorFilename = doctorFilename;
             _patientFilename = patientFilename;
             _directorFilename = directorFilename;
             _secretaryFilename = secretaryFilename;
+            _operatingRoomsFn = operatingRoomsFn;
+            _overviewRoomsFn = overviewRoomsFn;
+            _retiringRoomsFn = retiringRoomsFn;
         }
 
-        public string DoctorFilename
-        {
-            get => _doctorFilename;
-        }
+        public string OperatingRoomsFn => _operatingRoomsFn;
 
-        public string PatientFilename
-        {
-            get => _patientFilename;
-        }
+        public string OverviewRoomsFn => _overviewRoomsFn;
 
-        public string DirectorFilename
-        {
-            get => _directorFilename;
-        }
+        public string RetiringRoomsFn => _retiringRoomsFn;
 
-        public string SecretaryFilename
-        {
-            get => _secretaryFilename;
-        }
+        public string DoctorFilename => _doctorFilename;
+
+        public string PatientFilename => _patientFilename;
+
+        public string DirectorFilename => _directorFilename;
+
+        public string SecretaryFilename => _secretaryFilename;
     }
 }

@@ -9,13 +9,19 @@ namespace Usi_Projekat
     {
         static void Main(string[] args)
         {
+
             
-            FileSettings fileSettings = new FileSettings("../../../Files/doctors.json", "../../../Files/patients.json",
-                "../../../Files/director.json", "../../../Files/secretaries.json");
-            Factory factory = new Factory(fileSettings);
-            factory.LoadData();
-            CheckInfo checkInfo = new CheckInfo(factory);
-            checkInfo.PrintMenu();
+            //
+           FileSettings fileSettings = new FileSettings("../../../Files/doctors.json", "../../../Files/patients.json",
+               "../../../Files/director.json", "../../../Files/secretaries.json",
+               "../../../Files/operatingRooms.json", "../../../Files/overviewRooms.json",
+               "../../../Files/retiringRooms.json");
+           Factory factory = new Factory(fileSettings);
+           factory.LoadData();
+           CheckInfo checkInfo = new CheckInfo(factory);
+           checkInfo.PrintMenu();
+
+           
         }
     }
 }

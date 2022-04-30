@@ -1,41 +1,52 @@
+using System.Collections.Generic;
+
 namespace Usi_Projekat
 {
     public class HospitalRoom
     {
-        private readonly string _id;
+        private string _id;
         private string _name;
-        private RoomFurniture _furniture;
+        private Dictionary<Furniture, int> _furniture;
+        
+        public HospitalRoom()
+        {
+            _id = "";
+            _name = "";
+            _furniture = new Dictionary<Furniture, int>();
+            
+        }
+        public Dictionary<Furniture, int> Furniture
+        {
+            get => _furniture;
+            set => _furniture = value;
+        }
 
-
-        public HospitalRoom(string id, string name, RoomFurniture furniture)
+        public HospitalRoom(string id, string name, Dictionary<Furniture, int> furniture)
         {
             _id = id;
             _name = name;
             _furniture = furniture;
         }
 
-        public RoomFurniture Furniture
+        public HospitalRoom(string id, string name)
         {
-            get => _furniture;
-            set => _furniture = value;
+            _id = id;
+            _name = name;
+            _furniture = new Dictionary<Furniture, int>();
         }
 
-        public string Id => _id;
+        public string Id
+        {
+            get => _id;
+            set =>_id = value;
+        }
+        
+        
         public string Name
         {
             get => _name;
             set => _name = value;
         }
-
-        protected HospitalRoom()
-        {
-            _furniture = new RoomFurniture();
-        }
-        protected HospitalRoom(string id, string name)
-        {
-            _id = id;
-            _name = name;
-            _furniture = new RoomFurniture();
-        }
+        
     }
 }
