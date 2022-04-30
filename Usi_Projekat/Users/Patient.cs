@@ -11,6 +11,7 @@ namespace Usi_Projekat.Users
             this.medicalRecord = medicalRecord;
         
         }
+        
         public int Blocked
         {
             get => blocked;

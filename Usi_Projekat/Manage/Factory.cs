@@ -32,6 +32,12 @@ namespace Usi_Projekat.Manage
             _secretaryManager.LoadData();
             _doctorManager.LoadData();
             _roomManager.LoadData();
+            
+            _directorManager.LoadData();
+            _patientManager.LoadData();
+            _secretaryManager.LoadData();
+            _doctorManager.LoadData();
+            _roomManager.LoadData();
 
         }
 

@@ -11,6 +11,5 @@ namespace Usi_Projekat.Users
             : base(email, password, name, lastName, address, phone, Role.Secretary)
         {
         }
-        
-}
+    }
     }

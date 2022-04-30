@@ -9,10 +9,7 @@ namespace Usi_Projekat
     {
         static void Main(string[] args)
         {
-
-            
-            //
-           FileSettings fileSettings = new FileSettings("../../../Files/doctors.json", "../../../Files/patients.json",
+            FileSettings fileSettings = new FileSettings("../../../Files/doctors.json", "../../../Files/patients.json",
                "../../../Files/director.json", "../../../Files/secretaries.json",
                "../../../Files/operatingRooms.json", "../../../Files/overviewRooms.json",
                "../../../Files/retiringRooms.json");
@@ -20,8 +17,6 @@ namespace Usi_Projekat
            factory.LoadData();
            CheckInfo checkInfo = new CheckInfo(factory);
            checkInfo.PrintMenu();
-
-           
         }
     }
 }

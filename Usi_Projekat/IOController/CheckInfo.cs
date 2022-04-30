@@ -21,55 +21,59 @@ namespace Usi_Projekat.IOController
 
                 while (true)
                 {
-
-                    Console.WriteLine("Enter email: ");
-                    string enteredEmail = Console.ReadLine();
-                    Console.WriteLine("Enter password: ");
-                    string enteredPassword = Console.ReadLine();
-                    Director director = _factory.DirectorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
-                    if (director != null)
+                    while (true)
                     {
-                        DirectorManager.Menu();
-                        break;
-                    }
 
-                    else
-                    {
-                        Doctor doctor = _factory.DoctorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
-                        if (doctor != null)
+                        Console.WriteLine("Enter email: ");
+                        string enteredEmail = Console.ReadLine();
+                        Console.WriteLine("Enter password: ");
+                        string enteredPassword = Console.ReadLine();
+                        Director director = _factory.DirectorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
+                        if (director != null)
                         {
-                            //DoctorManager.Menu();
+                            DirectorManager.Menu();
                             break;
                         }
 
                         else
                         {
-                            Patient patient = _factory.PatientManager.CheckPersonalInfo(enteredEmail, enteredPassword);
-                            if (patient != null)
+                            Doctor doctor = _factory.DoctorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
+                            if (doctor != null)
                             {
-                                //patient.Menu();
+                                //DoctorManager.Menu();
                                 break;
                             }
 
                             else
                             {
-                                Secretary secretary =
-                                    _factory.SecretaryManager.CheckPersonalInfo(enteredEmail, enteredPassword);
-                                if (secretary != null)
+                                Patient patient =
+                                    _factory.PatientManager.CheckPersonalInfo(enteredEmail, enteredPassword);
+                                if (patient != null)
                                 {
-                                    _factory.SecretaryManager.Menu();
+                                    //patient.Menu();
                                     break;
                                 }
+
+                                else
+                                {
+                                    Secretary secretary =
+                                        _factory.SecretaryManager.CheckPersonalInfo(enteredEmail, enteredPassword);
+                                    if (secretary != null)
+                                    {
+                                        _factory.SecretaryManager.Menu();
+                                        break;
+                                    }
+                                }
+
                             }
+
 
                         }
 
-
+                        Console.WriteLine("Not valid email/password combination, try again");
                     }
 
-                    Console.WriteLine("Not valid email/password combination, try again");
                 }
-
             }
         }
     }
