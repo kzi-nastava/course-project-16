@@ -1,0 +1,27 @@
+{
+  "SurgeryEquipment": {
+    "Clamps": 46,
+    "Defibrillator": 13,
+    "Lamp": 53,
+    "Scalpels": 67,
+    "Scissors": 72,
+    "Table": 39,
+    "CottonWool": 350
+  },
+  "MedicalEquipment": {
+    "Ekg": 20,
+    "Generator": 30,
+    "Monitor": 15,
+    "Stethoscope": 40,
+    "Thermometer": 45,
+    "Xray": 16
+  },
+  "Furniture": {
+    "Bad": 300,
+    "Chair": 600,
+    "Closet": 50,
+    "Table": 124
+  },
+  "Id": "MAG",
+  "Name": "Stock room"
+}

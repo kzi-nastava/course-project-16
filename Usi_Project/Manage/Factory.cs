@@ -66,7 +66,7 @@ namespace Usi_Project.Manage
             _patientManager.LoadData();
             _secretaryManager.LoadData();
             _doctorManager.LoadData();
-            //_roomManager.LoadData();
+            _roomManager.LoadData();
             _appointmentManager.LoadData();
             _anamnesaManager.LoadData();
             _requestManager.LoadData();

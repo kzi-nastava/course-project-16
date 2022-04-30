@@ -1,0 +1,11 @@
+[
+  {
+    "MedicalDict": {
+      "Xray": 2
+    },
+    "SurgeryDict": {},
+    "FurnitureDict": {},
+    "DateTime": "2022-04-30T22:40:00",
+    "IdRoom": "B1"
+  }
+]
