@@ -429,7 +429,7 @@ namespace Usi_Project.Manage
             }
         }
         
-         void ConfirmationOfRequests()
+      /*   void ConfirmationOfRequests()
         {
             int noChanges = 0;
             foreach (Request request in _manager.RequestManager.Requests)
@@ -530,7 +530,7 @@ namespace Usi_Project.Manage
                     Menu();
                 }
             }
-        } 
+        } */
        
         
         
