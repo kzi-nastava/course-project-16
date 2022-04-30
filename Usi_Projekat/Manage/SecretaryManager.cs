@@ -429,12 +429,15 @@ namespace Usi_Projekat.Manage
             }
         }
         
-       /*  void ConfirmationOfRequests()
+         void ConfirmationOfRequests()
         {
             int noChanges = 0;
             foreach (Request request in _manager.RequestManager.Requests)
             {
-                Console.WriteLine(request.id);
+            (if request.confirmed == 0)
+            {
+                Console.WriteLine("request id: " + request.id);
+            }
             }
             Console.WriteLine("Enter id (x for exit) of the request you want to confirm/deny:");
             string requestId = Console.ReadLine();
@@ -443,6 +446,7 @@ namespace Usi_Projekat.Manage
                 Menu();
             }
             else if (!_manager.RequestManager.CheckId(requestId))
+                //checkId(requestId) should check if request.confirmed is 0 too
             {
                 Console.WriteLine("Invalid id entered, try again");
                 ConfirmationOfRequests();
@@ -461,6 +465,31 @@ namespace Usi_Projekat.Manage
                             if (requestId == request.id)
                             {
                                 request.confirmed = 1;
+                                //status 1 - changing the appointment
+                                if (request.status == 1)
+                                {
+                                    foreach (Appointment appointment in _manager.AppointmentManager.Appointments)
+                                    {
+                                        if (appointment.startTime == request.startTime &&
+                                            appointment.EndTime == request.endTime)
+                                        {
+                                            appointment.StartTime = request.changedStartTime;
+                                            appointment.EndTime = request.changedEndTime;
+                                        }
+                                    }
+                                }
+                                else
+                                //status 2 - deleteing
+                                {
+                                    for (int i = 0; i < _manager.AppointmentManager.Appointments.Count; i++)
+                                    {
+                                        if (_manager.AppointmentManager.Appointments[i].startTime == request.startTime &&
+                                            _manager.AppointmentManager.Appointments[i].EndTime == request.endTime)
+                                        {
+                                            _manager.AppointmentManager.Appointments.Remove(_manager.AppointmentManager.Appointments[i]);
+                                        }
+                                    }
+                                }
                             }
                         }
                         break;
@@ -486,6 +515,12 @@ namespace Usi_Projekat.Manage
                 }
                 if (noChanges == 0)
                 {
+                    using (StreamWriter file = File.CreateText(_manager.AppointmentManager.requestFileName))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        serializer.Formatting = Formatting.Indented;
+                        serializer.Serialize(file, _manager.AppointmentManager.Appointments);
+                    }
                     using (StreamWriter file = File.CreateText(_manager.RequestManager.requestFileName))
                     {
                         JsonSerializer serializer = new JsonSerializer();
@@ -495,7 +530,8 @@ namespace Usi_Projekat.Manage
                     Menu();
                 }
             }
-        } */
+        } 
+       
         
         
     }
