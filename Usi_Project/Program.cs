@@ -27,6 +27,7 @@ namespace Usi_Project
             CheckInfo checkInfo = new CheckInfo(factory);
             checkInfo.PrintMenu();
             int x = 2;
+            int y = 2;
         }
     }
 }
