@@ -110,6 +110,7 @@ namespace Usi_Project.Manage
 //                        break;
                     case "x":
                         Console.WriteLine("Loging Out...");
+                        
                         flagIner = false;
                         break;
                     default:
