@@ -36,7 +36,7 @@ namespace Usi_Project.IOController
                         if (director != null)
                         {
                             DirectorManager.Menu();
-                            break;
+                            return;
                         }
                         
                         Doctor doctor =

@@ -676,6 +676,7 @@ namespace Usi_Project.Manage
 
                 op.PrintSurgeryEquipments(eq, option);
                 op.PrintFurniture(eq, option);
+
             }
         }
 
