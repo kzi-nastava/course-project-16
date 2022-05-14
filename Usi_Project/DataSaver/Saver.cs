@@ -50,6 +50,8 @@ namespace Usi_Project.DataSaver
                 serializer.Serialize(file, anamnesas);
             }
         }
+
+      
         
     }
 }

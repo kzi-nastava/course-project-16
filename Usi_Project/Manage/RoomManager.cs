@@ -64,6 +64,38 @@ namespace Usi_Project.Manage
             _stockRoom = JsonConvert.DeserializeObject<StockRoom>(File.ReadAllText(_stockRoomFn), json);
         }
 
+        public void SaveData()
+        {
+            using (StreamWriter file = File.CreateText(_overviewRoomsFn))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, _overviewRooms);
+            }
+            
+            using (StreamWriter file = File.CreateText(_operatingRoomsFn))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, _operatingRooms);
+            }
+            
+            using (StreamWriter file = File.CreateText(_retiringRoomsFn))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, _retiringRooms);
+            }
+            
+            using (StreamWriter file = File.CreateText(_stockRoomFn))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, _stockRoom);
+            }
+            
+        }
+
         public OperatingRoom OperatingRoomById(string id)
         {
             foreach (var room in _operatingRooms)
