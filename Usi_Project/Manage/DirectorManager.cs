@@ -81,7 +81,7 @@ namespace Usi_Project.Manage
                         break;
                     case "4":
                         _factory.TimerManager.RefreshEquipments();
-                        CheckIfRenovationIsEnded();
+                        _factory.DirectorManager.CheckIfRenovationIsEnded();
                         break;
                     case "5":
                         RoomRenovation();
@@ -174,7 +174,288 @@ namespace Usi_Project.Manage
                 case 1:
                     ChooseRoomForDividing();
                     break;
+                case 2:
+                    ChooseRoomsForMerging();
+                    break;
             }
+        }
+
+        private static void PrintMenuForMergingRooms()
+        {
+            Console.WriteLine("Choose type of hospital room for merging: ");
+            Console.WriteLine("1) Merge rooms of same type");
+            Console.WriteLine("2) Merge operating room with retiring room");
+            Console.WriteLine("3) Merge operating room with overview room");
+            Console.WriteLine("4) Merge overview room with retiring room");
+            Console.WriteLine(">> ");
+        }
+
+        private static void ChooseRoomsForMerging()
+        {
+            PrintMenuForMergingRooms();
+            int choiseRoom = Int32.Parse(Console.ReadLine());
+            switch (choiseRoom)
+            {
+                case 1:
+                    MergeRoomsOfSameType();
+                    break;
+                case 2:
+                    Console.WriteLine("\nChoose operating room\n");
+                    OperatingRoom operatingRoom = _factory.RoomManager.FindOperatingRoom();
+                    Console.WriteLine("\nChoose  retiring room\n");
+                    RetiringRoom retiringRoom = _factory.RoomManager.FindRetiringRoom();
+                    MergeOperatingAndRetiringRoom(operatingRoom, retiringRoom);
+                    break;
+                case 4:
+                    Console.WriteLine("\nChoose  retiring room\n");
+                    retiringRoom = _factory.RoomManager.FindRetiringRoom();
+                    Console.WriteLine("\nChoose overview room\n");
+                    OverviewRoom overviewRoom = _factory.RoomManager.FindOverviewRoom();
+                    MergeRetiringRoomAndOverviewRoom(retiringRoom, overviewRoom);
+                    break;
+                case 3:
+                    Console.WriteLine("\nChoose  operating room\n");
+                    operatingRoom = _factory.RoomManager.FindOperatingRoom();
+                    Console.WriteLine("\nChoose overview room\n");
+                    overviewRoom = _factory.RoomManager.FindOverviewRoom();
+                    MergeOperatingAndOverviewRoom(operatingRoom, overviewRoom);
+                    break;
+                    
+                    
+            }
+        }
+
+        private static void MergeRoomsOfSameType()
+        {
+            Console.WriteLine("1) Merge into new Operating room");
+            Console.WriteLine("2) Merge into new Overview room");
+            Console.WriteLine("3) Merge into new Retiring room");
+            Console.WriteLine(">> ");
+            int choiseRoom = Int32.Parse(Console.ReadLine());
+            switch (choiseRoom)
+            {
+                case 1:
+                    MergeOperatingRooms();
+                    break;
+                case 2:
+                    MergeOverviewRooms();
+                    break;
+                case 3:
+                    MergeRetiringRooms();
+                    break;
+            }
+        }
+
+        private static void MergeOperatingRooms()
+        {
+            Console.WriteLine("\nChoose first operating room\n");
+            OperatingRoom first = _factory.RoomManager.FindOperatingRoom();
+            Console.WriteLine("\nChoose second operating room\n");
+            OperatingRoom second = _factory.RoomManager.FindOperatingRoom();
+            if (first.Id == second.Id)
+            {
+                Console.WriteLine("Input two different rooms!");
+                return;
+            }
+
+            Console.WriteLine("\nCreating new operating room\n");
+            OperatingRoom newOperatingRoom = CreateOperatingRoom();
+            newOperatingRoom.SurgeryEquipments =  MergeSurgeryEquipments(first, second);
+            newOperatingRoom.Furniture = MergeFurniture(first, second);
+            _factory.RoomManager.OperatingRooms.Add(newOperatingRoom);
+            _factory.RoomManager.OperatingRooms.Remove(first);
+            _factory.RoomManager.OperatingRooms.Remove(second);
+
+        }
+
+        private static Dictionary<SurgeryTool, int> MergeSurgeryEquipments(OperatingRoom first, OperatingRoom second)
+        {
+            Dictionary<SurgeryTool, int> ret = new Dictionary<SurgeryTool, int>();
+            foreach (var tool in first.SurgeryEquipments)
+            {
+                ret[tool.Key] = tool.Value;
+            }
+            foreach (var tool in second.SurgeryEquipments)
+            {
+                if (!ret.ContainsKey(tool.Key))
+                    ret[tool.Key] = tool.Value;
+                ret[tool.Key] += tool.Value;
+            }
+
+            return ret;
+        }
+
+        private static void MergeRetiringRooms()
+        {
+            
+        }
+
+        private static void MergeOverviewRooms()
+        {
+            Console.WriteLine("\nChoose first overview room\n");
+            OverviewRoom first = _factory.RoomManager.FindOverviewRoom();
+            Console.WriteLine("\nChoose second overview room\n");
+            OverviewRoom second = _factory.RoomManager.FindOverviewRoom();
+            if (first.Id == second.Id)
+            {
+                Console.WriteLine("Input two different rooms!");
+                return;
+            }
+
+            Console.WriteLine("\nCreating new overview room\n");
+            OverviewRoom newOverviewRoom = CreateOverviewRoom();
+            newOverviewRoom.Tools =  MergeMedicalEquipments(first, second);
+            newOverviewRoom.Furniture = MergeFurniture(first, second);
+            _factory.RoomManager.OverviewRooms.Add(newOverviewRoom);
+            _factory.RoomManager.OverviewRooms.Remove(first);
+            _factory.RoomManager.OverviewRooms.Remove(second);
+            
+        }
+
+        private static Dictionary<MedicalTool, int> MergeMedicalEquipments(OverviewRoom first, OverviewRoom second)
+        {
+            Dictionary<MedicalTool, int> ret = new Dictionary<MedicalTool, int>();
+            foreach (var tool in first.Tools)
+            {
+                ret[tool.Key] = tool.Value;
+            }
+            foreach (var tool in second.Tools)
+            {
+                if (!ret.ContainsKey(tool.Key))
+                    ret[tool.Key] = tool.Value;
+                ret[tool.Key] += tool.Value;
+            }
+
+            return ret;
+            
+        }
+        private static void MergeOperatingAndOverviewRoom(OperatingRoom operatingRoom, OverviewRoom overviewRoom)
+        {
+            
+            Console.WriteLine("1) Merge into new Operating room");
+            Console.WriteLine("2) Merge into new Overview room");
+            Console.WriteLine(">> ");
+            int choiseRoom = Int32.Parse(Console.ReadLine());
+            switch (choiseRoom)
+            {
+                case 1:
+                    OperatingRoom newOperatingRoom = CreateOperatingRoom();
+                    newOperatingRoom.SurgeryEquipments = operatingRoom.SurgeryEquipments;
+                    newOperatingRoom.Furniture = MergeFurniture(operatingRoom, overviewRoom);
+                    SendMedicalEquipmentToStockRoom(overviewRoom);
+                    Console.WriteLine("Medical Equipments from overview room send to Stock Room.");
+                    _factory.RoomManager.OperatingRooms.Add(newOperatingRoom);
+                    break;
+                case 2:
+                    OverviewRoom newOverviewRoom = CreateOverviewRoom();
+                    newOverviewRoom.Tools = overviewRoom.Tools;
+                    newOverviewRoom.Furniture = MergeFurniture(operatingRoom, overviewRoom);
+                    SendSurgeryEquipmentToStockRoom(operatingRoom);
+                    Console.WriteLine("Surgery Equipments from overview room send to Stock Room.");
+                    _factory.RoomManager.OverviewRooms.Add(newOverviewRoom);
+                    break;
+            }
+            _factory.RoomManager.OverviewRooms.Remove(overviewRoom);
+            _factory.RoomManager.OperatingRooms.Remove(operatingRoom);
+        }
+
+        private static void SendSurgeryEquipmentToStockRoom(OperatingRoom operatingRoom)
+        {
+            foreach (var tool in operatingRoom.SurgeryEquipments)
+            {
+                if (!_factory.RoomManager.StockRoom.SurgeryEquipment.ContainsKey(tool.Key))
+                {
+                    _factory.RoomManager.StockRoom.SurgeryEquipment[tool.Key] = tool.Value;
+                }
+                _factory.RoomManager.StockRoom.SurgeryEquipment[tool.Key] += tool.Value;
+            }
+        }
+
+        private static void SendMedicalEquipmentToStockRoom(OverviewRoom overviewRoom)
+        {
+            foreach (var tool in overviewRoom.Tools)
+            {
+                if (!_factory.RoomManager.StockRoom.MedicalEquipment.ContainsKey(tool.Key))
+                {
+                    _factory.RoomManager.StockRoom.MedicalEquipment[tool.Key] = tool.Value;
+                }
+                _factory.RoomManager.StockRoom.MedicalEquipment[tool.Key] += tool.Value;
+            }
+        }
+
+        private static  Dictionary<Furniture,int> MergeFurniture(HospitalRoom hospitalRoom1, HospitalRoom hospitalRoom2)
+        {
+            Dictionary<Furniture, int> ret = new Dictionary<Furniture, int>();
+            foreach (var tool in hospitalRoom1.Furniture)
+            {
+                ret[tool.Key] = tool.Value;
+            }
+            foreach (var tool in hospitalRoom2.Furniture)
+            {
+                if (!ret.ContainsKey(tool.Key))
+                    ret[tool.Key] = tool.Value;
+                ret[tool.Key] += tool.Value;
+            }
+
+            return ret;
+            
+        }
+
+        private static void  MergeRetiringRoomAndOverviewRoom(RetiringRoom retiringRoom, OverviewRoom overviewRoom)
+        {
+
+            Console.WriteLine("1) Merge into new Retiring room");
+            Console.WriteLine("2) Merge into new Overview room");
+            Console.WriteLine(">> ");
+            int choiseRoom = Int32.Parse(Console.ReadLine());
+            switch (choiseRoom)
+            {
+                case 1:
+                    RetiringRoom newRetiringRoom = CreateRetiringRoom();
+                    newRetiringRoom.Furniture = MergeFurniture(retiringRoom, overviewRoom);
+                    SendMedicalEquipmentToStockRoom(overviewRoom);
+                    Console.WriteLine("Medical Equipments from overview room send to Stock Room.");
+                    _factory.RoomManager.RetiringRooms.Add(newRetiringRoom);
+                    break;
+                case 2:
+                    OverviewRoom newOverviewRoom = CreateOverviewRoom();
+                    newOverviewRoom.Tools = overviewRoom.Tools;
+                    newOverviewRoom.Furniture = MergeFurniture(retiringRoom, overviewRoom); ;
+                    _factory.RoomManager.OverviewRooms.Add(newOverviewRoom);
+                    break;
+            }
+            _factory.RoomManager.OverviewRooms.Remove(overviewRoom);
+            _factory.RoomManager.RetiringRooms.Remove(retiringRoom);
+            
+        }
+
+        private static void MergeOperatingAndRetiringRoom(OperatingRoom operatingRoom, RetiringRoom retiringRoom)
+        {
+            
+            Console.WriteLine("1) Merge into new Retiring room");
+            Console.WriteLine("2) Merge into new Operating room");
+            Console.WriteLine(">> ");
+            int choiseRoom = Int32.Parse(Console.ReadLine());
+            switch (choiseRoom)
+            {
+                case 1:
+                    RetiringRoom newRetiringRoom = CreateRetiringRoom();
+                    newRetiringRoom.Furniture = MergeFurniture(retiringRoom, operatingRoom);
+                    SendSurgeryEquipmentToStockRoom(operatingRoom);
+                    Console.WriteLine("Surgery Equipments from operating room send to Stock Room.");
+                    _factory.RoomManager.RetiringRooms.Add(newRetiringRoom);
+                    break;
+                case 2:
+                    OperatingRoom newOperatingRoom = CreateOperatingRoom();
+                    newOperatingRoom.Furniture = MergeFurniture(retiringRoom, operatingRoom);
+                    newOperatingRoom.SurgeryEquipments = operatingRoom.SurgeryEquipments;
+                    _factory.RoomManager.OperatingRooms.Add(newOperatingRoom);
+                    break;
+            }
+
+            _factory.RoomManager.OperatingRooms.Remove(operatingRoom);
+            _factory.RoomManager.RetiringRooms.Remove(retiringRoom);
+            
         }
 
         private static void ChooseRoomForDividing()
@@ -530,6 +811,7 @@ namespace Usi_Project.Manage
             Console.WriteLine("Choose one of the options below: ");
             Console.WriteLine("1. View Operating rooms");
             Console.WriteLine("2. View Overview rooms");
+            Console.WriteLine("3. View Retiring rooms");
             Console.WriteLine("3. View Stock room");
             Console.Write(">> ");
             string option = Console.ReadLine();
@@ -542,30 +824,32 @@ namespace Usi_Project.Manage
                     factory.RoomManager.ViewOverviewRooms(factory.RoomManager.FindOverviewRoom());
                     break;
                 case "3":
+                    factory.RoomManager.ViewRetiringRoom(factory.RoomManager.FindRetiringRoom());
+                    break;
+                case "4":
                     break;
             }
         }
 
-        public static  void CheckIfRenovationIsEnded()
+        public  void CheckIfRenovationIsEnded()
         {
-            while (true)
+
+            foreach (var operatingRoom in _factory.RoomManager.OperatingRooms.ToList())
             {
-                foreach (var operatingRoom in _factory.RoomManager.OperatingRooms.ToList())
-                {
-                    if (DateTime.Now >= operatingRoom.TimeOfRenovation.Value)
-                        operatingRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>();
-                }
-                foreach (var overviewRoom in _factory.RoomManager.OverviewRooms.ToList())
-                {
-                    if (DateTime.Now >= overviewRoom.TimeOfRenovation.Value)
-                        overviewRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>();
-                }
-                foreach (var retiringRoom in _factory.RoomManager.RetiringRooms.ToList())
-                {
-                    if (DateTime.Now >= retiringRoom.TimeOfRenovation.Value)
-                        retiringRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>();
-                }
+                if (DateTime.Now >= operatingRoom.TimeOfRenovation.Value)
+                    operatingRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>();
             }
+            foreach (var overviewRoom in _factory.RoomManager.OverviewRooms.ToList())
+            {
+                if (DateTime.Now >= overviewRoom.TimeOfRenovation.Value)
+                    overviewRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>();
+            }
+            foreach (var retiringRoom in _factory.RoomManager.RetiringRooms.ToList())
+            {
+                if (DateTime.Now >= retiringRoom.TimeOfRenovation.Value)
+                    retiringRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>();
+            }
+            
         }
 
         public Director CheckPersonalInfo(string email, string password) =>
