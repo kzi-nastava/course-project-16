@@ -5,10 +5,8 @@ namespace Usi_Project
 {
     public class StockRoom : HospitalRoom
     {
-        
         private Dictionary<SurgeryTool, int> _surgeryEquipment;
         private Dictionary<MedicalTool, int> _medicalEquipment;
-
         public StockRoom()
         {
             _surgeryEquipment = new Dictionary<SurgeryTool, int>();
@@ -23,11 +21,12 @@ namespace Usi_Project
         }
 
         public StockRoom(string id, string name, Dictionary<Furniture, int> furniture,
-            Dictionary<SurgeryTool, int> surgeryEquipment, Dictionary<MedicalTool, int> medicalEquipment) : base(id, name, furniture )
+            Dictionary<SurgeryTool, int> surgeryEquipment, Dictionary<MedicalTool, int> medicalEquipment) : base(id,
+            name, furniture)
         {
             _surgeryEquipment = surgeryEquipment;
             _medicalEquipment = medicalEquipment;
-            
+
         }
 
         public StockRoom(Dictionary<SurgeryTool, int> surgeryEquipment, Dictionary<MedicalTool, int> medicalEquipment)
@@ -48,29 +47,70 @@ namespace Usi_Project
             set => _medicalEquipment = value;
         }
 
-        public StockRoom(string id, string name, Dictionary<SurgeryTool, int> surgeryEquipment, Dictionary<MedicalTool, int> medicalEquipment) : base(id, name)
+        public StockRoom(string id, string name, Dictionary<SurgeryTool, int> surgeryEquipment,
+            Dictionary<MedicalTool, int> medicalEquipment) : base(id, name)
         {
             _surgeryEquipment = surgeryEquipment;
             _medicalEquipment = medicalEquipment;
         }
-        public void printRoom()
+
+        public override void PrintRoom()
         {
-            Console.WriteLine("=========================");
-            Console.WriteLine("ID: " + Id); 
-            Console.WriteLine("Name: " + Name);
+            base.PrintRoom();
             Console.WriteLine("Medical Equipments:");
+            Console.WriteLine("-------------------------");
             foreach (var tools in _medicalEquipment)
-            {
                 Console.WriteLine("\t" + tools.Key + ": " + tools.Value);
-            }
-            Console.WriteLine("Furniture:");
-            foreach (var tools in Furniture)
-                Console.WriteLine("\t" + tools.Key + ": " + tools.Value);
-            
+            foreach (var surgeryTools in _surgeryEquipment)
+                Console.WriteLine("\t" + surgeryTools.Key + ": " + surgeryTools.Value);
             Console.WriteLine("=========================");
-  
-            
         }
-        
+
+        public void PrintMedicalEquipment(string equipment, int parameterOfSearch)
+        {
+            foreach (var dictionary in MedicalEquipment)
+            {
+                if (parameterOfSearch == 1)
+                {
+                    if (dictionary.Value == 0 && dictionary.Key.ToString().ToLower().Contains(equipment))
+                        Console.WriteLine(dictionary.Key + " : " + dictionary.Value);
+                }
+                else if (parameterOfSearch == 2)
+                {
+                    if (dictionary.Value <= 10 && dictionary.Value >= 0 &&
+                        dictionary.Key.ToString().ToLower().Contains(equipment))
+                        Console.WriteLine(dictionary.Key + " : " + dictionary.Value);
+                }
+                else if (parameterOfSearch == 3)
+                {
+                    if (dictionary.Value > 10 && dictionary.Key.ToString().ToLower().Contains(equipment))
+                        Console.WriteLine(dictionary.Key + " : " + dictionary.Value);
+                }
+            }
+        }
+
+        public void PrintSurgeryEquipment(string equipment, int parameterOfSearch)
+        {
+            foreach (var dictionary in SurgeryEquipment)
+            {
+                if (parameterOfSearch == 1)
+                {
+                    if (dictionary.Value == 0 && dictionary.Key.ToString().ToLower().Contains(equipment))
+                        Console.WriteLine(dictionary.Key + " : " + dictionary.Value);
+                }
+                else if (parameterOfSearch == 2)
+                {
+                    if (dictionary.Value <= 10 && dictionary.Value >= 0 &&
+                        dictionary.Key.ToString().ToLower().Contains(equipment))
+                        Console.WriteLine(dictionary.Key + " : " + dictionary.Value);
+                }
+                else if (parameterOfSearch == 3)
+                {
+                    if (dictionary.Value > 10 && dictionary.Key.ToString().ToLower().Contains(equipment))
+                        Console.WriteLine(dictionary.Key + " : " + dictionary.Value);
+                }
+            }
+
+        }
     }
 }

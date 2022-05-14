@@ -66,9 +66,9 @@ namespace Usi_Project.Manage
         }
         public void Menu(Patient patient)
         {
-            bool flag, flagIner = true;
-            flag = AntiTroll(patient);
-            while (flag && flagIner)
+            bool flagOut, flagInner = true;
+            flagOut = AntiTroll(patient);
+            while (flagOut && flagInner)
             {
                 string inp;
                 Console.Clear();
@@ -96,9 +96,9 @@ namespace Usi_Project.Manage
                     case "3":
                         UpdateAppointment(patient);
                         break;
-//                    case "4":
-//                        PatientHistory();
-//                        break;
+                    case "4":
+                        PatientHistory(patient);
+                        break;
 //                    case "5":
 //                        SearchDoctors();
 //                        break;
@@ -109,7 +109,7 @@ namespace Usi_Project.Manage
 //                        FillSurvey();
 //                        break;
                     case "x":
-                        Console.WriteLine("Loging Out...");
+                        Console.WriteLine("Loging Out...");                       
                         flagIner = false;
                         break;
                     default:
@@ -117,11 +117,94 @@ namespace Usi_Project.Manage
                         break;
                 }
 
-                flag = AntiTroll(patient);
+                flagOut = AntiTroll(patient);
             }
         }
 
-        public bool CheckBlockedStatus(Patient patient)
+        public void PatientHistoryMenu(Patient patient)
+        {
+            bool flag = true;
+            while (flag)
+            {
+                string inp;
+                Console.WriteLine("************************");
+                Console.WriteLine("*     History Menu     *");
+                Console.WriteLine("* [1] Show All History *");
+                Console.WriteLine("* [2] Search History   *");
+                Console.WriteLine("* [X] For aborting     *");
+                Console.WriteLine("************************");
+                Console.Write("Your input: ");
+                inp = Console.ReadLine();
+                if (inp == "X")
+                    inp = inp.ToLower();
+                switch (inp)
+                {
+                    case "1":
+                        PatientHistory(patient);
+                        break;
+                    case "2":
+                        SearchPatientHistory(patient);
+                        break;
+                    case "x":
+                        flag = false;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid Input, try again...");
+                        break;
+                }
+
+            }
+        }
+
+        private void PatientHistory(Patient patient)
+        {
+            List<Anamnesa> li = _factory.AnamnesaManager.ResolveAnamnesisForEmail(patient.email, 1);
+            Console.WriteLine("**************************");
+            Console.WriteLine("List of Anamnesis:");
+            foreach (Anamnesa anamnesa in li)
+            {
+                Console.WriteLine(anamnesa.ToString());
+            }
+
+            string inp;
+            Console.Write("Do You Wish To Sort Anamnese[Y/N]: ");
+            inp = Console.ReadLine();
+            if (inp.ToLower() == "y")
+            {
+                li.Sort(delegate(Anamnesa x, Anamnesa y) { return x.EmailDoctor.CompareTo(y.EmailDoctor);});
+                foreach (Anamnesa anamnesa in li)
+                {
+                    Console.WriteLine(anamnesa.ToString());
+                }
+            }
+        }
+
+        private void SearchPatientHistory(Patient patient)
+        {
+            List<Anamnesa> li = _factory.AnamnesaManager.ResolveAnamnesisForEmail(patient.email, 1);
+            while (true)
+            {
+                string inp;
+                Console.Write("Enter Keyword: ");
+                inp = Console.ReadLine();
+                foreach (Anamnesa anamnesa in li)
+                {
+                    if (anamnesa.Anamnesa1.Contains(inp))
+                    {
+                        Console.WriteLine(anamnesa.ToString());
+                    }
+                }
+                Console.Write("Do You Wish To Continue Search[Y/N]: ");
+                inp = Console.ReadLine();
+                if (inp.ToLower() != "y")
+                {
+                    break;
+                }
+
+            }
+        }
+        
+        private bool CheckBlockedStatus(Patient patient)
         {
             if (patient.Blocked == 2)
             {
@@ -132,7 +215,8 @@ namespace Usi_Project.Manage
 
             return true;
         }
-        public bool AntiTroll(Patient patient)
+        
+        private bool AntiTroll(Patient patient)
         {
             bool flag;
             flag = CheckBlockedStatus(patient);
@@ -181,7 +265,8 @@ namespace Usi_Project.Manage
 
             return true;
         }
-        public void ShowAppointments(Patient patient)
+        
+        private void ShowAppointments(Patient patient)
         {
             int i = 1;
             Console.WriteLine("---------------------");
@@ -197,47 +282,158 @@ namespace Usi_Project.Manage
                     i =+ 1;
                 }
             }
-        }       
+        }
 
-        public void CreateAppointment(Patient patient)
+        private Doctor ResolveDoctorForAppointment(int autoFlag=0)
         {
-            int i = 1, inp;
-            while (true)
+            
+            Doctor doctorForAppoint = new Doctor();
+            if (autoFlag == 0)
             {
+                int i = 1, inp;
+                while (true)
+                {
+                    foreach (Doctor doctor in _factory.DoctorManager.Doctors)
+                    {
+                        Console.WriteLine("----------------------------------");
+                        Console.WriteLine("[" + i + "]" + doctor);
+                        Console.WriteLine("----------------------------------");
+                        i += 1;
+                    }
+
+                    inp = Convert.ToInt32(Console.ReadLine());
+                    if (inp > i || inp < 1)
+                    {
+                        Console.WriteLine("Invalid Input, try again");
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                int j = 0;
                 foreach (Doctor doctor in _factory.DoctorManager.Doctors)
                 {
-                    Console.WriteLine("----------------------------------");
-                    Console.WriteLine("[" + i + "]" + doctor);
-                    Console.WriteLine("----------------------------------");
+                    if (j == inp - 1) //
+                    {
+                        doctorForAppoint = doctor;
+                    }
+
+                }
+
+                if (doctorForAppoint is null)
+                {
+                    doctorForAppoint = _factory.DoctorManager.Doctors[0];
+                }
+            }
+            else
+            {
+                Random random = new Random(); 
+                int i=0;
+                foreach (Doctor doctor in _factory.DoctorManager.Doctors)
+                {
                     i += 1;
                 }
 
-                inp = Convert.ToInt32(Console.ReadLine());
-                if (inp > i || inp < 1)
+                int num = random.Next(0, i);
+                int j = 0;
+                foreach (Doctor doctor in _factory.DoctorManager.Doctors)
                 {
-                    Console.WriteLine("Invalid Input, try again");
+                    if (j == num - 1) //
+                    {
+                        doctorForAppoint = doctor;
+                    }
+
+                }
+
+                if (doctorForAppoint is null)
+                {
+                    doctorForAppoint = _factory.DoctorManager.Doctors[0];
+                }
+            }
+
+            return doctorForAppoint;
+        }
+
+        private DateTime AutoTimeForAppointment(Doctor doctorForAppoint, DateTime timeDelta)
+        {
+            
+            bool flag1=true, flag2=true, flag3=true;
+            DateTime startTime = timeDelta.AddHours(-4);
+            DateTime midTime = timeDelta;
+            DateTime endTime = timeDelta.AddHours(4);
+            while (true)
+            {
+                if (!_factory.DoctorManager.checkTime(startTime, startTime.AddMinutes(15),
+                        doctorForAppoint) && flag1)
+                {
+                    startTime = startTime.AddMinutes(15);
                 }
                 else
+                {
+                    flag1 = false;
+                }
+                    
+                if (!_factory.DoctorManager.checkTime(midTime, midTime.AddMinutes(15),
+                        doctorForAppoint) && flag2)
+                {
+                    midTime = startTime.AddMinutes(15);
+                }
+                else
+                {
+                    flag2 = false;
+                }
+                if (!_factory.DoctorManager.checkTime(endTime, endTime.AddMinutes(15),
+                        doctorForAppoint) && flag3)
+                {
+                    endTime = startTime.AddMinutes(15);
+                }
+                else
+                {
+                    flag3 = false;
+                }
+
+                if (flag1 == false && flag2 == false && flag3 == false)
                 {
                     break;
                 }
             }
 
-            Doctor doctorForAppoint = new Doctor();
-            int j = 0;
-            foreach (Doctor doctor in _factory.DoctorManager.Doctors)
+            DateTime appointTime;
+            List<DateTime> appointTimes = new List<DateTime>();
+            appointTimes.Add(startTime);
+            appointTimes.Add(midTime);
+            appointTimes.Add(endTime);
+            Console.WriteLine("Possible Times: ");
+            int i = 1;
+            foreach (DateTime time in appointTimes)
             {
-                if (j == inp - 1)
+                Console.WriteLine("[" + i + "] " + time);
+                i++;
+            }
+            
+            while (true)
+            {
+                int opt;
+                Console.Write("Your Option: ");
+                opt = Convert.ToInt32(Console.ReadLine());
+                if (opt < 0 && opt > i)
                 {
-                    doctorForAppoint = doctor;
+                    Console.WriteLine("Invalid Input, Try Again...");
                 }
-
+                else
+                {
+                    appointTime = appointTimes[opt - 1];
+                    break;
+                }
             }
 
-            if (doctorForAppoint is null)
-            {
-                doctorForAppoint = _factory.DoctorManager.Doctors[0];
-            }
+            return appointTime;
+        }
+        
+        private DateTime ResolveTimeForAppointment(Doctor doctorForAppoint)
+        {
             DateTime appointTime;
             while (true)
             {
@@ -247,7 +443,8 @@ namespace Usi_Project.Manage
                 {
                     Console.WriteLine("To Soon For Making an Appointment, try again.");
                 }
-                else if (!_factory.DoctorManager.checkTime(appointTime,appointTime.AddMinutes(15), doctorForAppoint))
+                else if (!_factory.DoctorManager.checkTime(appointTime, appointTime.AddMinutes(15),
+                             doctorForAppoint))
                 {
                     Console.WriteLine("Doctor Will Be Busy At This Moment!");
                 }
@@ -256,25 +453,70 @@ namespace Usi_Project.Manage
                     break;
                 }
             }
+            return appointTime;
+        }
 
+        private string ResolveRoomForAppointment(DateTime appointTime)
+        {
+            string roomId;
             while (true)
             {
-                var roomId = _factory.DoctorManager.CheckRoomOverview(appointTime, appointTime.AddMinutes(15));
-                Console.WriteLine("fun_expected");
+                roomId = _factory.DoctorManager.CheckRoomOverview(appointTime, appointTime.AddMinutes(15));
                 if (roomId != null)
                 {
-                    
-                    _factory.AppointmentManager.Appointment.Add(new Appointment(doctorForAppoint.email, patient.email, appointTime, appointTime.AddMinutes(15), "OV", roomId,"0"));
                     break;
                 }
-                
             }
-            
-            Requested requested = new Requested(patient.email, appointTime, appointTime.AddMinutes(15), "3");
-            _factory.RequestManager.Serialize(requested);
-        }   
 
-        public void UpdateAppointment(Patient patient)
+            return roomId;
+        }
+        
+        private void CreateAppointment(Patient patient)
+        {
+            string appType;
+            Console.Write("Do You Wish To Manually Make Appointment?[Y/N]: ");
+            appType = Console.ReadLine();
+            if (appType == "N" || appType == "n")
+            {
+                AutoAppointment(patient);
+            }
+            else
+            {
+                Doctor doctorForAppoint;
+                doctorForAppoint = ResolveDoctorForAppointment();
+                
+
+                DateTime appointTime;
+                appointTime = ResolveTimeForAppointment(doctorForAppoint);
+
+                string roomId;
+                roomId = ResolveRoomForAppointment(appointTime);
+                _factory.AppointmentManager.Appointment.Add(new Appointment(doctorForAppoint.email,
+                    patient.email, appointTime, appointTime.AddMinutes(15), "OV", roomId, "0"));
+
+                Requested requested = new Requested(patient.email, appointTime, appointTime.AddMinutes(15), "1");
+                _factory.RequestManager.Serialize(requested);
+            }
+        }
+
+        private void AutoAppointment(Patient patient)
+        {
+            Doctor doctorForAppoint = ResolveDoctorForAppointment(2);
+
+            Console.WriteLine("Enter Date & Time, Time Delta Of 8 Hours Will Be Taken Into Consideration");
+            DateTime timeDelta = ShowDateTimeUserInput();
+            DateTime appointTime = AutoTimeForAppointment(doctorForAppoint, timeDelta);
+            
+            string roomId = ResolveRoomForAppointment(appointTime);
+            
+            // _factory.AppointmentManager.Appointment.Add(new Appointment(doctorForAppoint.email,
+            //     patient.email, appointTime, appointTime.AddMinutes(15), "OV", roomId, "0"));
+            //
+            // Requested requested = new Requested(patient.email, appointTime, appointTime.AddMinutes(15), "1");
+            // _factory.RequestManager.Serialize(requested);
+        }
+        
+        private void UpdateAppointment(Patient patient)
             {
                 string opt;   //1-cancel  2-change
                 while (true)
@@ -325,12 +567,13 @@ namespace Usi_Project.Manage
                 }
             }
 
-//        public void PatientHistory(){}
-//        public void SearchDoctors(){}
-//        public void ChangeNotifications(){}
-//        public void FillSurvey(){}
+        private void SearchDoctors(){}
+        
+        private void ChangeNotifications(){}
+        
+        private void FillSurvey(){}
 
-        public DateTime ShowDateTimeUserInput()
+        private DateTime ShowDateTimeUserInput()
         {
             DateTime dateTime;
             while (true)

@@ -1,5 +1,4 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,14 +7,15 @@ using Usi_Project.DataSaver;
 using Usi_Project.IOController;
 using Usi_Project.Manage;
 using Usi_Project.Settings;
+using System.Threading;
 
 namespace Usi_Project
 {
     class Program
     {
-        //veljko
         static void Main(string[] args)
         {
+            
             FileSettings fileSettings = new FileSettings("../../../Files/doctors.json", "../../../Files/patients.json",
                 "../../../Files/director.json", "../../../Files/secretaries.json",
                 "../../../Files/operatingRooms.json", "../../../Files/overviewRooms.json",

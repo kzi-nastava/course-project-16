@@ -6,6 +6,10 @@
       "Table": 6,
       "Defibrillator": 1
     },
+    "TimeOfRenovation": {
+      "Key": "2022-12-12T12:34:00",
+      "Value": "2022-12-17T12:34:00"
+    },
     "Furniture": {
       "Closet": 1,
       "Bad": 1
@@ -15,24 +19,14 @@
   },
   {
     "SurgeryEquipments": {
-      "Clamps": 4,
-      "Lamp": 2,
-      "Table": 12,
-      "Defibrillator": 1
-    },
-    "Furniture": {
-      "Closet": 1,
-      "Bad": 1
-    },
-    "Id": "A3",
-    "Name": "Operating room 3"
-  },
-  {
-    "SurgeryEquipments": {
       "Clamps": 2,
       "Table": 3,
       "Defibrillator": 1,
       "CottonWool": 2
+    },
+    "TimeOfRenovation": {
+      "Key": "0001-01-01T00:00:00",
+      "Value": "0001-01-01T00:00:00"
     },
     "Furniture": {
       "Closet": 4,
@@ -40,5 +34,34 @@
     },
     "Id": "A4",
     "Name": "Operating room 4"
+  },
+  {
+    "SurgeryEquipments": {
+      "Clamps": 4,
+      "Table": 12
+    },
+    "TimeOfRenovation": {
+      "Key": "2022-04-12T12:45:00",
+      "Value": "2022-05-03T12:45:00"
+    },
+    "Furniture": {
+      "Closet": 1,
+      "Bad": 1
+    },
+    "Id": "8",
+    "Name": "Operating room 8"
+  },
+  {
+    "SurgeryEquipments": {
+      "Lamp": 2,
+      "Defibrillator": 1
+    },
+    "TimeOfRenovation": {
+      "Key": "2022-04-12T12:45:00",
+      "Value": "2022-05-03T12:45:00"
+    },
+    "Furniture": {},
+    "Id": "9",
+    "Name": "Operating room 9"
   }
 ]

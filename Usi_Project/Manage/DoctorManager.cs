@@ -81,7 +81,7 @@ namespace Usi_Project.Manage
                     break;
                 
                 case "2":
-                    overviewSchedule(doctor);
+                    OverviewSchedule(doctor);
                     break;
                 
                 case "3":
@@ -100,11 +100,7 @@ namespace Usi_Project.Manage
                 case "6":
                     Overview(doctor);
                     break;
-                
-                case "7":
-                    CreateRecipes("MilosK@gmail.com");
-                    break;
-                
+
                 case "x":
                     break;
                 
@@ -198,7 +194,7 @@ namespace Usi_Project.Manage
             return true;
         }
             
-        public void overviewSchedule(Doctor doctor)
+        public void OverviewSchedule(Doctor doctor)
         {
             DateTime time = CreateDate();
             foreach (var appointment in _manager.AppointmentManager.Appointment)
@@ -280,10 +276,6 @@ namespace Usi_Project.Manage
         public void CreateRecipes(string emailPatient)
         {
             List<Recipes> recipes = _manager.RecipesManager.Recipes;
-            //     emailPatient;
-            // public string timeInstructions;
-            // public string timesADay;
-            // public string timeRelFood;
             Console.WriteLine("Enter cure name: ");
             string cureName = "Cure name: " + Console.ReadLine();
             Console.WriteLine("When to take medicine? ");
@@ -484,7 +476,7 @@ namespace Usi_Project.Manage
                 var option = Console.ReadLine();
                 if (option == "1")
                 {
-                    overviewSchedule(doctor);
+                    OverviewSchedule(doctor);
                 }
                 else
                 {
@@ -497,19 +489,28 @@ namespace Usi_Project.Manage
                         var idRoom = CheckRoomOverview(startTime, endTime);
                         if (checkTime(startTime, endTime, doctor))
                         {
-                            if (idRoom != null)
+                            if (idRoom == null)
                             {
-                                List<Appointment> appointments = _manager.AppointmentManager.Appointment;
-                                Appointment app= new Appointment(doctor.email,
-                                    patientEmail,
-                                    startTime, endTime, type, idRoom,"0");
-                                appointments.Add(app);
-                                _manager.Saver.SaveAppointment(appointments);
+                                Console.WriteLine("All rooms are busy in this term");
                                 break;
+                                
                             }
+                                
+                            List<Appointment> appointments = _manager.AppointmentManager.Appointment;
+                            Appointment app= new Appointment(doctor.email,
+                                patientEmail,
+                                startTime, endTime, type, idRoom,"0");
+                            appointments.Add(app);
+                            _manager.Saver.SaveAppointment(appointments);
+                            break;
+                            
+                            
 
-                            Console.WriteLine("All rooms are busy in this term");
+                            
+                                
                         }
+
+                        break;
                     }
                     else
                     {
@@ -536,7 +537,7 @@ namespace Usi_Project.Manage
                         }
 
                         Console.WriteLine("You fell into some term ");
-                        overviewSchedule(doctor);
+                        OverviewSchedule(doctor);
 
                     }
                 }
@@ -707,10 +708,21 @@ namespace Usi_Project.Manage
                         }
 
                         break;
-
-                    case "x":
+                }
+                Console.WriteLine("Choose one of the options below: ");
+                Console.WriteLine("1) - Recipes for patient.");
+                Console.WriteLine("x) - exit.");
+                var option1 = Console.ReadLine();
+                switch (option1)
+                {
+                    case "1":
+                        CreateRecipes(app.EmailPatient);
+                        break;
+                    case "2":
+                        
                         break;
                 }
+                
                 break;
 
             }
