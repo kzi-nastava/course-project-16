@@ -11,15 +11,16 @@
   "MedicalEquipment": {
     "Ekg": 20,
     "Generator": 30,
-    "Monitor": 15,
+    "Monitor": 17,
     "Stethoscope": 40,
     "Thermometer": 45,
-    "Xray": 16
+    "Xray": 17
   },
   "TimeOfRenovation": {
     "Key": "0001-01-01T00:00:00",
     "Value": "0001-01-01T00:00:00"
   },
+  "ForRemove": false,
   "Furniture": {
     "Bad": 300,
     "Chair": 600,
