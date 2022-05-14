@@ -32,6 +32,15 @@ namespace Usi_Project.DataSaver
                 serializer.Serialize(file, appointments);
             }
         }
+        public void SaveRecipe(List<Recipes> recipes)
+        {
+            using (StreamWriter file = File.CreateText(_fileSettings.RecipesFn))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, recipes);
+            }
+        }
         public void SavePatient(List<Patient> appointments)
         {
             using (StreamWriter file = File.CreateText(_fileSettings.PatientFilename))

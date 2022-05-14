@@ -81,7 +81,7 @@ namespace Usi_Project.Manage
                     break;
                 
                 case "2":
-                    overviewSchedule(doctor);
+                    OverviewSchedule(doctor);
                     break;
                 
                 case "3":
@@ -100,7 +100,7 @@ namespace Usi_Project.Manage
                 case "6":
                     Overview(doctor);
                     break;
-                
+
                 case "x":
                     break;
                 
@@ -141,11 +141,6 @@ namespace Usi_Project.Manage
             return true;
         }
         
-      
-
-            
-      
-
         public string CheckRoomOverview(DateTime dateStart,DateTime dateEnd)
         {
             int x = 0;
@@ -169,6 +164,7 @@ namespace Usi_Project.Manage
             
             return null;
         }
+      
         public string CheckOperation(DateTime dateStart,DateTime dateEnd)
         {
             int x = 0;
@@ -197,8 +193,8 @@ namespace Usi_Project.Manage
         {
             return true;
         }
-
-        public void overviewSchedule(Doctor doctor)
+            
+        public void OverviewSchedule(Doctor doctor)
         {
             DateTime time = CreateDate();
             foreach (var appointment in _manager.AppointmentManager.Appointment)
@@ -213,6 +209,10 @@ namespace Usi_Project.Manage
                 
             }
         }
+      
+
+
+
 
         public void PrintDoctorsAppointments(Doctor doctor)
         {
@@ -225,6 +225,99 @@ namespace Usi_Project.Manage
                 
             }
         }
+
+        public void AddReferralForSpecialist(Referral refferal,Patient patient)
+        {
+            List<Patient> patientList = _manager.PatientManager.Patients;
+            foreach (var p in patientList)
+
+            {
+                if (p.email == patient.email)
+                {
+                    p.MedicalRecord.referral = refferal;
+                    _manager.Saver.SavePatient(patientList);
+                    break;
+                }
+                
+            }
+                
+            
+        }
+        
+
+        public void ReferralForSpecialist(Doctor doctor, Patient patient)
+        {
+            Console.WriteLine("Choose option");
+            Console.WriteLine("1) - Referral to a doctor.");
+            Console.WriteLine("2) - Referral for a doctor of specialty.");
+            var chosenOption = Console.ReadLine();
+
+            switch (chosenOption)
+            {
+                case "1":
+                    Console.WriteLine("Enter email doctor");
+                    string DoctorEmail = Console.ReadLine();
+                    Referral referralDoctor  = new Referral(patient.email,DoctorEmail,null);
+                    AddReferralForSpecialist(referralDoctor,patient);
+
+                    break;
+
+                case "2":
+                    Console.WriteLine("Enter the specialty doctor");
+                    var specialisation = Console.ReadLine();
+                    Referral referralSpecialisation  = new Referral(patient.email,null, specialisation);
+                    AddReferralForSpecialist(referralSpecialisation,patient);
+                    
+
+                    break;
+            }
+        }
+
+        public void CreateRecipes(string emailPatient)
+        {
+            List<Recipes> recipes = _manager.RecipesManager.Recipes;
+            Console.WriteLine("Enter cure name: ");
+            string cureName = "Cure name: " + Console.ReadLine();
+            Console.WriteLine("When to take medicine? ");
+            string timeInstructions = "When to take medicine: " + Console.ReadLine();
+            Console.WriteLine("How many times a day should he take medicine? ");
+            string timesADay = "How many times a day should he take medicine: " + Console.ReadLine();
+            Console.WriteLine("Choose option");
+            Console.WriteLine("1) - Drink before meal.");
+            Console.WriteLine("2) - Drink after meal.");
+            Console.WriteLine("3) - Doesnt matter.");
+            var chosenOption = Console.ReadLine();
+
+            switch (chosenOption)
+            {
+                case "1":
+                    string timeRelFood = "Drink before meal.";
+                    Recipes recipe = new Recipes(cureName,emailPatient, timeInstructions, timesADay, timeRelFood);
+                    recipes.Add(recipe);
+                    _manager.Saver.SaveRecipe(recipes);
+                    break;
+                    
+                    
+
+                case "2":
+                    timeRelFood = "Drink after meal.";
+                    recipe = new Recipes(cureName,emailPatient, timeInstructions, timesADay, timeRelFood);
+                    recipes.Add(recipe);
+                    _manager.Saver.SaveRecipe(recipes);
+                    break;
+                case "3":
+                    timeRelFood = "Whenever, it is not related to food.";
+                    recipe = new Recipes(cureName,emailPatient, timeInstructions, timesADay, timeRelFood);
+                    recipes.Add(recipe);
+                    _manager.Saver.SaveRecipe(recipes);
+                    break;
+
+                    
+            }
+            
+
+        }
+        
 
         public void UpdateAppointments(Doctor doctor)
         {
@@ -383,7 +476,7 @@ namespace Usi_Project.Manage
                 var option = Console.ReadLine();
                 if (option == "1")
                 {
-                    overviewSchedule(doctor);
+                    OverviewSchedule(doctor);
                 }
                 else
                 {
@@ -396,19 +489,28 @@ namespace Usi_Project.Manage
                         var idRoom = CheckRoomOverview(startTime, endTime);
                         if (checkTime(startTime, endTime, doctor))
                         {
-                            if (idRoom != null)
+                            if (idRoom == null)
                             {
-                                List<Appointment> appointments = _manager.AppointmentManager.Appointment;
-                                Appointment app= new Appointment(doctor.email,
-                                    patientEmail,
-                                    startTime, endTime, type, idRoom,"0");
-                                appointments.Add(app);
-                                _manager.Saver.SaveAppointment(appointments);
+                                Console.WriteLine("All rooms are busy in this term");
                                 break;
+                                
                             }
+                                
+                            List<Appointment> appointments = _manager.AppointmentManager.Appointment;
+                            Appointment app= new Appointment(doctor.email,
+                                patientEmail,
+                                startTime, endTime, type, idRoom,"0");
+                            appointments.Add(app);
+                            _manager.Saver.SaveAppointment(appointments);
+                            break;
+                            
+                            
 
-                            Console.WriteLine("All rooms are busy in this term");
+                            
+                                
                         }
+
+                        break;
                     }
                     else
                     {
@@ -435,7 +537,7 @@ namespace Usi_Project.Manage
                         }
 
                         Console.WriteLine("You fell into some term ");
-                        overviewSchedule(doctor);
+                        OverviewSchedule(doctor);
 
                     }
                 }
@@ -590,12 +692,37 @@ namespace Usi_Project.Manage
 
                     case "2":
                         WriteAnamnesa(app);
-                        UpdateStatus(app.StartTime);
-                        break;
+                        Console.WriteLine("Choose one of the options below: ");
+                        Console.WriteLine("1) - Issuing a prescription.");
+                        Console.WriteLine("2) - End overview.");
+                        var input = Console.ReadLine();
+                        switch (input)
+                        {
+                          case "1":
+                              CreateRecipes(app.EmailPatient);
+                              UpdateStatus(app.StartTime);
+                              break;
+                          case "2":
+                              UpdateStatus(app.StartTime);
+                              break;
+                        }
 
-                    case "x":
                         break;
                 }
+                Console.WriteLine("Choose one of the options below: ");
+                Console.WriteLine("1) - Recipes for patient.");
+                Console.WriteLine("x) - exit.");
+                var option1 = Console.ReadLine();
+                switch (option1)
+                {
+                    case "1":
+                        CreateRecipes(app.EmailPatient);
+                        break;
+                    case "2":
+                        
+                        break;
+                }
+                
                 break;
 
             }

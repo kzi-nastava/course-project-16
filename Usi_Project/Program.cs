@@ -19,7 +19,7 @@ namespace Usi_Project
                 "../../../Files/director.json", "../../../Files/secretaries.json",
                 "../../../Files/operatingRooms.json", "../../../Files/overviewRooms.json",
                 "../../../Files/retiringRooms.json", "../../../Files/appointments.json","../../../Files/anamnesa.json","../../../Files/requested.json",
-                "../../../Files/stockRoom.json", "../../../Files/timer.json");
+                "../../../Files/stockRoom.json", "../../../Files/timer.json","../../../Files/recipes.json");
             Saver saver = new Saver(fileSettings);
             Factory factory = new Factory(fileSettings, saver);
             factory.LoadData();
