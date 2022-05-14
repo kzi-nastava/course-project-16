@@ -66,9 +66,9 @@ namespace Usi_Project.Manage
         }
         public void Menu(Patient patient)
         {
-            bool flag, flagIner = true;
-            flag = AntiTroll(patient);
-            while (flag && flagIner)
+            bool flagOut, flagInner = true;
+            flagOut = AntiTroll(patient);
+            while (flagOut && flagInner)
             {
                 string inp;
                 Console.Clear();
@@ -110,14 +110,14 @@ namespace Usi_Project.Manage
 //                        break;
                     case "x":
                         Console.WriteLine("Loging Out...");
-                        flagIner = false;
+                        flagInner = false;
                         break;
                     default:
                         Console.WriteLine("Invalid Input, try again.");
                         break;
                 }
 
-                flag = AntiTroll(patient);
+                flagOut = AntiTroll(patient);
             }
         }
 
@@ -156,7 +156,7 @@ namespace Usi_Project.Manage
             }
         }
 
-        public void PatientHistory(Patient patient)
+        private void PatientHistory(Patient patient)
         {
             List<Anamnesa> li = _factory.AnamnesaManager.ResolveAnamnesisForEmail(patient.email, 1);
             Console.WriteLine("**************************");
@@ -179,7 +179,7 @@ namespace Usi_Project.Manage
             }
         }
 
-        public void SearchPatientHistory(Patient patient)
+        private void SearchPatientHistory(Patient patient)
         {
             List<Anamnesa> li = _factory.AnamnesaManager.ResolveAnamnesisForEmail(patient.email, 1);
             while (true)
@@ -203,7 +203,8 @@ namespace Usi_Project.Manage
 
             }
         }
-        public bool CheckBlockedStatus(Patient patient)
+        
+        private bool CheckBlockedStatus(Patient patient)
         {
             if (patient.Blocked == 2)
             {
@@ -214,7 +215,8 @@ namespace Usi_Project.Manage
 
             return true;
         }
-        public bool AntiTroll(Patient patient)
+        
+        private bool AntiTroll(Patient patient)
         {
             bool flag;
             flag = CheckBlockedStatus(patient);
@@ -263,7 +265,8 @@ namespace Usi_Project.Manage
 
             return true;
         }
-        public void ShowAppointments(Patient patient)
+        
+        private void ShowAppointments(Patient patient)
         {
             int i = 1;
             Console.WriteLine("---------------------");
@@ -281,7 +284,7 @@ namespace Usi_Project.Manage
             }
         }
 
-        public Doctor ResolveDoctorForAppointment(int autoFlag=0)
+        private Doctor ResolveDoctorForAppointment(int autoFlag=0)
         {
             
             Doctor doctorForAppoint = new Doctor();
@@ -353,7 +356,7 @@ namespace Usi_Project.Manage
             return doctorForAppoint;
         }
 
-        public DateTime AutoTimeForAppointment(Doctor doctorForAppoint, DateTime timeDelta)
+        private DateTime AutoTimeForAppointment(Doctor doctorForAppoint, DateTime timeDelta)
         {
             
             bool flag1=true, flag2=true, flag3=true;
@@ -429,7 +432,7 @@ namespace Usi_Project.Manage
             return appointTime;
         }
         
-        public DateTime ResolveTimeForAppointment(Doctor doctorForAppoint)
+        private DateTime ResolveTimeForAppointment(Doctor doctorForAppoint)
         {
             DateTime appointTime;
             while (true)
@@ -453,7 +456,7 @@ namespace Usi_Project.Manage
             return appointTime;
         }
 
-        public string ResolveRoomForAppointment(DateTime appointTime)
+        private string ResolveRoomForAppointment(DateTime appointTime)
         {
             string roomId;
             while (true)
@@ -468,7 +471,7 @@ namespace Usi_Project.Manage
             return roomId;
         }
         
-        public void CreateAppointment(Patient patient)
+        private void CreateAppointment(Patient patient)
         {
             string appType;
             Console.Write("Do You Wish To Manually Make Appointment?[Y/N]: ");
@@ -496,7 +499,7 @@ namespace Usi_Project.Manage
             }
         }
 
-        public void AutoAppointment(Patient patient)
+        private void AutoAppointment(Patient patient)
         {
             Doctor doctorForAppoint = ResolveDoctorForAppointment(2);
 
@@ -512,7 +515,8 @@ namespace Usi_Project.Manage
             // Requested requested = new Requested(patient.email, appointTime, appointTime.AddMinutes(15), "1");
             // _factory.RequestManager.Serialize(requested);
         }
-        public void UpdateAppointment(Patient patient)
+        
+        private void UpdateAppointment(Patient patient)
             {
                 string opt;   //1-cancel  2-change
                 while (true)
@@ -563,11 +567,13 @@ namespace Usi_Project.Manage
                 }
             }
 
-        public void SearchDoctors(){}
-        public void ChangeNotifications(){}
-        public void FillSurvey(){}
+        private void SearchDoctors(){}
+        
+        private void ChangeNotifications(){}
+        
+        private void FillSurvey(){}
 
-        public DateTime ShowDateTimeUserInput()
+        private DateTime ShowDateTimeUserInput()
         {
             DateTime dateTime;
             while (true)

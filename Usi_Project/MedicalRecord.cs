@@ -2,7 +2,6 @@ namespace Usi_Project
 {
     public class MedicalRecord
     {
-        
         public string height;
         public string weight;
         public string diseases;
