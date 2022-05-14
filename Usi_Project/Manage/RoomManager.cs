@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.IO;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Usi_Project.Manage
 {
@@ -82,16 +83,40 @@ namespace Usi_Project.Manage
         return null;
         }
 
-        public RetiringRoom RetiringRoomById(string id) {
+        public RetiringRoom RetiringRoomById(string id)
+        {
             foreach (var room in _retiringRooms)
             {
                 if (room.Id == id)
                     return room;
             }
+
             return null;
         }
+        
+        public OverviewRoom FindOverviewRoom()
+        {
+            int i = 1;
+            Dictionary<int, OverviewRoom> dictionary = new Dictionary<int, OverviewRoom>();
+            foreach (var opp in _overviewRooms)
+            {
+                dictionary[i] = opp;
+                Console.WriteLine(i + ")  " + opp.Name);
+                i++;
+            }
 
-        public void ViewOperatingRooms()
+            while (true)
+            {
+                Console.Write("Choose the number to see overview room: >> ");
+                int p = Convert.ToInt32(Console.ReadLine());
+                if (dictionary.ContainsKey(p))
+                    return dictionary[p];
+                Console.WriteLine("Wrong input! Try again.");
+                
+            }
+        }
+
+        public OperatingRoom FindOperatingRoom()
         {
             int i = 1;
             Dictionary<int, OperatingRoom> dictionary = new Dictionary<int, OperatingRoom>();
@@ -107,38 +132,85 @@ namespace Usi_Project.Manage
                 Console.Write("Choose the number to see operating room: >>  ");
                 int p = Convert.ToInt32(Console.ReadLine());
                 if (dictionary.ContainsKey(p))
-                {
-                    ViewOpRoom(dictionary[p]);
-                    break;
-                }
-                {
-                    Console.WriteLine("Wrong input! Try again.");
-                }
+                    return dictionary[p];
+                Console.WriteLine("Wrong input! Try again.");
+                
             }
         }
-        
-        public void ViewOverviewRooms()
+
+        public RetiringRoom FindRetiringRoom()
         {
             int i = 1;
-            Dictionary<int, OverviewRoom> dictionary = new Dictionary<int, OverviewRoom>();
-            foreach (var opp in _overviewRooms)
+            Dictionary<int, RetiringRoom> dictionary = new Dictionary<int, RetiringRoom>();
+            foreach (var opp in _retiringRooms)
             {
                 dictionary[i] = opp;
-                Console.WriteLine(i.ToString() + ")  " + opp.Name);
+                Console.WriteLine(i + ")  " + opp.Name);
                 i++;
             }
 
             while (true)
             {
-                Console.Write("Choose the number to see overview room: >> ");
+                Console.Write("Choose the number to see operating room: >>  ");
                 int p = Convert.ToInt32(Console.ReadLine());
                 if (dictionary.ContainsKey(p))
+                    return dictionary[p];
+                Console.WriteLine("Wrong input! Try again.");
+                
+            }
+        }
+
+        public  void ViewOverviewRooms(OverviewRoom room)
+        {
+            if (!room.IsDateTimeOfRenovationDefault())
+            {
+                Console.WriteLine("The room is being renovated until  " + room.TimeOfRenovation.Value);
+                return;
+            }
+            while (true)
+            {
+                room.PrintRoom();
+                switch (GetOption())
                 {
-                    ViewOvRoom(dictionary[p]);
-                    break;
+                    case "1":
+                        _manager.RoomManager._overviewRooms.Remove(room);
+                        break;
+                    case "2":
+                        ChangeOvRoom(room);
+                        break;
+                    case "x":
+                        return;
+                    default:
+                        Console.WriteLine("Wrong input!");
+                        break;
                 }
+            }
+        }
+
+        public void ViewOperatingRooms(OperatingRoom operatingRoom)
+        {
+            // proveriti da li se trenutno renovira
+            if (!operatingRoom.IsDateTimeOfRenovationDefault())
+            {
+                Console.WriteLine("The room is being renovated until  " + operatingRoom.TimeOfRenovation.Value);
+                return;
+            }
+            while (true)
+            {
+                operatingRoom.PrintRoom();
+                switch (GetOption())
                 {
-                    Console.WriteLine("Wrong input! Try again.");
+                    case "1":
+                        _manager.RoomManager._operatingRooms.Remove(operatingRoom);
+                        break;
+                    case "2":
+                        ChangeOpRoom(operatingRoom);
+                        break;
+                    case "x":
+                        return;
+                    default:
+                        Console.WriteLine("Wrong input!");
+                        break;
                 }
             }
         }
@@ -149,64 +221,18 @@ namespace Usi_Project.Manage
             Console.WriteLine("1) Delete room");
             Console.WriteLine("2) Change room");
             Console.Write(">> ");
-            string option = Console.ReadLine();
+            var option = Console.ReadLine();
             return option;
 
         }
-        private static void ViewOpRoom(OperatingRoom room)
-        {
-            while (true)
-            {
-                room.PrintRoom();
-                switch (GetOption())
-                {
-                    case "1":
-                    {
-                        _manager.RoomManager._operatingRooms.Remove(room);
-                        break;
-                    }
-                    case "2":
-                    {
-                        ChangeOpRoom(room);
-                        break;
-                    }
-                    case "x":
-                        return;
-                    
-                    default:
-                        Console.WriteLine("Wrong input!");
-                        break;
-                }
-            }
-        }
-        private static void ViewOvRoom(OverviewRoom room)
-        {
-            while (true)
-            {
-                room.printRoom();
-                switch (GetOption())
-                {
-                    case "1":
-                    {
-                        _manager.RoomManager._overviewRooms.Remove(room);
-                        break;
-                    }
-                    case "2":
-                    {
-                        ChangeOvRoom(room);
-                        break;
-                    }
-                    case "x":
-                        return;
 
-                    default:
-                        Console.WriteLine("Wrong input!");
-                        break;
-                }
-            }
-        }
         private static void ViewRetiringRoom(RetiringRoom room)
         {
+            if (!room.IsDateTimeOfRenovationDefault())
+            {
+                Console.WriteLine("The room is being renovated until  " + room.TimeOfRenovation.Value);
+                return;
+            }
             while (true)
             {
 
@@ -214,18 +240,13 @@ namespace Usi_Project.Manage
                 switch (GetOption())
                 {
                     case "1":
-                    {
                         _manager.RoomManager._retiringRooms.Remove(room);
                         break;
-                    }
                     case "2":
-                    {
                         ChangeRetiringRoom(room);
                         break;
-                    }
                     case "x":
                         return;
-                    
                     default:
                         Console.WriteLine("Wrong input!");
                         break;
@@ -234,6 +255,11 @@ namespace Usi_Project.Manage
         }
         private static void ChangeRetiringRoom(RetiringRoom retiring)
         {
+            if (!retiring.IsDateTimeOfRenovationDefault())
+            {
+                Console.WriteLine("The room is being renovated until  " + retiring.TimeOfRenovation.Value);
+                return;
+            }
             while (true)
             {
                 Console.WriteLine("Choose option or x for exit: ");
@@ -250,10 +276,8 @@ namespace Usi_Project.Manage
                         retiring.Name = newName;
                         break;
                     }
-
                     case "x":
                         return;
-                    
                     default:
                         Console.WriteLine("Wrong input!");
                         break;
@@ -263,6 +287,11 @@ namespace Usi_Project.Manage
 
         private static void ChangeOvRoom(OverviewRoom overview)
         {
+            if (!overview.IsDateTimeOfRenovationDefault())
+            {
+                Console.WriteLine("The room is being renovated until  " + overview.TimeOfRenovation.Value);
+                return;
+            }
             while (true)
             {
                 Console.WriteLine("Choose option or x for exit: ");
@@ -281,19 +310,14 @@ namespace Usi_Project.Manage
                         break;
                     }
                     case "2":
-                    {
                         ChangeFurnitureInOvRoom(overview);
                         break;
-                    }
-
+                        
                     case "3":
-                    {
                         ChangeMedicalTools(overview);
                         break;
-                    }
                     case "x":
                         return;
-                    
                     default:
                         Console.WriteLine("Wrong input!");
                         break;
@@ -303,6 +327,11 @@ namespace Usi_Project.Manage
         
         private static void ChangeMedicalTools(OverviewRoom overviewRoom)
         {
+            if (!overviewRoom.IsDateTimeOfRenovationDefault())
+            {
+                Console.WriteLine("The room is being renovated until  " + overviewRoom.TimeOfRenovation.Value);
+                return;
+            }
             while (true)
             {
                 Console.WriteLine("Choose option or x for exit ");
@@ -313,15 +342,11 @@ namespace Usi_Project.Manage
                 switch (Console.ReadLine())
                 {
                     case "1":
-                    {
                         AddNewMedicalToolFromStockRoom(overviewRoom);
                         break;
-                    }
                     case "3":
-                    {
                         RemoveMedicalTool(overviewRoom);
                         break;
-                    }
                     case "x":
                         return;
                     default:
@@ -340,6 +365,7 @@ namespace Usi_Project.Manage
                 string shadeName = ((MedicalTool) j).ToString();
                 Console.WriteLine(j + ")  " + shadeName);
             }
+
             Console.WriteLine(">> ");
             int choice = int.Parse(Console.ReadLine());
             Console.WriteLine("How much you want to add? >> ");
@@ -355,14 +381,14 @@ namespace Usi_Project.Manage
             }
             else
             {
-                Console.WriteLine("Stock room just have " + 
+                Console.WriteLine("Stock room just have " +
                                   _manager.RoomManager._stockRoom.MedicalEquipment[(MedicalTool) choice] + " " +
-                                  ((MedicalTool) choice).ToString() + "s.");
+                                  ((MedicalTool) choice) + "s.");
             }
-           
+
         }
 
-        private static DateTime GetTime()
+        public static DateTime GetTime()
         {
             Console.WriteLine("Input year >> ");
             int year = Int32.Parse(Console.ReadLine());
@@ -401,6 +427,11 @@ namespace Usi_Project.Manage
 
         private static void ChangeOpRoom(OperatingRoom operatingRoom)
         {
+            if (!operatingRoom.IsDateTimeOfRenovationDefault())
+            {
+                Console.WriteLine("The room is being renovated until  " + operatingRoom.TimeOfRenovation.Value);
+                return;
+            }
             while (true)
             {
 
@@ -420,15 +451,11 @@ namespace Usi_Project.Manage
                         break;
                     }
                     case "2":
-                    {
                         ChangeFurnitureInOpRoom(operatingRoom);
                          break;
-                    }
                     case "3":
-                    {
                         ChangeSurgeryTools(operatingRoom);
                         break;
-                    }
                     case "x":
                         return;
                     default:
@@ -449,15 +476,11 @@ namespace Usi_Project.Manage
                 switch (Console.ReadLine())
                 {
                     case "1":
-                    {
                         AddNewFurniture(operatingRoom);
                         break;
-                    }
                     case "2":
-                    {
                         RemoveCurrentFurniture(operatingRoom);
                         break;
-                    }
                     case "x":
                         return;
                     default:
@@ -478,15 +501,11 @@ namespace Usi_Project.Manage
                 switch (Console.ReadLine())
                 {
                     case "1":
-                    {
                         AddNewFurniture(overviewRoom);
                         break;
-                    }
                     case "2":
-                    {
                         RemoveCurrentFurniture(overviewRoom);
                         break;
-                    }
                     case "x":
                         return;
                     default:
@@ -581,9 +600,7 @@ namespace Usi_Project.Manage
                 if (!checkDict.ContainsKey(choice))
                     Console.WriteLine("Wrong input");
                 else
-                {
                     break;
-                }
             }
         }
         
@@ -608,9 +625,7 @@ namespace Usi_Project.Manage
                 if (!checkDict.ContainsKey(choice))
                     Console.WriteLine("Wrong input");
                 else
-                {
                     break;
-                }
             }
         }
         private static void ChangeSurgeryTools(OperatingRoom operatingRoom)
@@ -624,15 +639,11 @@ namespace Usi_Project.Manage
                 switch (Console.ReadLine())
                 {
                     case "1":
-                    {
                         AddNewSurgeryTool(operatingRoom);
                         break;
-                    }
                     case "2":
-                    {
                         RemoveSurgeryTool(operatingRoom);
                         break;
-                    }
                     case "x":
                         return;
                     default:
@@ -669,7 +680,7 @@ namespace Usi_Project.Manage
             {
                 Console.WriteLine("Stock room just have " + 
                                   _manager.RoomManager._stockRoom.SurgeryEquipment[(SurgeryTool) choice] + " " +
-                                  ((SurgeryTool) choice).ToString() + "s.");
+                                  ((SurgeryTool) choice) + "s.");
             }
         }
         
@@ -693,9 +704,7 @@ namespace Usi_Project.Manage
                 if (!checkDict.ContainsKey(choice))
                     Console.WriteLine("Wrong input");
                 else
-                {
                     break;
-                }
             }
 
             Console.WriteLine("How much you want to remove? >> ");
@@ -708,12 +717,9 @@ namespace Usi_Project.Manage
                 Timer timer = new Timer(time, operatingRoom.Id);
                 timer.SurgeryDict = dict;
                 _manager.TimerManager.Timers.Add(timer);
-
             }
             else
-            {
                 Console.WriteLine("You don’t have that much equipment");
-            }
         }
 
         
@@ -725,17 +731,14 @@ namespace Usi_Project.Manage
         public List<OverviewRoom> OverviewRooms
         {
             get => _overviewRooms;
-            set => _overviewRooms = value;
         }
         public List<OperatingRoom> OperatingRooms
         {
             get => _operatingRooms;
-            set => _operatingRooms = value;
         }
         public List<RetiringRoom> RetiringRooms
         {
             get => _retiringRooms;
-            set => _retiringRooms = value;
         }
     }
 }
