@@ -22,8 +22,14 @@ namespace Usi_Project.IOController
                 {
                     while (true)
                     {
-                        Console.WriteLine("Enter email: ");
+                        Console.WriteLine("Enter email or x for exit: ");
                         string enteredEmail = Console.ReadLine();
+                        if (enteredEmail == "x")
+                        {
+                            _factory.RoomManager.SaveData();
+                            _factory.DirectorManager.SaveData();
+                            Environment.Exit(0);
+                        }
                         Console.WriteLine("Enter password: ");
                         string enteredPassword = Console.ReadLine();
                         Director director = _factory.DirectorManager.CheckPersonalInfo(enteredEmail, enteredPassword);

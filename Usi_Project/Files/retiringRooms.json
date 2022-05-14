@@ -1,5 +1,9 @@
 [
   {
+    "TimeOfRenovation": {
+      "Key": "0001-01-01T00:00:00",
+      "Value": "0001-01-01T00:00:00"
+    },
     "Furniture": {
       "Closet": 3,
       "Bad": 25
@@ -8,6 +12,10 @@
     "Name": "Retiring room 1"
   },
   {
+    "TimeOfRenovation": {
+      "Key": "0001-01-01T00:00:00",
+      "Value": "0001-01-01T00:00:00"
+    },
     "Furniture": {
       "Closet": 3,
       "Bad": 20

@@ -50,6 +50,8 @@ namespace Usi_Project.Manage
                 {PreserveReferencesHandling = PreserveReferencesHandling.Objects};
             _director = JsonConvert.DeserializeObject<Director>(File.ReadAllText(_directorFilename), json);
         }
+        
+        
 
         public static void Menu()
         {
@@ -96,6 +98,17 @@ namespace Usi_Project.Manage
                 }
 
             }
+        }
+
+        public void SaveData()
+        {
+            using (StreamWriter file = File.CreateText(_directorFilename))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, _director);
+            }
+
         }
 
         private static void PrintRoomsMenu()
