@@ -23,6 +23,11 @@ namespace Usi_Project.Users
         {
             _specialisation = null;
         }
+
+        public string specialisation
+        {
+            get => _specialisation;
+        }
     }
     
     

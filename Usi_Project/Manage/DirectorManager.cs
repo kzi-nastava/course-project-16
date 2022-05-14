@@ -154,17 +154,17 @@ namespace Usi_Project.Manage
                 {
                     if (option2 == 1)
                     {   
-                        if (dictionary.Value == 0&& dictionary.Key.ToString().ToLower().Contains(eq))
+                        if (dictionary.Value == 0 && dictionary.Key.ToString().ToLower() == eq)
                             Console.WriteLine(dictionary.Key.ToString() + " : "  + dictionary.Value);
                     }
                     else if (option2 == 2)
                     {   
-                        if (dictionary.Value <= 10&& dictionary.Key.ToString().ToLower().Contains(eq))
+                        if (dictionary.Value <= 10&& dictionary.Key.ToString().ToLower() == eq)
                             Console.WriteLine(dictionary.Key.ToString() + " : "  + dictionary.Value);
                     }
                     else if (option2 == 3)
                     {   
-                        if (dictionary.Value > 10&& dictionary.Key.ToString().ToLower().Contains(eq))
+                        if (dictionary.Value > 10&& dictionary.Key.ToString().ToLower() == eq)
                             Console.WriteLine(dictionary.Key.ToString() + " : "  + dictionary.Value);
                     }
                 }
