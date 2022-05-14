@@ -101,6 +101,10 @@ namespace Usi_Project.Manage
                     Overview(doctor);
                     break;
                 
+                case "7":
+                    CreateRecipes("MilosK@gmail.com");
+                    break;
+                
                 case "x":
                     break;
                 
@@ -141,11 +145,6 @@ namespace Usi_Project.Manage
             return true;
         }
         
-      
-
-            
-      
-
         public string CheckRoomOverview(DateTime dateStart,DateTime dateEnd)
         {
             int x = 0;
@@ -169,6 +168,7 @@ namespace Usi_Project.Manage
             
             return null;
         }
+      
         public string CheckOperation(DateTime dateStart,DateTime dateEnd)
         {
             int x = 0;
@@ -197,7 +197,7 @@ namespace Usi_Project.Manage
         {
             return true;
         }
-
+            
         public void overviewSchedule(Doctor doctor)
         {
             DateTime time = CreateDate();
@@ -213,6 +213,10 @@ namespace Usi_Project.Manage
                 
             }
         }
+      
+
+
+
 
         public void PrintDoctorsAppointments(Doctor doctor)
         {
@@ -225,6 +229,103 @@ namespace Usi_Project.Manage
                 
             }
         }
+
+        public void AddReferralForSpecialist(Referral refferal,Patient patient)
+        {
+            List<Patient> patientList = _manager.PatientManager.Patients;
+            foreach (var p in patientList)
+
+            {
+                if (p.email == patient.email)
+                {
+                    p.MedicalRecord.referral = refferal;
+                    _manager.Saver.SavePatient(patientList);
+                    break;
+                }
+                
+            }
+                
+            
+        }
+        
+
+        public void ReferralForSpecialist(Doctor doctor, Patient patient)
+        {
+            Console.WriteLine("Choose option");
+            Console.WriteLine("1) - Referral to a doctor.");
+            Console.WriteLine("2) - Referral for a doctor of specialty.");
+            var chosenOption = Console.ReadLine();
+
+            switch (chosenOption)
+            {
+                case "1":
+                    Console.WriteLine("Enter email doctor");
+                    string DoctorEmail = Console.ReadLine();
+                    Referral referralDoctor  = new Referral(patient.email,DoctorEmail,null);
+                    AddReferralForSpecialist(referralDoctor,patient);
+
+                    break;
+
+                case "2":
+                    Console.WriteLine("Enter the specialty doctor");
+                    var specialisation = Console.ReadLine();
+                    Referral referralSpecialisation  = new Referral(patient.email,null, specialisation);
+                    AddReferralForSpecialist(referralSpecialisation,patient);
+                    
+
+                    break;
+            }
+        }
+
+        public void CreateRecipes(string emailPatient)
+        {
+            List<Recipes> recipes = _manager.RecipesManager.Recipes;
+            //     emailPatient;
+            // public string timeInstructions;
+            // public string timesADay;
+            // public string timeRelFood;
+            Console.WriteLine("Enter cure name: ");
+            string cureName = "Cure name: " + Console.ReadLine();
+            Console.WriteLine("When to take medicine? ");
+            string timeInstructions = "When to take medicine: " + Console.ReadLine();
+            Console.WriteLine("How many times a day should he take medicine? ");
+            string timesADay = "How many times a day should he take medicine: " + Console.ReadLine();
+            Console.WriteLine("Choose option");
+            Console.WriteLine("1) - Drink before meal.");
+            Console.WriteLine("2) - Drink after meal.");
+            Console.WriteLine("3) - Doesnt matter.");
+            var chosenOption = Console.ReadLine();
+
+            switch (chosenOption)
+            {
+                case "1":
+                    string timeRelFood = "Drink before meal.";
+                    Recipes recipe = new Recipes(cureName,emailPatient, timeInstructions, timesADay, timeRelFood);
+                    recipes.Add(recipe);
+                    _manager.Saver.SaveRecipe(recipes);
+                    break;
+                    
+                    
+
+                case "2":
+                    timeRelFood = "Drink after meal.";
+                    recipe = new Recipes(cureName,emailPatient, timeInstructions, timesADay, timeRelFood);
+                    recipes.Add(recipe);
+                    _manager.Saver.SaveRecipe(recipes);
+                    break;
+                case "3":
+                    timeRelFood = "Whenever, it is not related to food.";
+                    recipe = new Recipes(cureName,emailPatient, timeInstructions, timesADay, timeRelFood);
+                    recipes.Add(recipe);
+                    _manager.Saver.SaveRecipe(recipes);
+                    break;
+
+                    
+            }
+            
+
+        }
+        
 
         public void UpdateAppointments(Doctor doctor)
         {
@@ -590,7 +691,21 @@ namespace Usi_Project.Manage
 
                     case "2":
                         WriteAnamnesa(app);
-                        UpdateStatus(app.StartTime);
+                        Console.WriteLine("Choose one of the options below: ");
+                        Console.WriteLine("1) - Issuing a prescription.");
+                        Console.WriteLine("2) - End overview.");
+                        var input = Console.ReadLine();
+                        switch (input)
+                        {
+                          case "1":
+                              CreateRecipes(app.EmailPatient);
+                              UpdateStatus(app.StartTime);
+                              break;
+                          case "2":
+                              UpdateStatus(app.StartTime);
+                              break;
+                        }
+
                         break;
 
                     case "x":

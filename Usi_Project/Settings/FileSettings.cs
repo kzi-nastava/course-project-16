@@ -16,11 +16,12 @@ namespace Usi_Project.Settings
         private readonly string _requestedFn;
         private readonly string _stockRoomFn;
         private readonly string _timerFn;
+        private readonly string _recipesFn;
 
         public FileSettings(string doctorFilename, string patientFilename, string directorFilename,
             string secretaryFilename, string operatingRoomsFn, string overviewRoomsFn, string retiringRoomsFn,
             string appointmentsFn, string anamnesaFn, string requestedFn, 
-            string stockRoomFn, string timerFn)
+            string stockRoomFn, string timerFn, string recipesFn)
         
         {
             _doctorFilename = doctorFilename;
@@ -35,8 +36,11 @@ namespace Usi_Project.Settings
             _requestedFn = requestedFn;
             _stockRoomFn = stockRoomFn;
             _timerFn = timerFn;
+            _recipesFn = recipesFn;
 
         }
+
+        public string RecipesFn => _recipesFn;
 
         public string RequestedFn => _requestedFn;
 
