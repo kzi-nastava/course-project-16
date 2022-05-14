@@ -221,11 +221,14 @@ namespace Usi_Project.Manage
 
         public void ViewOperatingRooms(OperatingRoom operatingRoom)
         {
-            // proveriti da li se trenutno renovira
             if (!operatingRoom.IsDateTimeOfRenovationDefault())
             {
-                Console.WriteLine("The room is being renovated until  " + operatingRoom.TimeOfRenovation.Value);
-                return;
+                _manager.DirectorManager.CheckIfRenovationIsEnded();
+                if (!operatingRoom.IsDateTimeOfRenovationDefault())
+                {
+                    Console.WriteLine("The room is being renovated until  " + operatingRoom.TimeOfRenovation.Value);
+                    return;
+                }
             }
             while (true)
             {
@@ -258,16 +261,20 @@ namespace Usi_Project.Manage
 
         }
 
-        private static void ViewRetiringRoom(RetiringRoom room)
+        public  void ViewRetiringRoom(RetiringRoom room)
         {
+   
             if (!room.IsDateTimeOfRenovationDefault())
             {
-                Console.WriteLine("The room is being renovated until  " + room.TimeOfRenovation.Value);
-                return;
+                _manager.DirectorManager.CheckIfRenovationIsEnded();
+                if (!room.IsDateTimeOfRenovationDefault())
+                {
+                    Console.WriteLine("The room is being renovated until  " + room.TimeOfRenovation.Value);
+                    return;
+                }
             }
             while (true)
             {
-
                 room.printRoom();
                 switch (GetOption())
                 {
@@ -289,8 +296,12 @@ namespace Usi_Project.Manage
         {
             if (!retiring.IsDateTimeOfRenovationDefault())
             {
-                Console.WriteLine("The room is being renovated until  " + retiring.TimeOfRenovation.Value);
-                return;
+                _manager.DirectorManager.CheckIfRenovationIsEnded();
+                if (!retiring.IsDateTimeOfRenovationDefault())
+                {
+                    Console.WriteLine("The room is being renovated until  " + retiring.TimeOfRenovation.Value);
+                    return;
+                }
             }
             while (true)
             {
@@ -321,8 +332,12 @@ namespace Usi_Project.Manage
         {
             if (!overview.IsDateTimeOfRenovationDefault())
             {
-                Console.WriteLine("The room is being renovated until  " + overview.TimeOfRenovation.Value);
-                return;
+                _manager.DirectorManager.CheckIfRenovationIsEnded();
+                if (!overview.IsDateTimeOfRenovationDefault())
+                {
+                    Console.WriteLine("The room is being renovated until  " + overview.TimeOfRenovation.Value);
+                    return;
+                }
             }
             while (true)
             {
@@ -359,11 +374,6 @@ namespace Usi_Project.Manage
         
         private static void ChangeMedicalTools(OverviewRoom overviewRoom)
         {
-            if (!overviewRoom.IsDateTimeOfRenovationDefault())
-            {
-                Console.WriteLine("The room is being renovated until  " + overviewRoom.TimeOfRenovation.Value);
-                return;
-            }
             while (true)
             {
                 Console.WriteLine("Choose option or x for exit ");
