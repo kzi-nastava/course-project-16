@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using Usi_Project.Users;
 using System.IO;
-
+using System.Runtime.InteropServices;
 
 
 namespace Usi_Project.Manage
@@ -66,6 +66,26 @@ namespace Usi_Project.Manage
         {
             get => _manager;
             set => _manager = value;
+        }
+        
+        // Function return list<Anamnesa> for entered email of user
+        // if role==0 > entered doctorEmail
+        // if role==1 > entered patientEmail
+        public List<Anamnesa> ResolveAnamnesisForEmail(string email, int role)
+        {
+            List<Anamnesa> allAnamnesis = new List<Anamnesa>();
+            foreach (Anamnesa anamnesa in _anamnesa)
+            {
+                if (role == 0 && anamnesa.EmailDoctor == email)
+                {
+                    allAnamnesis.Add(anamnesa);
+                }
+                else if (role == 1 && anamnesa.EmailPatient == email)
+                {
+                    allAnamnesis.Add(anamnesa);
+                }
+            }
+            return allAnamnesis;
         }
     }
 }

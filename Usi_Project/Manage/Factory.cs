@@ -19,6 +19,7 @@ namespace Usi_Project.Manage
         private RequestManager _requestManager;
         private TimerManager _timerManager;
         private Saver _saver;
+        private RecipesManager _recipesManager;
 
         public Factory()
         {
@@ -44,6 +45,13 @@ namespace Usi_Project.Manage
             _requestManager = new RequestManager(fileSettings.RequestedFn, this);
             _saver = saver;
             _timerManager = new TimerManager(fileSettings.TimerFn, this);
+            _recipesManager = new RecipesManager(fileSettings.RecipesFn, this);
+        }
+
+        public RecipesManager RecipesManager
+        {
+            get => _recipesManager;
+            set => _recipesManager = value;
         }
 
         public RequestManager RequestManager
