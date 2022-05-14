@@ -1,20 +1,30 @@
+using System;
 using System.Collections.Generic;
 
 namespace Usi_Project
 {
-    public class HospitalRoom
+    public abstract class HospitalRoom
     {
         private string _id;
         private string _name;
         private Dictionary<Furniture, int> _furniture;
-        
+        private KeyValuePair<DateTime, DateTime> _timeOfRenovation;
+
         public HospitalRoom()
         {
             _id = "";
             _name = "";
             _furniture = new Dictionary<Furniture, int>();
-            
+            _timeOfRenovation = new KeyValuePair<DateTime, DateTime>();
+
         }
+
+        public KeyValuePair<DateTime, DateTime> TimeOfRenovation
+        {
+            get => _timeOfRenovation;
+            set => _timeOfRenovation = value;
+        }
+
         public Dictionary<Furniture, int> Furniture
         {
             get => _furniture;
@@ -41,12 +51,68 @@ namespace Usi_Project
             set =>_id = value;
         }
         
-        
         public string Name
         {
             get => _name;
             set => _name = value;
         }
+
+        public virtual void PrintRoom()
+        {
+            Console.WriteLine("=========================");
+            Console.WriteLine("ID: " + Id); 
+            Console.WriteLine("Name: " + Name);
+            Console.WriteLine("-------------------------");
+            Console.WriteLine("Furniture:");
+            Console.WriteLine("-------------------------");
+            foreach (var tools in Furniture)
+                Console.WriteLine("\t" + tools.Key + ": " + tools.Value);
+            Console.WriteLine("-------------------------");
+        }
+
+        public bool IsDateTimeOfRenovationDefault()
+        {
+            return (TimeOfRenovation.Key == default);
+        }
+
+        public void PrintFurniture(string equipment, int parameterOfSearch)
+        {
+            foreach (var dictionary in Furniture)
+            {
+                if (parameterOfSearch == 1)
+                {   
+                    if (dictionary.Value == 0 && dictionary.Key.ToString().ToLower().Contains(equipment))
+                        Console.WriteLine(dictionary.Key.ToString() + " : "  + dictionary.Value);
+                }
+                else if (parameterOfSearch == 2)
+                {   
+                    if (dictionary.Value <= 10 && dictionary.Value >= 0
+                                               && dictionary.Key.ToString().ToLower().Contains(equipment))
+                        Console.WriteLine(dictionary.Key.ToString() + " : "  + dictionary.Value);
+                }
+                else if (parameterOfSearch == 3)
+                {   
+                    if (dictionary.Value > 10 && dictionary.Key.ToString().ToLower().Contains(equipment))
+                        Console.WriteLine(dictionary.Key.ToString() + " : "  + dictionary.Value);
+                }
+            }
+        }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         
     }
 }

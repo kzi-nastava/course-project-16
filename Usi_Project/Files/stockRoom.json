@@ -16,6 +16,10 @@
     "Thermometer": 45,
     "Xray": 16
   },
+  "TimeOfRenovation": {
+    "Key": "0001-01-01T00:00:00",
+    "Value": "0001-01-01T00:00:00"
+  },
   "Furniture": {
     "Bad": 300,
     "Chair": 600,

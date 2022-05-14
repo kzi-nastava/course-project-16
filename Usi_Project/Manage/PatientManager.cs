@@ -109,8 +109,8 @@ namespace Usi_Project.Manage
 //                        FillSurvey();
 //                        break;
                     case "x":
-                        Console.WriteLine("Loging Out...");
-                        flagInner = false;
+                        Console.WriteLine("Loging Out...");                       
+                        flagIner = false;
                         break;
                     default:
                         Console.WriteLine("Invalid Input, try again.");
