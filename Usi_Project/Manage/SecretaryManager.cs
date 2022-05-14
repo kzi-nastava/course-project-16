@@ -56,9 +56,6 @@ namespace Usi_Project.Manage
 
         public void Menu()
         {
-            DateTime appointTime = DateTime.Now;
-            appointTime = appointTime.AddMinutes(15);
-            Console.WriteLine(appointTime);
             Console.WriteLine("Choose one of the options below: ");
             Console.WriteLine("1) - Create the patient profile.");
             Console.WriteLine("2) - Change the patient profile.");
@@ -73,6 +70,7 @@ namespace Usi_Project.Manage
             switch (chosenOption)
             {
                 case "1":
+                    
                     CreatingPatientProfile();
                     break;
 
@@ -568,15 +566,76 @@ namespace Usi_Project.Manage
             }
         }
 
-       public void ReferalAppointment()
+
+        void ReferalOpAppointment(Doctor refferedDoctor, string patientEmail)
         {
-            foreach (Patient patient in _manager.PatientManager.Patients)
+            while (true)
             {
-                if (patient.MedicalRecord.referral != null)
+                DateTime startTime = _manager.DoctorManager.CreateDate();
+                Console.WriteLine("Enter duration of operation in minutes");
+                int duration = Convert.ToInt32(Console.ReadLine());
+                DateTime endTime = startTime.AddMinutes(duration);
+
+                if (_manager.DoctorManager.checkTime(startTime, endTime, refferedDoctor))
                 {
-                    Console.WriteLine("Email: " + patient.email);
+                    var idRoom = _manager.DoctorManager.CheckRoomOverview(startTime, endTime);
+
+                    if (idRoom != null)
+                    {
+                        List<Appointment> appointments = _manager.AppointmentManager.Appointment;
+                        Appointment appointment = new Appointment(refferedDoctor.email,
+                            patientEmail,
+                            startTime, endTime, "OP", idRoom, "0");
+                        _manager.AppointmentManager.Appointment.Add(appointment);
+
+                        _manager.Saver.SaveAppointment(appointments);
+                        break;
+                    }
+                }
+                Console.WriteLine("You fell into some term ");
+            }
+        }
+        
+
+        void ReferalOvAppointment(Doctor refferedDoctor, string patientEmail)
+        {
+            while (true)
+            {
+                DateTime startTime = _manager.DoctorManager.CreateDate();
+                DateTime endTime = startTime.AddMinutes(15);
+                var idRoom = _manager.DoctorManager.CheckRoomOverview(startTime, endTime);
+                if (_manager.DoctorManager.checkTime(startTime, endTime, refferedDoctor))
+                {
+                    if (idRoom != null)
+                    {
+                        Appointment app = new Appointment(refferedDoctor.email,
+                            patientEmail,
+                            startTime, endTime, "OV", idRoom, "0");
+                        _manager.AppointmentManager.Appointment.Add(app);
+                        _manager.Saver.SaveAppointment(_manager.AppointmentManager.Appointment);
+                        break;
+                    }
+
+                    Console.WriteLine("All rooms are busy in this term");
                 }
             }
+        }
+
+        
+        public void DeleteReferal(string patientEmail)
+        {
+            for (int i = 0; i < _manager.PatientManager.Patients.Count; i++)
+            {
+                if (_manager.PatientManager.Patients[i].email == patientEmail)
+                {
+                    _manager.PatientManager.Patients[i].MedicalRecord.referral = null;
+                }
+            }
+        }
+
+
+        public string CheckEmailExist()
+        {
             string patientEmail;
             while (true)
             {
@@ -591,109 +650,101 @@ namespace Usi_Project.Manage
                     break;
                 }
             }
+            return patientEmail;
+        }
+
+
+        int PrintPatientsWithReferal()
+        {
+            int noReferals = 1;
+            foreach (Patient patient in _manager.PatientManager.Patients)
+            {
+                if (patient.MedicalRecord.referral != null)
+                {
+                    noReferals = 0;
+                    Console.WriteLine("Email: " + patient.email);
+                }
+            }
+
+            return noReferals;
+        }
+
+
+        string FindDoctorForReferal(string patientEmail)
+        {
             string doctorEmail = null;
             string doctorSpecialization = null;
             foreach (Patient patient in _manager.PatientManager.Patients)
             {
                 if (patientEmail == patient.email)
                 {
-                     doctorEmail = patient.MedicalRecord.referral.DoctorEmail;
-                     doctorSpecialization = patient.MedicalRecord.referral.DoctorSpecialisation;
+                    doctorEmail = patient.MedicalRecord.referral.DoctorEmail;
+                    doctorSpecialization = patient.MedicalRecord.referral.DoctorSpecialisation;
                 }
             }
             if (doctorEmail == null)
             {
                 foreach (Doctor doctor in _manager.DoctorManager.Doctors)
                 {
-                    if (doctorSpecialization == doctor.specialisation)
+                    if (doctorSpecialization == doctor.Specialisation)
                     {
                         doctorEmail = doctor.email;
                     }
                 }
             }
-            if (doctorEmail == null)
+
+            return doctorEmail;
+        }
+        
+
+       public void ReferalAppointment()
+       {
+           int noReferals = PrintPatientsWithReferal();
+           if (noReferals == 1)
             {
-                Console.WriteLine("Greska, pokusajte ponovo.");
-                ReferalAppointment();
+                Console.WriteLine("No referals");
+                Menu();
             }
             else
             {
-                Doctor refferedDoctor = null;
-                foreach (Doctor doctor in _manager.DoctorManager.Doctors)
+                string patientEmail = CheckEmailExist();
+                string doctorEmail = FindDoctorForReferal(patientEmail);
+                if (doctorEmail == null)
                 {
-                    if (doctorEmail == doctor.email)
+                    Console.WriteLine("Error, try again.");
+                    ReferalAppointment();
+                }
+                else
+                {
+                    Doctor refferedDoctor = null;
+                    foreach (Doctor doctor in _manager.DoctorManager.Doctors)
                     {
-                        refferedDoctor = doctor;
+                        if (doctorEmail == doctor.email)
+                        {
+                            refferedDoctor = doctor;
+                        }
                     }
-                } Console.WriteLine("Enter type ('OP' or 'OV')");
-            string type = Console.ReadLine();
-            while (true)
-            {
-                while (true)
+                    Console.WriteLine("Enter type ('OP' or 'OV')");
+                    string type = Console.ReadLine();
+                    if (type == "OV")
                     {
-                        DateTime startTime = _manager.DoctorManager.CreateDate();
-                        if (type == "OV")
-                        {
-                            DateTime endTime = startTime.AddMinutes(15);
-                            var idRoom = _manager.DoctorManager.CheckRoomOverview(startTime, endTime);
-                            if (_manager.DoctorManager.checkTime(startTime, endTime, refferedDoctor))
-                            {
-                                if (idRoom != null)
-                                {
-                                    List<Appointment> appointments = _manager.AppointmentManager.Appointment;
-                                    Appointment app = new Appointment(refferedDoctor.email,
-                                        patientEmail,
-                                        startTime, endTime, type, idRoom, "0");
-                                    appointments.Add(app);
-                                    _manager.Saver.SaveAppointment(appointments);
-                                    break;
-                                }
-                                Console.WriteLine("All rooms are busy in this term");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Enter duration of operation in minutes");
-                            int duration = Convert.ToInt32(Console.ReadLine());
-                            DateTime endTime = startTime.AddMinutes(duration);
-
-                            if (_manager.DoctorManager.checkTime(startTime, endTime, refferedDoctor))
-                            {
-                                var idRoom = _manager.DoctorManager.CheckRoomOverview(startTime, endTime);
-
-                                if (idRoom != null)
-                                {
-                                    List<Appointment> appointments = _manager.AppointmentManager.Appointment;
-                                    Appointment appointment = new Appointment(refferedDoctor.email,
-                                        patientEmail,
-                                        startTime, endTime, type, idRoom, "0");
-                                    _manager.AppointmentManager.Appointment.Add(appointment);
-
-                                    _manager.Saver.SaveAppointment(appointments);
-                                    break;
-                                }
-                            }
-                            Console.WriteLine("You fell into some term ");
-                            ReferalAppointment();
-                        }
-                    } break;
-            }
-            for (int i = 0; i < _manager.PatientManager.Patients.Count; i++)
-            {
-                if (_manager.PatientManager.Patients[i].email == patientEmail)
-                {
-                    _manager.PatientManager.Patients[i].MedicalRecord.referral = null;
+                        ReferalOvAppointment(refferedDoctor, patientEmail);
+                    }
+                    else
+                    {
+                        ReferalOpAppointment(refferedDoctor, patientEmail);
+                    }
+                    DeleteReferal(patientEmail);
+                    using (StreamWriter file = File.CreateText(_manager.PatientManager.patientFileName))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        serializer.Formatting = Formatting.Indented;
+                        serializer.Serialize(file, _manager.PatientManager.Patients);
+                    }
+                    Menu();
                 }
             }
-            using (StreamWriter file = File.CreateText(_manager.PatientManager.patientFileName))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Formatting = Formatting.Indented;
-                serializer.Serialize(file, _manager.PatientManager.Patients);
-            }
-            Menu();
-            }
-        }
+       }
 
        
         public void EmergencyAppointment()
@@ -717,16 +768,12 @@ namespace Usi_Project.Manage
             {
                 Console.WriteLine("Chose the Doctor specialization");
                 Console.WriteLine("1) - Cardiology");
-                Console.WriteLine("2) - Surgery");
                 Console.WriteLine("x) - exit");
                 string chosenSpecialization = Console.ReadLine();
                 switch (chosenSpecialization)
                 {
                     case "1":
                         EmergencyAppointmentSpecializationBased("Cardiology", enteredEmail);
-                        break;
-                    case "2":
-                        EmergencyAppointmentSpecializationBased("Surgery", enteredEmail);
                         break;
                     case "x":
                         break;
@@ -748,9 +795,9 @@ namespace Usi_Project.Manage
             int appointmentDuration = Convert.ToInt32(Console.ReadLine());
             foreach (Doctor doctor in _manager.DoctorManager.Doctors)
             {
-                Console.WriteLine(doctor.specialisation);
-                if (specialization == doctor.specialisation)
+                if (specialization == doctor.Specialisation)
                 {
+                    
                     DateTime appointTime = DateTime.Now;
                     int appointmentFound = FreeTermFound(doctor, appointTime, appointmentDuration, enteredEmail);
                     if (appointmentFound == 0)
@@ -783,7 +830,7 @@ namespace Usi_Project.Manage
         int FreeTermFound(Doctor doctor, DateTime appointTime, int appointmentDuration, string enteredEmail)
         {
            int appointmentFound = 0;
-            for (int i = 0; i < 120; i += appointmentDuration)
+            for (int i = 0; i < 120; i += 10)
             {
                 if (_manager.DoctorManager.checkTime(appointTime.AddMinutes(i),
                         appointTime.AddMinutes(i + appointmentDuration), doctor))
@@ -810,7 +857,7 @@ namespace Usi_Project.Manage
         
         List<Appointment> FindScheduledAppointments(Doctor doctor, DateTime appointTime)
         {
-            List<Appointment> scheduledAppointments = null;
+            List<Appointment> scheduledAppointments = new List<Appointment>();
             foreach (Appointment appointment in _manager.AppointmentManager.Appointment)
             {
                 if (appointment.EmailDoctor == doctor.email &&
