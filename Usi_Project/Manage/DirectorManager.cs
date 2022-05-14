@@ -204,6 +204,8 @@ namespace Usi_Project.Manage
                     OperatingRoom operatingRoom = _factory.RoomManager.FindOperatingRoom();
                     Console.WriteLine("\nChoose  retiring room\n");
                     RetiringRoom retiringRoom = _factory.RoomManager.FindRetiringRoom();
+                    if (IsBeingRenovated(operatingRoom) || IsBeingRenovated(retiringRoom))
+                        return;
                     MergeOperatingAndRetiringRoom(operatingRoom, retiringRoom);
                     break;
                 case 4:
@@ -246,8 +248,38 @@ namespace Usi_Project.Manage
             }
         }
 
+        private static bool IsBeingRenovated(HospitalRoom hospitalRoom)
+        {
+            if (!hospitalRoom.IsDateTimeOfRenovationDefault())
+            {
+                Console.WriteLine("\nYou can not split room, because room is being renovated until  "
+                                  + hospitalRoom.TimeOfRenovation.Value + "\n");
+                return true;
+            }
+
+            return false;
+        }
+
+        private static void SetTimeForRenovation(HospitalRoom hospitalRoom, DateTime start, DateTime end)
+        {
+            bool isFree = _factory.DoctorManager.CheckRoom(start, end, hospitalRoom.Id);
+            if (isFree)
+                hospitalRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>(
+                    start, end);
+        }
+
+        private static (DateTime, DateTime) GetStartAndEndTimeForRenovation()
+        {
+            Console.WriteLine("Input time for start room renovation");
+            DateTime timeStart = _factory.DoctorManager.CreateDate();
+            Console.WriteLine("Input end time for room renovation");
+            DateTime timeEnd = _factory.DoctorManager.CreateDate();
+            return (timeStart, timeEnd);
+        }
+
         private static void MergeOperatingRooms()
         {
+            
             Console.WriteLine("\nChoose first operating room\n");
             OperatingRoom first = _factory.RoomManager.FindOperatingRoom();
             Console.WriteLine("\nChoose second operating room\n");
@@ -257,14 +289,19 @@ namespace Usi_Project.Manage
                 Console.WriteLine("Input two different rooms!");
                 return;
             }
+            if (IsBeingRenovated(first) || IsBeingRenovated(second))
+                return;
+            var timeForRenovation = GetStartAndEndTimeForRenovation();
+            SetTimeForRenovation(first, timeForRenovation.Item1, timeForRenovation.Item2);
+            SetTimeForRenovation(second, timeForRenovation.Item1, timeForRenovation.Item2);
 
             Console.WriteLine("\nCreating new operating room\n");
             OperatingRoom newOperatingRoom = CreateOperatingRoom();
             newOperatingRoom.SurgeryEquipments =  MergeSurgeryEquipments(first, second);
             newOperatingRoom.Furniture = MergeFurniture(first, second);
-            _factory.RoomManager.OperatingRooms.Add(newOperatingRoom);
-            _factory.RoomManager.OperatingRooms.Remove(first);
-            _factory.RoomManager.OperatingRooms.Remove(second);
+            SetTimeForRenovation(newOperatingRoom, timeForRenovation.Item1, timeForRenovation.Item2);
+            first.ForRemove = true;
+            second.ForRemove = true;
 
         }
 
@@ -287,7 +324,28 @@ namespace Usi_Project.Manage
 
         private static void MergeRetiringRooms()
         {
-            
+            Console.WriteLine("\nChoose first overview room\n");
+            RetiringRoom first = _factory.RoomManager.FindRetiringRoom();
+            Console.WriteLine("\nChoose second overview room\n");
+            RetiringRoom second = _factory.RoomManager.FindRetiringRoom();
+            if (first.Id == second.Id)
+            {
+                Console.WriteLine("Input two different rooms!");
+                return;
+            }
+            if (IsBeingRenovated(first) || IsBeingRenovated(second))
+                return;
+            var timeForRenovation = GetStartAndEndTimeForRenovation();
+            SetTimeForRenovation(first, timeForRenovation.Item1, timeForRenovation.Item2);
+            SetTimeForRenovation(second, timeForRenovation.Item1, timeForRenovation.Item2);
+
+            Console.WriteLine("\nCreating new overview room\n");
+            RetiringRoom newRetiringRoom = CreateRetiringRoom();
+            newRetiringRoom.Furniture = MergeFurniture(first, second);
+            SetTimeForRenovation(newRetiringRoom, timeForRenovation.Item1, timeForRenovation.Item2);
+            first.ForRemove = true;
+            second.ForRemove = true;
+      
         }
 
         private static void MergeOverviewRooms()
@@ -301,14 +359,19 @@ namespace Usi_Project.Manage
                 Console.WriteLine("Input two different rooms!");
                 return;
             }
+            if (IsBeingRenovated(first) || IsBeingRenovated(second))
+                return;
+            var timeForRenovation = GetStartAndEndTimeForRenovation();
+            SetTimeForRenovation(first, timeForRenovation.Item1, timeForRenovation.Item2);
+            SetTimeForRenovation(second, timeForRenovation.Item1, timeForRenovation.Item2);
 
             Console.WriteLine("\nCreating new overview room\n");
             OverviewRoom newOverviewRoom = CreateOverviewRoom();
             newOverviewRoom.Tools =  MergeMedicalEquipments(first, second);
             newOverviewRoom.Furniture = MergeFurniture(first, second);
-            _factory.RoomManager.OverviewRooms.Add(newOverviewRoom);
-            _factory.RoomManager.OverviewRooms.Remove(first);
-            _factory.RoomManager.OverviewRooms.Remove(second);
+            SetTimeForRenovation(newOverviewRoom, timeForRenovation.Item1, timeForRenovation.Item2);
+            first.ForRemove = true;
+            second.ForRemove = true;
             
         }
 
@@ -336,6 +399,9 @@ namespace Usi_Project.Manage
             Console.WriteLine("2) Merge into new Overview room");
             Console.WriteLine(">> ");
             int choiseRoom = Int32.Parse(Console.ReadLine());
+            var timeForRenovation = GetStartAndEndTimeForRenovation();
+            SetTimeForRenovation(operatingRoom, timeForRenovation.Item1, timeForRenovation.Item2);
+            SetTimeForRenovation(overviewRoom, timeForRenovation.Item1, timeForRenovation.Item2);
             switch (choiseRoom)
             {
                 case 1:
@@ -344,7 +410,7 @@ namespace Usi_Project.Manage
                     newOperatingRoom.Furniture = MergeFurniture(operatingRoom, overviewRoom);
                     SendMedicalEquipmentToStockRoom(overviewRoom);
                     Console.WriteLine("Medical Equipments from overview room send to Stock Room.");
-                    _factory.RoomManager.OperatingRooms.Add(newOperatingRoom);
+                    SetTimeForRenovation(newOperatingRoom, timeForRenovation.Item1, timeForRenovation.Item2);
                     break;
                 case 2:
                     OverviewRoom newOverviewRoom = CreateOverviewRoom();
@@ -352,11 +418,12 @@ namespace Usi_Project.Manage
                     newOverviewRoom.Furniture = MergeFurniture(operatingRoom, overviewRoom);
                     SendSurgeryEquipmentToStockRoom(operatingRoom);
                     Console.WriteLine("Surgery Equipments from overview room send to Stock Room.");
-                    _factory.RoomManager.OverviewRooms.Add(newOverviewRoom);
+                    SetTimeForRenovation(newOverviewRoom, timeForRenovation.Item1, timeForRenovation.Item2);
                     break;
             }
-            _factory.RoomManager.OverviewRooms.Remove(overviewRoom);
-            _factory.RoomManager.OperatingRooms.Remove(operatingRoom);
+            overviewRoom.ForRemove = true;
+            operatingRoom.ForRemove = true;
+            
         }
 
         private static void SendSurgeryEquipmentToStockRoom(OperatingRoom operatingRoom)
@@ -408,6 +475,10 @@ namespace Usi_Project.Manage
             Console.WriteLine("2) Merge into new Overview room");
             Console.WriteLine(">> ");
             int choiseRoom = Int32.Parse(Console.ReadLine());
+            var timeForRenovation = GetStartAndEndTimeForRenovation();
+            SetTimeForRenovation(retiringRoom, timeForRenovation.Item1, timeForRenovation.Item2);
+            SetTimeForRenovation(overviewRoom, timeForRenovation.Item1, timeForRenovation.Item2);
+          
             switch (choiseRoom)
             {
                 case 1:
@@ -415,18 +486,19 @@ namespace Usi_Project.Manage
                     newRetiringRoom.Furniture = MergeFurniture(retiringRoom, overviewRoom);
                     SendMedicalEquipmentToStockRoom(overviewRoom);
                     Console.WriteLine("Medical Equipments from overview room send to Stock Room.");
-                    _factory.RoomManager.RetiringRooms.Add(newRetiringRoom);
+                    SetTimeForRenovation(newRetiringRoom, timeForRenovation.Item1, timeForRenovation.Item2);
+
                     break;
                 case 2:
                     OverviewRoom newOverviewRoom = CreateOverviewRoom();
                     newOverviewRoom.Tools = overviewRoom.Tools;
                     newOverviewRoom.Furniture = MergeFurniture(retiringRoom, overviewRoom); ;
-                    _factory.RoomManager.OverviewRooms.Add(newOverviewRoom);
+                    SetTimeForRenovation(newOverviewRoom, timeForRenovation.Item1, timeForRenovation.Item2);
                     break;
             }
-            _factory.RoomManager.OverviewRooms.Remove(overviewRoom);
-            _factory.RoomManager.RetiringRooms.Remove(retiringRoom);
-            
+            overviewRoom.ForRemove = true;
+            retiringRoom.ForRemove = true;
+
         }
 
         private static void MergeOperatingAndRetiringRoom(OperatingRoom operatingRoom, RetiringRoom retiringRoom)
@@ -436,6 +508,9 @@ namespace Usi_Project.Manage
             Console.WriteLine("2) Merge into new Operating room");
             Console.WriteLine(">> ");
             int choiseRoom = Int32.Parse(Console.ReadLine());
+            var timeForRenovation = GetStartAndEndTimeForRenovation();
+            SetTimeForRenovation(retiringRoom, timeForRenovation.Item1, timeForRenovation.Item2);
+            SetTimeForRenovation(operatingRoom, timeForRenovation.Item1, timeForRenovation.Item2);
             switch (choiseRoom)
             {
                 case 1:
@@ -443,18 +518,18 @@ namespace Usi_Project.Manage
                     newRetiringRoom.Furniture = MergeFurniture(retiringRoom, operatingRoom);
                     SendSurgeryEquipmentToStockRoom(operatingRoom);
                     Console.WriteLine("Surgery Equipments from operating room send to Stock Room.");
-                    _factory.RoomManager.RetiringRooms.Add(newRetiringRoom);
+                    SetTimeForRenovation(newRetiringRoom, timeForRenovation.Item1, timeForRenovation.Item2);
                     break;
                 case 2:
                     OperatingRoom newOperatingRoom = CreateOperatingRoom();
                     newOperatingRoom.Furniture = MergeFurniture(retiringRoom, operatingRoom);
                     newOperatingRoom.SurgeryEquipments = operatingRoom.SurgeryEquipments;
-                    _factory.RoomManager.OperatingRooms.Add(newOperatingRoom);
+                    SetTimeForRenovation(newOperatingRoom, timeForRenovation.Item1, timeForRenovation.Item2);
                     break;
             }
+            retiringRoom.ForRemove = true;
+            operatingRoom.ForRemove = true;
 
-            _factory.RoomManager.OperatingRooms.Remove(operatingRoom);
-            _factory.RoomManager.RetiringRooms.Remove(retiringRoom);
             
         }
 
@@ -635,6 +710,7 @@ namespace Usi_Project.Manage
                 timeEnd, idRoom);
             return (timeStart, timeEnd, isFree);
         }
+        
 
         private static void SearchHospitalEquipments()
         {
@@ -838,19 +914,30 @@ namespace Usi_Project.Manage
             foreach (var operatingRoom in _factory.RoomManager.OperatingRooms.ToList())
             {
                 if (DateTime.Now >= operatingRoom.TimeOfRenovation.Value)
+                {
                     operatingRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>();
+                    operatingRoom.ForRemove = false;
+                }
             }
+
             foreach (var overviewRoom in _factory.RoomManager.OverviewRooms.ToList())
             {
                 if (DateTime.Now >= overviewRoom.TimeOfRenovation.Value)
+                {
+                    overviewRoom.ForRemove = false;
                     overviewRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>();
+                }
             }
+
             foreach (var retiringRoom in _factory.RoomManager.RetiringRooms.ToList())
             {
                 if (DateTime.Now >= retiringRoom.TimeOfRenovation.Value)
+                {
                     retiringRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>();
+                    retiringRoom.ForRemove = false;
+                }
             }
-            
+
         }
 
         public Director CheckPersonalInfo(string email, string password) =>

@@ -4,6 +4,7 @@
       "Key": "0001-01-01T00:00:00",
       "Value": "0001-01-01T00:00:00"
     },
+    "ForRemove": false,
     "Furniture": {
       "Closet": 3,
       "Bad": 25
@@ -16,11 +17,27 @@
       "Key": "0001-01-01T00:00:00",
       "Value": "0001-01-01T00:00:00"
     },
+    "ForRemove": false,
     "Furniture": {
       "Closet": 3,
       "Bad": 20
     },
     "Id": "C2",
     "Name": "Retiring room 2"
+  },
+  {
+    "TimeOfRenovation": {
+      "Key": "0001-01-01T00:00:00",
+      "Value": "0001-01-01T00:00:00"
+    },
+    "ForRemove": false,
+    "Furniture": {
+      "Closet": 3,
+      "Bad": 25,
+      "Table": 6,
+      "Chair": 10
+    },
+    "Id": "88",
+    "Name": "Retiring Room 88"
   }
 ]

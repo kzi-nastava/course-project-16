@@ -7,6 +7,7 @@ namespace Usi_Project
     {
         private string _id;
         private string _name;
+        private bool _forRemove;
         private Dictionary<Furniture, int> _furniture;
         private KeyValuePair<DateTime, DateTime> _timeOfRenovation;
 
@@ -14,6 +15,7 @@ namespace Usi_Project
         {
             _id = "";
             _name = "";
+            _forRemove = false;
             _furniture = new Dictionary<Furniture, int>();
             _timeOfRenovation = new KeyValuePair<DateTime, DateTime>();
 
@@ -23,6 +25,12 @@ namespace Usi_Project
         {
             get => _timeOfRenovation;
             set => _timeOfRenovation = value;
+        }
+
+        public bool ForRemove
+        {
+            get => _forRemove;
+            set => _forRemove = value;
         }
 
         public Dictionary<Furniture, int> Furniture
