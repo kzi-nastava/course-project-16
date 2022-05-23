@@ -110,7 +110,7 @@ namespace Usi_Project.Manage
 //                        break;
                     case "x":
                         Console.WriteLine("Loging Out...");                       
-                        flagIner = false;
+                        //flagIner = false;
                         break;
                     default:
                         Console.WriteLine("Invalid Input, try again.");
