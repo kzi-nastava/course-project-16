@@ -67,44 +67,62 @@ namespace Usi_Project.Manage
 
         public void PrintMenu()
         {
-            Console.WriteLine("Choose one of the options below: ");
-            Console.WriteLine("1) - Adding new drugs to the system");
-            Console.WriteLine("2) - View drugs");
-            Console.WriteLine("3) - View rejected drugs");
-            Console.Write(">> ");
-            string option = Console.ReadLine();
-            switch (option)
-            {
-                case "1":
-                    AddDrug();
-                    break;
-                case "2":
-                    Drug chosen = GetDrug();
-                    chosen.Print();
-                    Console.Write("Do you want to change some ingredients ? y/n  >> ");
-                    string answer = Console.ReadLine();
-                    if (answer == "y")
-                        chosen.ChangeIngredients();
-                    break;
-                case "3":
-                    RejectedDrug rejectedDrug = ViewRejectedDrugs();
-                    if (rejectedDrug == null)
+            while (true)
+            { 
+                Console.WriteLine("Choose one of the options below: ");
+                Console.WriteLine("1) - Adding new drugs to the system");
+                Console.WriteLine("2) - View drugs");
+                Console.WriteLine("3) - View rejected drugs");
+                Console.WriteLine("x) - Back");
+                Console.Write(">> ");
+                string option = Console.ReadLine();
+                Console.WriteLine();
+                switch (option)
+                {
+                    case "1":
+                        AddDrug();
+                        break;
+                    case "2":
+                        ViewDrugs();
+                        break;
+                    case "3":
+                        ViewRejectedDrugs();
+                        break;
+                    case "x":
                         return;
-                    rejectedDrug.Print();
-                    Console.Write("Do you want to change some ingredients ? y/n  >> ");
-                    answer = Console.ReadLine();
-                    if (answer == "y") {
-                        rejectedDrug.ChangeIngredients();
-                        _drugs.Add(new Drug(rejectedDrug));
-                        _rejectedDrugs.Remove(rejectedDrug);
-                    }
-                    break;
-     
+                }
             }
         }
 
+        private void ViewDrugs()
+        {
+            Drug chosen = GetDrug();
+            chosen.Print();
+            Console.Write("Do you want to change some ingredients ? y/n  >> ");
+            string answer = Console.ReadLine();
+            if (answer == "y")
+                chosen.ChangeIngredients();
+        }
 
-        private RejectedDrug ViewRejectedDrugs()
+        private void ViewRejectedDrugs()
+        {
+            Console.WriteLine("Rejected drugs:");
+            RejectedDrug rejectedDrug = GetRejectedDrugs();
+            if (rejectedDrug == null)
+                return;
+            
+            rejectedDrug.Print();
+            Console.Write("Do you want to change some ingredients ? y/n  >> ");
+            string answer = Console.ReadLine();
+            if (answer == "y")
+            {
+                rejectedDrug.ChangeIngredients();
+                _drugs.Add(new Drug(rejectedDrug));
+                _rejectedDrugs.Remove(rejectedDrug);
+            }
+        }
+
+        private RejectedDrug GetRejectedDrugs()
         {
             if (_rejectedDrugs.Count == 0)
             {

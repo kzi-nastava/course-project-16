@@ -31,10 +31,8 @@ namespace Usi_Project.IOController
                             _factory.DrugManager.SaveData();
                             Environment.Exit(0);
                         }
-                        //Console.WriteLine("Enter password: ");
-                        //string enteredPassword = Console.ReadLine();
-                        enteredEmail = "rock@gmail.com";
-                        var enteredPassword = "rock";
+                        Console.WriteLine("Enter password: ");
+                        string enteredPassword = Console.ReadLine();
                         Director director = _factory.DirectorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
                         if (director != null)
                         {
