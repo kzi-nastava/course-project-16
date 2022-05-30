@@ -64,6 +64,8 @@ namespace Usi_Project.Manage
                 Console.WriteLine("4) - Refresh changes");
                 Console.WriteLine("5) - Scheduling room renovation");
                 Console.WriteLine("6) - Scheduling multiple room renovation");
+                Console.WriteLine("7) - Drug and ingredient management");
+                Console.WriteLine("8) - Correction of information on rejected drugs");
                 Console.WriteLine("x) - Exit.");
                 Console.WriteLine(">> ");
                 
@@ -88,6 +90,9 @@ namespace Usi_Project.Manage
                         break;
                     case "6":
                         MultipleRoomRenovation();
+                        break;
+                    case "7":
+                        _factory.DrugManager.PrintMenu();
                         break;
                     case "x":
                         return;

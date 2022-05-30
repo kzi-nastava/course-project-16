@@ -28,15 +28,17 @@ namespace Usi_Project.IOController
                         {
                             _factory.RoomManager.SaveData();
                             _factory.DirectorManager.SaveData();
+                            _factory.DrugManager.SaveData();
                             Environment.Exit(0);
                         }
-                        Console.WriteLine("Enter password: ");
-                        string enteredPassword = Console.ReadLine();
+                        //Console.WriteLine("Enter password: ");
+                        //string enteredPassword = Console.ReadLine();
+                        enteredEmail = "rock@gmail.com";
+                        var enteredPassword = "rock";
                         Director director = _factory.DirectorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
                         if (director != null)
                         {
                             DirectorManager.Menu();
-                            return;
                         }
                         
                         Doctor doctor =

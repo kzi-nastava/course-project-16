@@ -1,0 +1,49 @@
+[
+  {
+    "Id": "321",
+    "Name": "Aspirin",
+    "Producer": "DrugCompany UK",
+    "ExpirationTime": 4,
+    "Ingredients": [
+      "Carnauba Wax",
+      "Corn Starch",
+      "Hypromellose",
+      "Powdered Cellulose"
+    ]
+  },
+  {
+    "Id": "942",
+    "Name": "Lisinopril",
+    "Producer": "DrugCompany USA",
+    "ExpirationTime": 3,
+    "Ingredients": [
+      "Calcium poshphate",
+      "Mannitol",
+      "Magnesium stearate",
+      "Starch"
+    ]
+  },
+  {
+    "Id": "663",
+    "Name": "Paracetamol",
+    "Producer": "DrugCompany UK",
+    "ExpirationTime": 4,
+    "Ingredients": [
+      "Starch",
+      "Pottasium sorbate",
+      "Purified talc",
+      "Povidone"
+    ]
+  },
+  {
+    "Id": "512",
+    "Name": "Morphine",
+    "Producer": "DrugCompany USA",
+    "ExpirationTime": 4,
+    "Ingredients": [
+      "Sucrose",
+      "Sodium methyl hydroxybenzoate",
+      "Ethanol"
+    ]
+  }
+]

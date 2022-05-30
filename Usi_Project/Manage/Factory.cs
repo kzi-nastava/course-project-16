@@ -20,7 +20,7 @@ namespace Usi_Project.Manage
         private TimerManager _timerManager;
         private Saver _saver;
         private RecipesManager _recipesManager;
-
+        private DrugManager _drugManager;
         public Factory()
         {
         }
@@ -46,6 +46,7 @@ namespace Usi_Project.Manage
             _saver = saver;
             _timerManager = new TimerManager(fileSettings.TimerFn, this);
             _recipesManager = new RecipesManager(fileSettings.RecipesFn, this);
+            _drugManager = new DrugManager(fileSettings.DrugsFn, fileSettings.RejectedDrugsFn, this);
         }
 
         public RecipesManager RecipesManager
@@ -58,6 +59,12 @@ namespace Usi_Project.Manage
         {
             get => _requestManager;
             set => _requestManager = value;
+        }
+
+        public DrugManager DrugManager
+        {
+            get => _drugManager;
+            set => _drugManager = value;
         }
 
         public AnamnesaManager AnamnesaManager
@@ -86,7 +93,9 @@ namespace Usi_Project.Manage
             _anamnesaManager.LoadData();
             _requestManager.LoadData();
             _timerManager.LoadData();
+            _drugManager.LoadData();
             
+
         }
         public TimerManager TimerManager
         {
