@@ -142,7 +142,7 @@ namespace Usi_Project
         public virtual void Print()
         {
  
-            Console.WriteLine("=======================");
+            Console.WriteLine("===========================");
             Console.WriteLine("ID of drug: " + Id);
             Console.WriteLine("Name: " + _drugName);
             Console.WriteLine("Producer: " + _producer);
@@ -154,7 +154,7 @@ namespace Usi_Project
             {
                 Console.WriteLine("\t" + ingredient);
             }
-            Console.WriteLine("=======================");
+            Console.WriteLine("===========================");
         }
     }
     
