@@ -13,6 +13,15 @@ namespace Usi_Project.IOController
             _factory = factory;
         }
 
+        private void SaveData()
+        {
+            _factory.RoomManager.SaveData();
+            _factory.DirectorManager.SaveData();
+            _factory.DrugManager.SaveData();
+            Environment.Exit(0);
+            
+        }
+
         public void PrintMenu()
         {
 
@@ -25,12 +34,7 @@ namespace Usi_Project.IOController
                         Console.WriteLine("Enter email or x for exit: ");
                         string enteredEmail = Console.ReadLine();
                         if (enteredEmail == "x")
-                        {
-                            _factory.RoomManager.SaveData();
-                            _factory.DirectorManager.SaveData();
-                            _factory.DrugManager.SaveData();
-                            Environment.Exit(0);
-                        }
+                            SaveData();
                         Console.WriteLine("Enter password: ");
                         string enteredPassword = Console.ReadLine();
                         Director director = _factory.DirectorManager.CheckPersonalInfo(enteredEmail, enteredPassword);

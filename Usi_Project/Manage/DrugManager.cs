@@ -226,7 +226,7 @@ namespace Usi_Project.Manage
             }
         }
 
-        bool ExistDrugId(string newId)
+        private bool ExistDrugId(string newId)
         {
             foreach (var drug in _drugs)
             {
