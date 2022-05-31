@@ -1,39 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Newtonsoft.Json;
-using Usi_Project.Users;
 
 namespace Usi_Project.Manage
 {
-    public class DrugManager
+    public class DrugManager 
     {
-        private string _drugsFilename;
-        private string _rejectedDrugsFilename;
+        private readonly string _drugsFilename;
+        private readonly string _rejectedDrugsFilename;
         private List<Drug> _drugs;
         private List<RejectedDrug> _rejectedDrugs;
-        private static Factory _factory;
 
-        public DrugManager(string drugsFilename, string rejectedDrugsFilename, Factory factory)
+        public DrugManager(string drugsFilename, string rejectedDrugsFilename)
         {
             _drugsFilename = drugsFilename;
             _rejectedDrugsFilename = rejectedDrugsFilename;
-            _factory = factory;
             _drugs = new List<Drug>();
             _rejectedDrugs = new List<RejectedDrug>();
-        }
-
-        public string DrugsFilename
-        {
-            get => _drugsFilename;
-            set => _drugsFilename = value;
-        }
-
-        public string RejectedDrugsFilename
-        {
-            get => _rejectedDrugsFilename;
-            set => _rejectedDrugsFilename = value;
         }
 
         public List<Drug> Drugs
@@ -41,21 +25,13 @@ namespace Usi_Project.Manage
             get => _drugs;
             set => _drugs = value;
         }
-
-        public static Factory Factory
-        {
-            get => _factory;
-            set => _factory = value;
-        }
-
+        
         public void LoadData()
         {
             JsonSerializerSettings json = new JsonSerializerSettings
                 {PreserveReferencesHandling = PreserveReferencesHandling.Objects};
             _drugs = JsonConvert.DeserializeObject<List<Drug>>(File.ReadAllText(_drugsFilename), json);
-            
-            JsonSerializerSettings json2 = new JsonSerializerSettings
-                {PreserveReferencesHandling = PreserveReferencesHandling.Objects};
+
             _rejectedDrugs = JsonConvert.DeserializeObject<List<RejectedDrug>>(File.ReadAllText(_rejectedDrugsFilename), json);
         }
 
@@ -76,6 +52,7 @@ namespace Usi_Project.Manage
                 Console.WriteLine("x) - Back");
                 Console.Write(">> ");
                 string option = Console.ReadLine();
+                option ??= "x";
                 Console.WriteLine();
                 switch (option)
                 {
@@ -129,6 +106,7 @@ namespace Usi_Project.Manage
                 Console.WriteLine("\nThere is no rejected drugs.\n");
                 return null;
             }
+            
             Dictionary<int, RejectedDrug> drugs = new Dictionary<int, RejectedDrug>();
             int i = 1;
             foreach (var drug in _rejectedDrugs)
@@ -138,8 +116,8 @@ namespace Usi_Project.Manage
                 i++;
             }
             Console.Write(">> ");
-            string option = Console.ReadLine();
-            return drugs[Int32.Parse(option)];
+            int option = GetNumberFromCL();
+            return drugs[option];
         }
 
         private string GetId()
@@ -164,10 +142,10 @@ namespace Usi_Project.Manage
             Console.Write("Input producer of drug: >> ");
             string producer = Console.ReadLine();
             Console.Write("Input expiration time of drug (years) >> ");
-            int expirationTime = Int32.Parse(Console.ReadLine());
+            int expirationTime = GetNumberFromCL();
             List<string> ingredients = new List<string>();
             Console.Write("How much ingredients you want to add ? >>  ");
-            int numOfIngredients= Int32.Parse(Console.ReadLine());
+            int numOfIngredients = GetNumberFromCL();
             for (int i = 0; i < numOfIngredients; i++)
             {
                 Console.Write("Input name of new ingredient: >> ");
@@ -196,17 +174,38 @@ namespace Usi_Project.Manage
 
         private Drug GetDrug()
         {
-            Dictionary<int, Drug> drugs = new Dictionary<int, Drug>();
-            int i = 1;
-            foreach (var drug in _drugs)
+            while (true)
             {
-                Console.WriteLine(i + ") " + drug.Name);
-                drugs[i] = drug;
-                i++;
+                Dictionary<int, Drug> drugs = new Dictionary<int, Drug>();
+                int i = 1;
+                foreach (var drug in _drugs)
+                {
+                    Console.WriteLine(i + ") " + drug.Name);
+                    drugs[i] = drug;
+                    i++;
+                }
+                Console.Write(">> ");
+                int option = GetNumberFromCL();
+                if (!drugs.ContainsKey(option))
+                {
+                    Console.WriteLine("Wrong input");
+                    continue;
+                }
+                return drugs[option];
             }
-            Console.Write(">> ");
-            string option = Console.ReadLine();
-            return drugs[Int32.Parse(option)];
+        }
+
+        private int GetNumberFromCL()
+        {
+            while(true) {
+                int option;
+                if (!int.TryParse(Console.ReadLine(), out option))
+                {
+                    Console.WriteLine("Must input a number!\n>> ");
+                    continue;
+                }
+                return option;
+            }
         }
 
         public void SaveData()

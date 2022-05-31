@@ -4,7 +4,7 @@ using Usi_Project.Users;
 
 namespace Usi_Project.IOController
 {
-    public class CheckInfo
+    public class CheckInfo 
     {
         private Factory _factory;
 
