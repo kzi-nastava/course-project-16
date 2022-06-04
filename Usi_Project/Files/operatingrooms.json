@@ -15,6 +15,13 @@
       "Closet": 1,
       "Bad": 1
     },
+    "DynamicEquipment": {
+      "Gauze": 3,
+      "Buckles": 0,
+      "Bandages": 12,
+      "Paper": 2,
+      "Pencils": 3
+    },
     "Id": "A2",
     "Name": "Operating room 2"
   },
@@ -22,8 +29,7 @@
     "SurgeryEquipments": {
       "Clamps": 2,
       "Table": 3,
-      "Defibrillator": 1,
-      "CottonWool": 2
+      "Defibrillator": 1
     },
     "TimeOfRenovation": {
       "Key": "0001-01-01T00:00:00",
@@ -33,6 +39,13 @@
     "Furniture": {
       "Closet": 4,
       "Bad": 3
+    },
+    "DynamicEquipment": {
+      "Gauze": 3,
+      "Buckles": 0,
+      "Bandages": 12,
+      "Paper": 2,
+      "Pencils": 3
     },
     "Id": "A4",
     "Name": "Operating room 4"
@@ -51,6 +64,13 @@
       "Closet": 1,
       "Bad": 1
     },
+    "DynamicEquipment": {
+      "Gauze": 1,
+      "Buckles": 5,
+      "Bandages": 82,
+      "Paper": 2,
+      "Pencils": 3
+    },
     "Id": "8",
     "Name": "Operating room 8"
   },
@@ -65,6 +85,13 @@
     },
     "ForRemove": false,
     "Furniture": {},
+    "DynamicEquipment": {
+      "Gauze": 3,
+      "Buckles": 88,
+      "Bandages": 12,
+      "Paper": 2,
+      "Pencils": 3
+    },
     "Id": "9",
     "Name": "Operating room 9"
   }

@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using System.Collections.Specialized;
 using Usi_Project.Users;
 using Usi_Project.Appointments;
 
@@ -56,6 +57,7 @@ namespace Usi_Project.Manage
 
         public void Menu()
         {
+            refresh();
             Console.WriteLine("Choose one of the options below: ");
             Console.WriteLine("1) - Create the patient profile.");
             Console.WriteLine("2) - Change the patient profile.");
@@ -65,11 +67,14 @@ namespace Usi_Project.Manage
             Console.WriteLine("6) - Confirmation of a request.");
             Console.WriteLine("7) - Schedule referal appointment");
             Console.WriteLine("8) - Emergency appointment.");
+            Console.WriteLine("9) - Request dynamic equipment.");
+            Console.WriteLine("10) - Deployment of dynamic equipment.");
             Console.WriteLine("x) - Exit.");
             string chosenOption = Console.ReadLine();
             switch (chosenOption)
             {
                 case "1":
+                    DynamicEquipmentRequest();
                     
                     CreatingPatientProfile();
                     break;
@@ -97,6 +102,12 @@ namespace Usi_Project.Manage
                     break;
                 case "8":
                     EmergencyAppointment();
+                    break;
+                case "9":
+                    DynamicEquipmentRequest();
+                    break;
+                case "10":
+                    DeploymentOfDynamicEquipment();
                     break;
                 case "x":
                     break;
@@ -303,7 +314,6 @@ namespace Usi_Project.Manage
                         }
                     }
                 }
-
                 if (validEmail == 0)
                 {
                     Console.WriteLine("Entered email already exists, try again");
@@ -546,7 +556,6 @@ namespace Usi_Project.Manage
                     }
                 }
             }
-
         }
 
         // 0-Zakazan, 1-Odradjen, 2-Obrisan
@@ -747,12 +756,18 @@ namespace Usi_Project.Manage
        }
 
        
+        public void PrintPatientsEmail()
+       {
+           foreach (Patient patient in _manager.PatientManager.Patients)
+           {
+               Console.WriteLine("Email: " + patient.email);
+           }
+       }
+
+        
         public void EmergencyAppointment()
         {
-            foreach (Patient patient in _manager.PatientManager.Patients)
-            {
-                Console.WriteLine("Email: " + patient.email);
-            }
+            PrintPatientsEmail();
             Console.WriteLine("Enter the email (x for exit) of a patient that  you want to schedule appointment for:");
             string enteredEmail = Console.ReadLine();
             if (enteredEmail == ("x"))
@@ -765,66 +780,53 @@ namespace Usi_Project.Manage
                 EmergencyAppointment();
             }
             else
+            ChooseSpecialization(enteredEmail);
+        }
+        
+        
+        public void ChooseSpecialization(string enteredEmail)
+        {
+            Console.WriteLine("Chose the Doctor specialization");
+            Console.WriteLine("1) - Cardiology");
+            Console.WriteLine("x) - exit");
+            string chosenSpecialization = Console.ReadLine();
+            switch (chosenSpecialization)
             {
-                Console.WriteLine("Chose the Doctor specialization");
-                Console.WriteLine("1) - Cardiology");
-                Console.WriteLine("x) - exit");
-                string chosenSpecialization = Console.ReadLine();
-                switch (chosenSpecialization)
-                {
-                    case "1":
-                        EmergencyAppointmentSpecializationBased("Cardiology", enteredEmail);
-                        break;
-                    case "x":
-                        break;
-                    default:
-                        Console.WriteLine("Invalid input");
-                        EmergencyAppointment();
-                        break;
-                }
-
-                Menu();
+                case "1":
+                    EmergencyAppointmentSpecializationBased("Cardiology", enteredEmail);
+                    break;
+                case "x":
+                    break;
+                default:
+                    Console.WriteLine("Invalid input");
+                    EmergencyAppointment();
+                    break;
             }
+            Menu();
         }
         
         
         void EmergencyAppointmentSpecializationBased(string specialization, string enteredEmail)
         {
-            
             Console.WriteLine("Enter the duration of a Appointment: ");
             int appointmentDuration = Convert.ToInt32(Console.ReadLine());
             foreach (Doctor doctor in _manager.DoctorManager.Doctors)
             {
                 if (specialization == doctor.Specialisation)
                 {
-                    
                     DateTime appointTime = DateTime.Now;
                     int appointmentFound = FreeTermFound(doctor, appointTime, appointmentDuration, enteredEmail);
                     if (appointmentFound == 0)
                     {
-                        List<Appointment> scheduledAppointments = FindScheduledAppointments(doctor, appointTime);
-                        int indexOfAppointment = ChooseTermToReschedule(scheduledAppointments);
-                        for (int i = 0; i < scheduledAppointments.Count; i++)
-                        {
-                            if (i == indexOfAppointment)
-                            {
-                                if (scheduledAppointments[i].Type == "OV")
-                                    {
-                                        ScheduleTypeOvAppointment(doctor, scheduledAppointments, i);
-                                    }
-                                    else
-                                    {
-                                        ScheduleTypeOpAppointment(doctor, scheduledAppointments, i);
-                                    }
-
-                                    ScheduleEmergencyAppointment(doctor, enteredEmail, scheduledAppointments, i);
-                            }
-                        }
+                        RescheduleAppointment(doctor, appointTime, enteredEmail);
                     }
                     break;
                 }
             }
         }
+        
+        
+        
 
         
         int FreeTermFound(Doctor doctor, DateTime appointTime, int appointmentDuration, string enteredEmail)
@@ -841,8 +843,8 @@ namespace Usi_Project.Manage
                     {
                         Appointment appointment = new Appointment(doctor.email,
                             enteredEmail,
-                            appointTime.AddMinutes(i), appointTime.AddMinutes(i + appointmentDuration), "OP",
-                            idRoom, "0");
+                            appointTime.AddMinutes(i), appointTime.AddMinutes(i + appointmentDuration),
+                            "OP", idRoom, "0");
                         _manager.AppointmentManager.Appointment.Add(appointment);
                         appointmentFound = 1;
                         _manager.Saver.SaveAppointment(_manager.AppointmentManager.Appointment);
@@ -852,6 +854,29 @@ namespace Usi_Project.Manage
             }
 
             return appointmentFound;
+        }
+        
+        
+        public void RescheduleAppointment(Doctor doctor, DateTime appointTime, string enteredEmail)
+        {
+            List<Appointment> scheduledAppointments = FindScheduledAppointments(doctor, appointTime);
+            int indexOfAppointment = ChooseTermToReschedule(scheduledAppointments);
+            for (int i = 0; i < scheduledAppointments.Count; i++)
+            {
+                if (i == indexOfAppointment)
+                {
+                    if (scheduledAppointments[i].Type == "OV")
+                    {
+                        ScheduleTypeOvAppointment(doctor, scheduledAppointments, i);
+                    }
+                    else
+                    {
+                        ScheduleTypeOpAppointment(doctor, scheduledAppointments, i);
+                    }
+                    ScheduleEmergencyAppointment(doctor, enteredEmail, scheduledAppointments, i);
+                }
+            }
+            
         }
 
         
@@ -949,7 +974,8 @@ namespace Usi_Project.Manage
             }
         }
 
-        void ScheduleEmergencyAppointment(Doctor doctor, string enteredEmail, List<Appointment> scheduledAppointments, int i)
+        void ScheduleEmergencyAppointment(Doctor doctor, string enteredEmail, List<Appointment> scheduledAppointments,
+            int i)
         {
             Appointment appointment = new Appointment(doctor.email,
                 enteredEmail,
@@ -958,6 +984,729 @@ namespace Usi_Project.Manage
                 scheduledAppointments[i].IdRoom, "0");
             _manager.AppointmentManager.Appointment.Add(appointment);
             _manager.Saver.SaveAppointment(_manager.AppointmentManager.Appointment);
+        }
+
+        void PrintAllOutOfStockDynamicTool()
+        {
+            Dictionary<DynamicEquipment, int> nekaList = _manager.RoomManager.StockRoom.DynamicEquipment;
+            foreach (OperatingRoom operatingRoom in _manager.RoomManager.OperatingRooms)
+            {
+                nekaList = operatingRoom.PrintDynamicTools(nekaList);
+            }
+            foreach (OverviewRoom overviewRoom in _manager.RoomManager.OverviewRooms)
+            {
+                nekaList = overviewRoom.PrintDynamicTools(nekaList);
+            }
+            
+            foreach (var liste in nekaList)
+            {
+                if (liste.Value == 0)
+                {
+                    Console.WriteLine(liste.Key + " out of stock");
+                }
+            }
+        }
+
+        void DynamicEquipmentRequest()
+        {
+            PrintAllOutOfStockDynamicTool();
+            while (true)
+            {
+                int validEntry = 0;
+                Dictionary<DynamicEquipment, int> nekaList2 = new Dictionary<DynamicEquipment, int>();
+                Console.WriteLine("Enter Dynamic tool(Gauze, Buckles, Bandages, Paper, Pencils) you want to create a request for (x for exit): ");
+                string toolName = Console.ReadLine().ToUpper();
+                int numberOfTools; 
+                switch (toolName)
+                {
+                    case "GAUZE":
+                        Console.WriteLine("Enter how much do you want to order: ");
+                        numberOfTools = Convert.ToInt32(Console.ReadLine());
+                        nekaList2.Add(DynamicEquipment.Gauze, numberOfTools);
+                        nekaList2.Add(DynamicEquipment.Buckles, 0);
+                        nekaList2.Add(DynamicEquipment.Bandages, 0);
+                        nekaList2.Add(DynamicEquipment.Paper, 0);
+                        nekaList2.Add(DynamicEquipment.Pencils, 0);
+                        validEntry = 1;
+                        break;
+                    case "BUCKLES":
+                        Console.WriteLine("Enter how much do you want to order: ");
+                        numberOfTools = Convert.ToInt32(Console.ReadLine());
+                        nekaList2.Add(DynamicEquipment.Gauze, 0);
+                        nekaList2.Add(DynamicEquipment.Buckles, numberOfTools);
+                        nekaList2.Add(DynamicEquipment.Bandages, 0);
+                        nekaList2.Add(DynamicEquipment.Paper, 0);
+                        nekaList2.Add(DynamicEquipment.Pencils, 0);
+                        validEntry = 1;
+                        break;
+                    case "BANDAGES":
+                        Console.WriteLine("Enter how much do you want to order: ");
+                        numberOfTools = Convert.ToInt32(Console.ReadLine());
+                        nekaList2.Add(DynamicEquipment.Gauze, 0);
+                        nekaList2.Add(DynamicEquipment.Buckles, 0);
+                        nekaList2.Add(DynamicEquipment.Bandages, numberOfTools);
+                        nekaList2.Add(DynamicEquipment.Paper, 0);
+                        nekaList2.Add(DynamicEquipment.Pencils, 0);
+                        validEntry = 1;
+                        break;
+                    case "PAPER":
+                        Console.WriteLine("Enter how much do you want to order: ");
+                        numberOfTools = Convert.ToInt32(Console.ReadLine());
+                        nekaList2.Add(DynamicEquipment.Gauze, 0);
+                        nekaList2.Add(DynamicEquipment.Buckles, 0);
+                        nekaList2.Add(DynamicEquipment.Bandages, 0);
+                        nekaList2.Add(DynamicEquipment.Paper, numberOfTools);
+                        nekaList2.Add(DynamicEquipment.Pencils, 0);
+                        validEntry = 1;
+                        break;
+                    case "PENCILS":
+                        Console.WriteLine("Enter how much do you want to order: ");
+                        numberOfTools = Convert.ToInt32(Console.ReadLine());
+                        nekaList2.Add(DynamicEquipment.Gauze, 0);
+                        nekaList2.Add(DynamicEquipment.Buckles, 0);
+                        nekaList2.Add(DynamicEquipment.Bandages, 0);
+                        nekaList2.Add(DynamicEquipment.Paper, 0);
+                        nekaList2.Add(DynamicEquipment.Pencils, numberOfTools);
+                        validEntry = 1;
+                        break;
+                    case "X":
+                        break;
+                    default:
+                        Console.WriteLine("You didnt enter valid name, try again.");
+                        break;
+                }
+                if (toolName == "X")
+                {
+                    break;
+                }
+                if (validEntry == 0)
+                {
+                }
+                else
+                {
+                    DateTime currentTime = DateTime.Now;
+                    DynamicRequest rikvest = new DynamicRequest(currentTime.AddHours(24), nekaList2);
+                    _manager.DynamicRequestManager.DynamicRequests.Add(rikvest);
+                    _manager.Saver.SaveDynamicRequest(_manager.DynamicRequestManager.DynamicRequests);
+                    break;
+                }
+            }
+            Menu();
+        }
+
+        void refresh()
+        {
+            DateTime currentTime = DateTime.Now;
+            for (int i = 0; i < _manager.DynamicRequestManager.DynamicRequests.Count; i++)
+            {
+                if (currentTime > _manager.DynamicRequestManager.DynamicRequests[i].TimeOfAddition)
+                {
+                    _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Gauze] +=
+                        _manager.DynamicRequestManager.DynamicRequests[i].DynamicEquipment[DynamicEquipment.Gauze];
+                    _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Buckles] +=
+                        _manager.DynamicRequestManager.DynamicRequests[i].DynamicEquipment[DynamicEquipment.Buckles];
+                    _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Bandages] +=
+                        _manager.DynamicRequestManager.DynamicRequests[i].DynamicEquipment[DynamicEquipment.Bandages];
+                    _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Paper] +=
+                        _manager.DynamicRequestManager.DynamicRequests[i].DynamicEquipment[DynamicEquipment.Paper];
+                    _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Pencils] +=
+                        _manager.DynamicRequestManager.DynamicRequests[i].DynamicEquipment[DynamicEquipment.Pencils];
+                    _manager.DynamicRequestManager.DynamicRequests.Remove(_manager.DynamicRequestManager.DynamicRequests[i]);
+                }
+            }
+
+            using (StreamWriter file = File.CreateText(_manager.DynamicRequestManager.RequestFilename))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, _manager.DynamicRequestManager.DynamicRequests);
+            }
+
+            _manager.RoomManager.SaveData();
+            
+        }
+
+
+        public List<string> PrintLowSupplyEquipmentFromAllRooms()
+        {
+            List<string> roomsId = new List<string>();
+            foreach (OperatingRoom operatingRoom in _manager.RoomManager.OperatingRooms)
+            {
+                roomsId =  operatingRoom.PrintLowSupplyEquipment(roomsId);
+            }
+            foreach (OverviewRoom overviewRoom in _manager.RoomManager.OverviewRooms)
+            {
+                roomsId = overviewRoom.PrintLowSupplyEquipment(roomsId);
+            }
+            roomsId = _manager.RoomManager.StockRoom.PrintLowSupplyEquipment(roomsId);
+            return roomsId;
+        }
+
+        
+        public string GetReceivingRoomid(List<string> roomsId)
+        {
+            string receivingRoomId = "";
+            while (true)
+            {
+                Console.WriteLine("Enter id of the room that you want to add equipment to: ");
+                receivingRoomId = Console.ReadLine();
+                if (roomsId.Contains(receivingRoomId))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid id entered, try again.");
+                }
+            }
+            return receivingRoomId;
+        }
+        
+        
+        public string GetSupplyingRoomid(List<string> roomsId)
+        {
+            string supplyingRoomId = "";
+            while (true)
+            {
+                Console.WriteLine("Enter id of the room that you want to take equipment from: ");
+                supplyingRoomId = Console.ReadLine();
+                if (roomsId.Contains(supplyingRoomId))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid id entered, try again.");
+                }
+            }
+            return supplyingRoomId;
+        }
+        void DeploymentOfDynamicEquipment()
+        {
+            List<string> roomsId = PrintLowSupplyEquipmentFromAllRooms();
+            string receivingRoomId = GetReceivingRoomid(roomsId);
+            string supplyingRoomId = GetSupplyingRoomid(roomsId);
+            Console.WriteLine("Enter Dynamic tool(Gauze, Buckles, Bandages, Pencils, Paper) you want to move (x for exit): ");
+            string toolName = Console.ReadLine().ToUpper();
+            int numberOfTools;
+            switch (toolName)
+            {
+                case "GAUZE":
+                    Console.WriteLine("Enter how much do you want to move: ");
+                    numberOfTools = Convert.ToInt32(Console.ReadLine());
+                    foreach (OverviewRoom receivingRoom in _manager.RoomManager.OverviewRooms)
+                        GiveEqToOvRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "GAUZE");
+                    foreach (OperatingRoom receivingRoom in _manager.RoomManager.OperatingRooms)
+                        GiveEqToOpRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "GAUZE");
+                    GiveEqToStock(receivingRoomId, numberOfTools, supplyingRoomId, _manager.RoomManager.StockRoom,
+                        "GAUZE");
+                    break;
+
+                case "BUCKLES":
+                    Console.WriteLine("Enter how much do you want to move: ");
+                    numberOfTools = Convert.ToInt32(Console.ReadLine());
+                    foreach (OverviewRoom receivingRoom in _manager.RoomManager.OverviewRooms)
+                        GiveEqToOvRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "BUCKLES");
+                    foreach (OperatingRoom receivingRoom in _manager.RoomManager.OperatingRooms)
+                        GiveEqToOpRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "BUCKLES");
+                    GiveEqToStock(receivingRoomId, numberOfTools, supplyingRoomId, _manager.RoomManager.StockRoom,
+                        "BUCKLES");
+                    break;
+
+                case "BANDAGES":
+                    Console.WriteLine("Enter how much do you want to move: ");
+                    numberOfTools = Convert.ToInt32(Console.ReadLine());
+                    foreach (OverviewRoom receivingRoom in _manager.RoomManager.OverviewRooms)
+                        GiveEqToOvRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "BANDAGES");
+                    foreach (OperatingRoom receivingRoom in _manager.RoomManager.OperatingRooms)
+                        GiveEqToOpRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "BANDAGES");
+                    GiveEqToStock(receivingRoomId, numberOfTools, supplyingRoomId, _manager.RoomManager.StockRoom,
+                        "BANDAGES");
+                    break;
+
+                case "PENCILS":
+                    Console.WriteLine("Enter how much do you want to move: ");
+                    numberOfTools = Convert.ToInt32(Console.ReadLine());
+                    foreach (OverviewRoom receivingRoom in _manager.RoomManager.OverviewRooms)
+                        GiveEqToOvRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "PENCILS");
+                    foreach (OperatingRoom receivingRoom in _manager.RoomManager.OperatingRooms)
+                        GiveEqToOpRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "PENCILS");
+                    GiveEqToStock(receivingRoomId, numberOfTools, supplyingRoomId, _manager.RoomManager.StockRoom,
+                        "PENCILS");
+                    break;
+
+                case "PAPER":
+                    Console.WriteLine("Enter how much do you want to move: ");
+                    numberOfTools = Convert.ToInt32(Console.ReadLine());
+                    foreach (OverviewRoom receivingRoom in _manager.RoomManager.OverviewRooms)
+                        GiveEqToOvRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "PAPER");
+                    foreach (OperatingRoom receivingRoom in _manager.RoomManager.OperatingRooms)
+                        GiveEqToOpRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "PAPER");
+                    GiveEqToStock(receivingRoomId, numberOfTools, supplyingRoomId, _manager.RoomManager.StockRoom,
+                        "PAPER");
+                    break;
+                case "X":
+                    break;
+                default:
+                    Console.WriteLine("You didnt enter valid name.");
+                    break;
+            }
+
+            _manager.RoomManager.SaveData();
+            Menu();
+        }
+
+        OverviewRoom CheckIfIdInOVRoom(string supplyingRoomId)
+        {
+            foreach (OverviewRoom supplyingRoom in _manager.RoomManager.OverviewRooms)
+            {
+                if (supplyingRoom.Id == supplyingRoomId)
+                {
+                    return supplyingRoom;
+                }
+            }
+            return null;
+        }
+        
+        OperatingRoom CheckIfIdInOPRoom(string supplyingRoomId)
+        {
+            foreach (OperatingRoom supplyingRoom in _manager.RoomManager.OperatingRooms)
+            {
+                if (supplyingRoom.Id == supplyingRoomId)
+                {
+                    return supplyingRoom;
+                }
+            }
+            return null;
+        }
+
+
+        public void TakeEqFromOpGiveToOv(int numberOfTools, OperatingRoom supplyingRoom1, OverviewRoom receivingRoom, string type)
+        {
+            if (GetNumOfEqInOpRoom(supplyingRoom1, type) >= numberOfTools)
+            {
+                switch (type)
+                {
+                    case "GAUZE":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
+                        break;
+                    case "BUCKLES":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
+                        break;
+                    case "BANDAGES":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
+                        break;
+                    case "PAPER":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
+                        break;
+                    case "PENCILS":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Not enough equipment in chosen room.");
+                
+            }
+        }
+
+
+        public void TakeEqFromOvGiveToOv(int numberOfTools, OverviewRoom supplyingRoom1, OverviewRoom receivingRoom, string type)
+        {
+            if (GetNumOfEqInOvRoom(supplyingRoom1, type) >= numberOfTools)
+            {
+                switch (type)
+                {
+                    case "GAUZE":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
+                        break;
+                    case "BUCKLES":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
+                        break;
+                    case "BANDAGES":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
+                        break;
+                    case "PAPER":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
+                        break;
+                    case "PENCILS":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Not enough equipment in chosen room.");
+            }
+        }
+        
+        
+        public void TakeEqFromStockGiveToOv(string supplyingRoomId, int numberOfTools, OverviewRoom receivingRoom, string type)
+        {
+            if (_manager.RoomManager.StockRoom.Id == supplyingRoomId)
+            {
+                if (GetNumOfEqInStockRoom(type) >= numberOfTools)
+                {
+                    switch (type)
+                    {
+                        case "GAUZE":
+                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
+                            receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
+                            break;
+                        case "BUCKLES":
+                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
+                            receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
+                            break;
+                        case "BANDAGES":
+                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
+                            receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
+                            break;
+                        case "PAPER":
+                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
+                            receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
+                            break;
+                        case "PENCILS":
+                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
+                            receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Not enough equipment in chosen room.");
+                    
+                }
+            }
+        }
+        
+
+        public void GiveEqToOvRoom(string receivingRoomId, int numberOfTools, string supplyingRoomId, OverviewRoom receivingRoom, string type)
+        {
+            if (receivingRoom.Id == receivingRoomId)
+            {
+                TakeEqFromStockGiveToOv(supplyingRoomId, numberOfTools, receivingRoom, type);
+                OperatingRoom supplyingRoom = CheckIfIdInOPRoom(supplyingRoomId);
+                if (supplyingRoom != null)
+                {
+                    TakeEqFromOpGiveToOv(numberOfTools, supplyingRoom, receivingRoom, type);
+                }
+
+                OverviewRoom supplyingRoom1 = CheckIfIdInOVRoom(supplyingRoomId);
+                if (supplyingRoom1 != null)
+                {
+                    TakeEqFromOvGiveToOv(numberOfTools, supplyingRoom1, receivingRoom, type);
+                }
+            }
+        }
+
+
+        public void TakeEqFromOvGiveToOp(int numberOfTools, OverviewRoom supplyingRoom1, OperatingRoom receivingRoom, string type)
+        {
+            if (GetNumOfEqInOvRoom(supplyingRoom1, type) >= numberOfTools)
+            {
+                switch (type)
+                {
+                    case "GAUZE":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
+                        break;
+                    case "BUCKLES":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
+                        break;
+                    case "BANDAGES":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
+                        break;
+                    case "PAPER":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
+                        break;
+                    case "PENCILS":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Not enough equipment in chosen room.");
+                
+                        
+            }
+        }
+        
+        
+        public void TakeEqFromOpGiveToOp(int numberOfTools, OperatingRoom supplyingRoom1, OperatingRoom receivingRoom, string type)
+        {
+            if (GetNumOfEqInOpRoom(supplyingRoom1, type) >= numberOfTools)
+            {
+                switch (type)
+                {
+                    case "GAUZE":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
+                        break;
+                    case "BUCKLES":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
+                        break;
+                    case "BANDAGES":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
+                        break;
+                    case "PAPER":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
+                        break;
+                    case "PENCILS":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Not enough equipment in chosen room.");
+                
+                        
+            }
+        }
+
+
+        public void TakeEqFromStockGiveToOp(string supplyingRoomId, int numberOfTools, OperatingRoom receivingRoom, string type )
+        {
+            if (_manager.RoomManager.StockRoom.Id == supplyingRoomId)
+            {
+                if (GetNumOfEqInStockRoom(type) >= numberOfTools)
+                {
+                    switch (type)
+                    {
+                        case "GAUZE":
+                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
+                            receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
+                            break;
+                        case "BUCKLES":
+                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
+                            receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
+                            break;
+                        case "BANDAGES":
+                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
+                            receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
+                            break;
+                        case "PAPER":
+                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
+                            receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
+                            break;
+                        case "PENCILS":
+                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
+                            receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Not enough equipment in chosen room.");
+                    
+                }
+            }
+        }
+        
+        
+        public void GiveEqToOpRoom(string receivingRoomId, int numberOfTools, string supplyingRoomId, OperatingRoom receivingRoom, string type)
+        {
+            if (receivingRoom.Id == receivingRoomId)
+            {
+                TakeEqFromStockGiveToOp(supplyingRoomId, numberOfTools, receivingRoom, type);
+                OverviewRoom supplyingRoom = CheckIfIdInOVRoom(supplyingRoomId);
+                if (supplyingRoom != null)
+                {
+                    TakeEqFromOvGiveToOp(numberOfTools, supplyingRoom, receivingRoom, type);
+                }
+
+                OperatingRoom supplyingRoom1 = CheckIfIdInOPRoom(supplyingRoomId);
+                if (supplyingRoom1 != null)
+                {
+                    TakeEqFromOpGiveToOp(numberOfTools, supplyingRoom1, receivingRoom, type);
+                }
+            }
+        }
+        
+        
+        public void TakeEqFromOvGiveToStock(int numberOfTools, OverviewRoom supplyingRoom1, StockRoom receivingRoom, string type)
+        {
+            if (GetNumOfEqInOvRoom(supplyingRoom1, type) >= numberOfTools)
+            {
+                switch (type)
+                {
+                    case "GAUZE":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
+                        break;
+                    case "BUCKLES":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
+                        break;
+                    case "BANDAGES":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
+                        break;
+                    case "PAPER":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
+                        break;
+                    case "PENCILS":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Not enough equipment in chosen room.");
+                
+                        
+            }
+        }
+        
+        
+        public void TakeEqFromOpGiveToStock(int numberOfTools, OperatingRoom supplyingRoom1, StockRoom receivingRoom, string type)
+        {
+            if (GetNumOfEqInOpRoom(supplyingRoom1, type) >= numberOfTools)
+            {
+                switch (type)
+                {
+                    case "GAUZE":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
+                        break;
+                    case "BUCKLES":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
+                        break;
+                    case "BANDAGES":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
+                        break;
+                    case "PAPER":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
+                        break;
+                    case "PENCILS":
+                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
+                        receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Not enough equipment in chosen room.");
+               
+            }
+        }
+
+        
+        public void GiveEqToStock(string receivingRoomId, int numberOfTools, string supplyingRoomId,
+            StockRoom receivingRoom, string type)
+        {
+            if (receivingRoom.Id == receivingRoomId)
+            {
+                OverviewRoom supplyingRoom = CheckIfIdInOVRoom(supplyingRoomId);
+                if (supplyingRoom != null)
+                {
+                    TakeEqFromOvGiveToStock(numberOfTools, supplyingRoom, receivingRoom, type);
+                }
+                OperatingRoom supplyingRoom1 = CheckIfIdInOPRoom(supplyingRoomId);
+                if (supplyingRoom1 != null)
+                {
+                    TakeEqFromOpGiveToStock(numberOfTools, supplyingRoom1, receivingRoom, type);
+                }
+            }
+        }
+
+        public int GetNumOfEqInOvRoom(OverviewRoom room, string type)
+        {
+            int numOfEq = 0;
+            switch (type)
+            {
+                case "GAUZE":
+                    numOfEq = room.DynamicEquipment[DynamicEquipment.Gauze];
+                    break;
+                case "BUCKLES":
+                    numOfEq = room.DynamicEquipment[DynamicEquipment.Buckles];
+                    break;
+                case "BANDAGES":
+                    numOfEq = room.DynamicEquipment[DynamicEquipment.Bandages];
+                    break;
+                case "PAPER":
+                    numOfEq = room.DynamicEquipment[DynamicEquipment.Paper];
+                    break;
+                case "PENCILS":
+                    numOfEq = room.DynamicEquipment[DynamicEquipment.Pencils];
+                    break;
+            }
+            return numOfEq;
+        }
+        
+        
+        public int GetNumOfEqInOpRoom(OperatingRoom room, string type)
+        {
+            int numOfEq = 0;
+            switch (type)
+            {
+                case "GAUZE":
+                    numOfEq = room.DynamicEquipment[DynamicEquipment.Gauze];
+                    break;
+                case "BUCKLES":
+                    numOfEq = room.DynamicEquipment[DynamicEquipment.Buckles];
+                    break;
+                case "BANDAGES":
+                    numOfEq = room.DynamicEquipment[DynamicEquipment.Bandages];
+                    break;
+                case "PAPER":
+                    numOfEq = room.DynamicEquipment[DynamicEquipment.Paper];
+                    break;
+                case "PENCILS":
+                    numOfEq = room.DynamicEquipment[DynamicEquipment.Pencils];
+                    break;
+            }
+            return numOfEq;
+        }
+        
+        
+        public int GetNumOfEqInStockRoom( string type)
+        {
+            int numOfEq = 0;
+            switch (type)
+            {
+                case "GAUZE":
+                    numOfEq =  _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Gauze];
+                    break;
+                case "BUCKLES":
+                    numOfEq =  _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Buckles];
+                    break;
+                case "BANDAGES":
+                    numOfEq =  _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Bandages];
+                    break;
+                case "PAPER":
+                    numOfEq =  _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Paper];
+                    break;
+                case "PENCILS":
+                    numOfEq =  _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Pencils];
+                    break;
+            }
+            return numOfEq;
         }
     }
 }
