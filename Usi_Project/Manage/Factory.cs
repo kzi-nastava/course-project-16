@@ -9,17 +9,7 @@ namespace Usi_Project.Manage
 {
     public class Factory
     {
-        private DirectorManager _directorManager;
-        private PatientManager _patientManager;
-        private SecretaryManager _secretaryManager;
-        private DoctorManager _doctorManager;
-        private RoomManager _roomManager;
-        private AppointmentManager _appointmentManager;
-        private AnamnesaManager _anamnesaManager;
-        private RequestManager _requestManager;
-        private TimerManager _timerManager;
-        private Saver _saver;
-        private RecipesManager _recipesManager;
+
         private DynamicRequestManager _dynamicRequestManager;
         private readonly DirectorManager _directorManager;
         private readonly PatientManager _patientManager;
@@ -61,24 +51,6 @@ namespace Usi_Project.Manage
             _drugManager = new DrugManager(fileSettings.DrugsFn, fileSettings.RejectedDrugsFn);
         }
         
-        public void LoadData()
-        {
-
-            _directorManager.LoadData();
-            _patientManager.LoadData();
-            _secretaryManager.LoadData();
-            _doctorManager.LoadData();
-            _roomManager.LoadData();
-            _appointmentManager.LoadData();
-            _anamnesaManager.LoadData();
-            _requestManager.LoadData();
-            _timerManager.LoadData();
-            _recipesManager.LoadData();
-            _drugManager.LoadData();
-            
-
-        }
-
         public RecipesManager RecipesManager
         {
             get => _recipesManager;
@@ -108,6 +80,7 @@ namespace Usi_Project.Manage
         public AppointmentManager AppointmentManager
         {
             get => _appointmentManager;
+        }
 
         public void LoadData()
         {

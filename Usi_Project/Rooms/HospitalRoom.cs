@@ -157,5 +157,16 @@ namespace Usi_Project
 
         }
 
+        public void PrintEquipment()
+        {
+            Console.WriteLine("-----------------------------------------");
+            Console.WriteLine("Room: " + _id);
+            foreach (var dictionary in DynamicEquipment)
+            {
+                Console.WriteLine(dictionary.Key.ToString() + " : "  + dictionary.Value);
+            }
+
+        }
+       
     }
 }
