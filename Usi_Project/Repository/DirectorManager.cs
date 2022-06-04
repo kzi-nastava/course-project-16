@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Usi_Project.Users;
 
-namespace Usi_Project.Manage
+namespace Usi_Project.Repository
 {
     public class DirectorManager
     {

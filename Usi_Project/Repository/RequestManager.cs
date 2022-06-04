@@ -4,7 +4,7 @@ using System.IO;
 using Usi_Project.Appointments;
 
 
-namespace Usi_Project.Manage
+namespace Usi_Project.Repository
 {
     public class RequestManager
     {

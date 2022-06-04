@@ -1,6 +1,6 @@
 using System;
 using Newtonsoft.Json;
-using Usi_Project.Manage;
+using Usi_Project.Repository;
 
 namespace Usi_Project.Appointments
 {

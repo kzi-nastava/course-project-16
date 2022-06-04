@@ -1,11 +1,10 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 using Usi_Project.Settings;
-using Usi_Project.Manage;
 using Newtonsoft.Json;
 using Usi_Project.DataSaver;
 
-namespace Usi_Project.Manage
+namespace Usi_Project.Repository
 {
     public class Factory
     {
@@ -19,6 +18,7 @@ namespace Usi_Project.Manage
         private RequestManager _requestManager;
         private TimerManager _timerManager;
         private Saver _saver;
+        private readonly RecipesManager _recipesManager;
 
         public Factory()
         {
@@ -44,8 +44,12 @@ namespace Usi_Project.Manage
             _requestManager = new RequestManager(fileSettings.RequestedFn, this);
             _saver = saver;
             _timerManager = new TimerManager(fileSettings.TimerFn, this);
+            _recipesManager = new RecipesManager(fileSettings.RecipesFn, this);
         }
-
+        public RecipesManager RecipesManager
+        {
+            get => _recipesManager;
+        }
         public RequestManager RequestManager
         {
             get => _requestManager;

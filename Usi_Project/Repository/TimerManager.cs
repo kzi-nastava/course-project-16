@@ -4,7 +4,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Usi_Project.Users;
 
-namespace Usi_Project.Manage
+namespace Usi_Project.Repository
 {
     public class TimerManager
     {

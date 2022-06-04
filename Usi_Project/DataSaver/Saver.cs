@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Usi_Project.Appointments;
-using Usi_Project.Manage;
+using Usi_Project.Repository;
 using Usi_Project.Settings;
 using Newtonsoft.Json;
 using Usi_Project.Users;
@@ -32,9 +32,6 @@ namespace Usi_Project.DataSaver
                 serializer.Serialize(file, appointments);
             }
         }
-<<<<<<< Updated upstream
-        public void SavePatient(List<Patient> appointments)
-=======
         public void SaveRecipe(List<Recipes> recipes)
         {
             using (StreamWriter file = File.CreateText(_fileSettings.RecipesFn))
@@ -45,7 +42,6 @@ namespace Usi_Project.DataSaver
             }
         }
         public void SavePatient(List<Patient> patients)
->>>>>>> Stashed changes
         {
             using (StreamWriter file = File.CreateText(_fileSettings.PatientFilename))
             {
@@ -61,6 +57,16 @@ namespace Usi_Project.DataSaver
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Formatting = Formatting.Indented;
                 serializer.Serialize(file, anamnesas);
+            }
+        }
+
+        public void SaveRequests(List<Requested> requests)
+        {
+            using (StreamWriter file = File.CreateText(_fileSettings.RequestedFn))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, requests);
             }
         }
         

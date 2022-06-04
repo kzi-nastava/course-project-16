@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System;
 
-namespace Usi_Project.Manage
+namespace Usi_Project.Repository
 {
     public class RoomManager
     {

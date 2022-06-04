@@ -6,7 +6,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 
 
-namespace Usi_Project.Manage
+namespace Usi_Project.Repository
 {
     public class AnamnesaManager
     {

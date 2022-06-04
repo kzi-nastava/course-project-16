@@ -10,7 +10,7 @@ using Usi_Project.Appointments;
 using Usi_Project.Settings;
 
 
-namespace Usi_Project.Manage
+namespace Usi_Project.Repository
 {
     public class DoctorManager
     {

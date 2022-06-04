@@ -3,12 +3,10 @@
     "IdRoom": "B1",
     "EmailDoctor": "veljkobubnjevic001@gmail.com",
     "EmailPatient": "MilosK@gmail.com",
-<<<<<<< Updated upstream
     "StartTime": "2022-05-01T12:00:00",
     "EndTime": "2022-05-01T12:15:00",
     "Type": "OV",
-    "Status": "0"
-=======
+    "Status": "0",
     "StartTime": "2022-10-10T10:10:00",
     "EndTime": "2022-10-10T10:40:00",
     "Type": "OP"
@@ -21,7 +19,6 @@
     "StartTime": "2022-06-04T08:00:00",
     "EndTime": "2022-06-04T08:15:00",
     "Type": "OV"
->>>>>>> Stashed changes
   }
   
 ]
