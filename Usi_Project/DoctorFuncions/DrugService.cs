@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Usi_Project.Manage;
+using Usi_Project.Repository;
 
 namespace Usi_Project.DoctorFuncions
 {
