@@ -1121,12 +1121,9 @@ namespace Usi_Project.Manage
                 serializer.Formatting = Formatting.Indented;
                 serializer.Serialize(file, _manager.DynamicRequestManager.DynamicRequests);
             }
-
             _manager.RoomManager.SaveData();
-            
         }
-
-
+        
         public List<string> PrintLowSupplyEquipmentFromAllRooms()
         {
             List<string> roomsId = new List<string>();
@@ -1140,6 +1137,18 @@ namespace Usi_Project.Manage
             }
             roomsId = _manager.RoomManager.StockRoom.PrintLowSupplyEquipment(roomsId);
             return roomsId;
+        }
+        
+        public void PrintEquipmentForOverviewRoom(string roomId)
+        {
+            List<OverviewRoom> rooms = _manager.RoomManager.OverviewRooms;
+            foreach (var room in rooms)
+            {
+                if (room.Id == roomId)
+                {
+                    room.PrintEquipment();
+                }
+            }
         }
 
         

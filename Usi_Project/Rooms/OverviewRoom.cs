@@ -78,7 +78,11 @@ namespace Usi_Project
                 }
             }
         }
-        
+
+        public void SaveData()
+        {
+            
+        }
         
         
         
