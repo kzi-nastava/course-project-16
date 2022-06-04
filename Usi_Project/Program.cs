@@ -16,7 +16,7 @@ namespace Usi_Project
         static void Main(string[] args)
         {
             
-            FileSettings fileSettings = new FileSettings("../../../Files/doctors.json", "../../../Files/patients.json",
+             FileSettings  fileSettings = new FileSettings("../../../Files/doctors.json", "../../../Files/patients.json",
                 "../../../Files/director.json", "../../../Files/secretaries.json",
                 "../../../Files/operatingRooms.json", "../../../Files/overviewRooms.json",
                 "../../../Files/retiringRooms.json", "../../../Files/appointments.json","../../../Files/anamnesa.json","../../../Files/requested.json",
