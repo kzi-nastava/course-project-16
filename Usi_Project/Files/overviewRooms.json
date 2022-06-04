@@ -15,9 +15,9 @@
     },
     "DynamicEquipment": {
       "Gauze": 0,
-      "Buckles": 4,
+      "Buckles": 2,
       "Bandages": 10,
-      "Paper": 21,
+      "Paper": 11,
       "Pencils": 6
     },
     "Id": "B1",
