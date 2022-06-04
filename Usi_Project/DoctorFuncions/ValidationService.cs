@@ -111,5 +111,17 @@ namespace Usi_Project.DoctorFuncions
                 }
             }
         }
+        
+        public bool CheckEmail(string email)
+        {
+            foreach (Doctor doctor in _validationManager.DoctorManager.Doctors)
+            {
+                if (email == doctor.email)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
