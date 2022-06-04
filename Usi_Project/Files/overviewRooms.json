@@ -14,8 +14,9 @@
       "Chair": 3
     },
     "DynamicEquipment": {
-      "Gauze": 0,
-      "Buckles": 2,
+
+      "Gauze": 10,
+      "Buckles": 4,
       "Bandages": 10,
       "Paper": 11,
       "Pencils": 6
@@ -42,7 +43,7 @@
       "Buckles": 3,
       "Bandages": 10,
       "Paper": 21,
-      "Pencils": 6
+      "Pencils": 8
     },
     "Id": "B2",
     "Name": "Overview room 2"
@@ -62,7 +63,7 @@
       "Chair": 5
     },
     "DynamicEquipment": {
-      "Gauze": 22,
+      "Gauze": 12,
       "Buckles": 5,
       "Bandages": 10,
       "Paper": 21,
