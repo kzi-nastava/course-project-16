@@ -94,6 +94,7 @@ namespace Usi_Project.Manage
                 rejectedDrug.ChangeIngredients();
                 _drugs.Add(new Drug(rejectedDrug));
                 _rejectedDrugs.Remove(rejectedDrug);
+                SaveData();
             }
         }
 
@@ -153,6 +154,7 @@ namespace Usi_Project.Manage
 
             Drug newDrug = new Drug(id, name, producer, expirationTime, ingredients);
             _drugs.Add(newDrug);
+            SaveData();
         }
         
         private Drug GetDrug()
