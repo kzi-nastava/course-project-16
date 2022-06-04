@@ -168,9 +168,20 @@ namespace Usi_Project.DoctorFuncions
                 }
             }
         }
+        public void PrintDoctorsAppointments(Doctor doctor)
+        {
+            foreach (var app in _doctorScheduleManager.AppointmentManager.Appointment)
+            {
+                if (app.EmailDoctor == doctor.email)
+                {
+                    app.PrintAppointment();
+                }
+                
+            }
+        }
         public void DeleteAppointment(Doctor doctor)
         {
-            _doctorScheduleManager.DoctorManager.PrintDoctorsAppointments(doctor);
+            PrintDoctorsAppointments(doctor);
             Console.WriteLine("Enter start time of appointment");
             DateTime time = CreateDate();
             List<Appointment> appointments = _doctorScheduleManager.AppointmentManager.Appointment;
