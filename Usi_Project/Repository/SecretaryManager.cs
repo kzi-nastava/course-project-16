@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 using Usi_Project.Users;
 using Usi_Project.Appointments;
 
-namespace Usi_Project.Manage
+namespace Usi_Project.Repository
 {
     public class SecretaryManager
     {

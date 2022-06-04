@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 using Usi_Project.Settings;
-using Usi_Project.Manage;
 using Newtonsoft.Json;
 using Usi_Project.DataSaver;
+using Usi_Project.Manage;
 
-namespace Usi_Project.Manage
+namespace Usi_Project.Repository
 {
     public class Factory
     {
@@ -50,37 +50,8 @@ namespace Usi_Project.Manage
             _dynamicRequestManager = new DynamicRequestManager(fileSettings.DynamicReqFilename, this);
             _drugManager = new DrugManager(fileSettings.DrugsFn, fileSettings.RejectedDrugsFn);
         }
-        
-        public RecipesManager RecipesManager
-        {
-            get => _recipesManager;
-        }
 
-        public RequestManager RequestManager
-        {
-            get => _requestManager;
-        }
 
-        public DrugManager DrugManager
-        {
-            get => _drugManager;
-        }
-
-        public DynamicRequestManager DynamicRequestManager
-        {
-            get => _dynamicRequestManager;
-            set => _dynamicRequestManager = value;
-        }
-
-        public AnamnesaManager AnamnesaManager
-        {
-            get => _anamnesaManager;
-        }
-
-        public AppointmentManager AppointmentManager
-        {
-            get => _appointmentManager;
-        }
 
         public void LoadData()
         {
@@ -128,6 +99,22 @@ namespace Usi_Project.Manage
         {
             get => _doctorManager;
         }
+
+        public DynamicRequestManager DynamicRequestManager
+        {
+            get => _dynamicRequestManager;
+            set => _dynamicRequestManager = value;
+        }
+
+        public AppointmentManager AppointmentManager => _appointmentManager;
+
+        public AnamnesaManager AnamnesaManager => _anamnesaManager;
+
+        public RequestManager RequestManager => _requestManager;
+
+        public RecipesManager RecipesManager => _recipesManager;
+
+        public DrugManager DrugManager => _drugManager;
     }
 
 }

@@ -4,7 +4,7 @@ using System.IO;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Usi_Project.Manage
+namespace Usi_Project.Repository
 {
     public class RoomManager
     {

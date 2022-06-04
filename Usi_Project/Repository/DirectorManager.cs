@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Usi_Project;
+using Usi_Project.Repository;
 using Usi_Project.Users;
-namespace Usi_Project.Manage
-{
+
+
     public class DirectorManager
     {
         private readonly string _directorFilename;
@@ -925,4 +927,3 @@ namespace Usi_Project.Manage
         }
         
     }
-}

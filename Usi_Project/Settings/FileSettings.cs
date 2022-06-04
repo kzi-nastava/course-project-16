@@ -23,9 +23,9 @@ namespace Usi_Project.Settings
       
         public FileSettings(string doctorFilename, string patientFilename, string directorFilename,
             string secretaryFilename, string operatingRoomsFn, string overviewRoomsFn, string retiringRoomsFn,
-            string appointmentsFn, string anamnesaFn, string requestedFn, 
+            string appointmentsFn, string anamnesaFn, string requestedFn,
             string stockRoomFn, string timerFn, string recipesFn, string dynamicReqFn, string drugsFn, string rejectedDrugsFn)
-
+        
         
         {
             _doctorFilename = doctorFilename;
