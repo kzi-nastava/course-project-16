@@ -21,7 +21,18 @@ namespace Usi_Project.Manage
         private Saver _saver;
         private RecipesManager _recipesManager;
         private DynamicRequestManager _dynamicRequestManager;
-
+        private readonly DirectorManager _directorManager;
+        private readonly PatientManager _patientManager;
+        private readonly SecretaryManager _secretaryManager;
+        private readonly DoctorManager _doctorManager;
+        private readonly RoomManager _roomManager;
+        private readonly AppointmentManager _appointmentManager;
+        private readonly AnamnesaManager _anamnesaManager;
+        private readonly RequestManager _requestManager;
+        private readonly TimerManager _timerManager;
+        private readonly Saver _saver;
+        private readonly RecipesManager _recipesManager;
+        private readonly DrugManager _drugManager;
         public Factory()
         {
         }
@@ -29,7 +40,6 @@ namespace Usi_Project.Manage
         public Saver Saver
         {
             get => _saver;
-            set => _saver = value;
         }
         
         public Factory(FileSettings fileSettings, Saver saver)
@@ -48,18 +58,40 @@ namespace Usi_Project.Manage
             _timerManager = new TimerManager(fileSettings.TimerFn, this);
             _recipesManager = new RecipesManager(fileSettings.RecipesFn, this);
             _dynamicRequestManager = new DynamicRequestManager(fileSettings.DynamicReqFilename, this);
+            _drugManager = new DrugManager(fileSettings.DrugsFn, fileSettings.RejectedDrugsFn);
+        }
+        
+        public void LoadData()
+        {
+
+            _directorManager.LoadData();
+            _patientManager.LoadData();
+            _secretaryManager.LoadData();
+            _doctorManager.LoadData();
+            _roomManager.LoadData();
+            _appointmentManager.LoadData();
+            _anamnesaManager.LoadData();
+            _requestManager.LoadData();
+            _timerManager.LoadData();
+            _recipesManager.LoadData();
+            _drugManager.LoadData();
+            
+
         }
 
         public RecipesManager RecipesManager
         {
             get => _recipesManager;
-            set => _recipesManager = value;
         }
 
         public RequestManager RequestManager
         {
             get => _requestManager;
-            set => _requestManager = value;
+        }
+
+        public DrugManager DrugManager
+        {
+            get => _drugManager;
         }
 
         public DynamicRequestManager DynamicRequestManager
@@ -71,16 +103,11 @@ namespace Usi_Project.Manage
         public AnamnesaManager AnamnesaManager
         {
             get => _anamnesaManager;
-            set => _anamnesaManager = value;
-           
-        
         }
 
         public AppointmentManager AppointmentManager
         {
             get => _appointmentManager;
-            set => _appointmentManager = value;
-        }
 
         public void LoadData()
         {
@@ -97,17 +124,16 @@ namespace Usi_Project.Manage
             _dynamicRequestManager.LoadData();
             
         }
+        
         public TimerManager TimerManager
         {
             get => _timerManager;
-            set => _timerManager = value;
 
         }
 
         public RoomManager RoomManager
         {
             get => _roomManager;
-            set => _roomManager = value;
         }
 
         public DirectorManager DirectorManager

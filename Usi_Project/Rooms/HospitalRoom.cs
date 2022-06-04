@@ -156,24 +156,6 @@ namespace Usi_Project
             return IdOfRooms;
 
         }
-        
-        
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        
+
     }
 }

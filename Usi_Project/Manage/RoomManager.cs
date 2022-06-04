@@ -275,7 +275,7 @@ namespace Usi_Project.Manage
             }
             while (true)
             {
-                room.printRoom();
+                room.PrintRoom();
                 switch (GetOption())
                 {
                     case "1":
