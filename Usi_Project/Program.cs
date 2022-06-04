@@ -23,7 +23,7 @@ namespace Usi_Project
                 "../../../Files/retiringRooms.json", "../../../Files/appointments.json",
                 "../../../Files/anamnesa.json","../../../Files/requested.json",
                 "../../../Files/stockRoom.json", "../../../Files/timer.json",
-                "../../../Files/recipes.json", "../../../Files/dynamicRequests.json,",
+                "../../../Files/recipes.json", "../../../Files/dynamicRequests.json,", 
                  "../../../Files/drugs.json", "../../../Files/rejectedDrugs.json");
              
             Saver saver = new Saver(fileSettings);
