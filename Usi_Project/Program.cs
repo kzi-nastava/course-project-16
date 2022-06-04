@@ -16,13 +16,18 @@ namespace Usi_Project
         static void Main(string[] args)
         {
             
-            FileSettings fileSettings = new FileSettings("../../../Files/doctors.json", "../../../Files/patients.json",
+             FileSettings  fileSettings = new FileSettings("../../../Files/doctors.json", "../../../Files/patients.json",
                 "../../../Files/director.json", "../../../Files/secretaries.json",
                 "../../../Files/operatingRooms.json", "../../../Files/overviewRooms.json",
                 "../../../Files/retiringRooms.json", "../../../Files/appointments.json",
                 "../../../Files/anamnesa.json","../../../Files/requested.json",
                 "../../../Files/stockRoom.json", "../../../Files/timer.json",
                 "../../../Files/recipes.json", "../../../Files/dynamicRequests.json");
+                "../../../Files/retiringRooms.json", "../../../Files/appointments.json","../../../Files/anamnesa.json","../../../Files/requested.json",
+                "../../../Files/stockRoom.json", "../../../Files/timer.json","../../../Files/recipes.json", 
+                "../../../Files/drugs.json", "../../../Files/dynamicRequests.json", 
+                "../../../Files/drugs.json", "../../../Files/drugs.json", 
+                "../../../Files/drugs.json", "../../../Files/rejectedDrugs.json");
             Saver saver = new Saver(fileSettings);
             Factory factory = new Factory(fileSettings, saver);
             factory.LoadData();

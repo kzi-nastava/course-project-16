@@ -8,40 +8,14 @@ namespace Usi_Project.Manage
 {
     public class DirectorManager
     {
-        private string _directorFilename;
+        private readonly string _directorFilename;
         private Director _director;
         private static Factory _factory;
-        private RoomManager _roomManager;
 
         public DirectorManager(string directorFilename, Factory factory)
         {
             _directorFilename = directorFilename;
             _factory = factory;
-            _roomManager = new RoomManager();
-        }
-
-        public string DirectorFilename
-        {
-            get => _directorFilename;
-            set => _directorFilename = value;
-        }
-
-        public Director Director
-        {
-            get => _director;
-            set => _director = value;
-        }
-
-        public Factory Factory
-        {
-            get => _factory;
-            set => _factory = value;
-        }
-
-        public RoomManager RoomManager
-        {
-            get => _roomManager;
-            set => _roomManager = value;
         }
 
         public void LoadData()
@@ -51,8 +25,6 @@ namespace Usi_Project.Manage
             _director = JsonConvert.DeserializeObject<Director>(File.ReadAllText(_directorFilename), json);
         }
         
-        
-
         public static void Menu()
         {
             while (true)
@@ -64,6 +36,7 @@ namespace Usi_Project.Manage
                 Console.WriteLine("4) - Refresh changes");
                 Console.WriteLine("5) - Scheduling room renovation");
                 Console.WriteLine("6) - Scheduling multiple room renovation");
+                Console.WriteLine("7) - Drug and ingredient management");
                 Console.WriteLine("x) - Exit.");
                 Console.WriteLine(">> ");
                 
@@ -88,6 +61,9 @@ namespace Usi_Project.Manage
                         break;
                     case "6":
                         MultipleRoomRenovation();
+                        break;
+                    case "7":
+                        _factory.DrugManager.PrintMenu();
                         break;
                     case "x":
                         return;

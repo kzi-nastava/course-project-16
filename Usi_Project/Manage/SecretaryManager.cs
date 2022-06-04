@@ -173,7 +173,7 @@ namespace Usi_Project.Manage
                             MedicalRecord medicalRecord = new MedicalRecord(patientHeight,
                                 patientWeight, patientDiseases, patientAllergens);
                             Patient patient = new Patient(patientEmail, patientPassword, patientName, patientLastname,
-                                patientAddress, patientPhone, medicalRecord);
+                                patientAddress, patientPhone, 2, medicalRecord);
                             _manager.PatientManager.Patients.Add(patient);
                             using (StreamWriter file = File.CreateText(_manager.PatientManager.patientFileName))
                             {
