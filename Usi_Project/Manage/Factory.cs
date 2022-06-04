@@ -78,7 +78,7 @@ namespace Usi_Project.Manage
             _anamnesaManager.LoadData();
             _requestManager.LoadData();
             _timerManager.LoadData();
-            
+            _recipesManager.LoadData();
         }
         public TimerManager TimerManager
         {
