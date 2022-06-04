@@ -57,7 +57,7 @@ namespace Usi_Project.Manage
 
         public void Menu()
         {
-            refresh();
+            Refresh();
             Console.WriteLine("Choose one of the options below: ");
             Console.WriteLine("1) - Create the patient profile.");
             Console.WriteLine("2) - Change the patient profile.");
@@ -1094,7 +1094,7 @@ namespace Usi_Project.Manage
             Menu();
         }
 
-        void refresh()
+        void Refresh()
         {
             DateTime currentTime = DateTime.Now;
             for (int i = 0; i < _manager.DynamicRequestManager.DynamicRequests.Count; i++)
@@ -1121,9 +1121,7 @@ namespace Usi_Project.Manage
                 serializer.Formatting = Formatting.Indented;
                 serializer.Serialize(file, _manager.DynamicRequestManager.DynamicRequests);
             }
-
             _manager.RoomManager.SaveData();
-            
         }
 
 
@@ -1181,77 +1179,50 @@ namespace Usi_Project.Manage
             }
             return supplyingRoomId;
         }
+
+        public int ValidateInput()
+        {
+            int chosenDynamicEq;
+            while (true)
+            {
+                chosenDynamicEq = Convert.ToInt32(Console.ReadLine());
+                if (chosenDynamicEq > 4 || chosenDynamicEq < 0)
+                {
+                    Console.WriteLine("Wrong option entered, try again: ");
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return chosenDynamicEq;
+        }
         void DeploymentOfDynamicEquipment()
         {
             List<string> roomsId = PrintLowSupplyEquipmentFromAllRooms();
             string receivingRoomId = GetReceivingRoomid(roomsId);
             string supplyingRoomId = GetSupplyingRoomid(roomsId);
-            Console.WriteLine("Enter Dynamic tool(Gauze, Buckles, Bandages, Pencils, Paper) you want to move (x for exit): ");
-            string toolName = Console.ReadLine().ToUpper();
+            Console.WriteLine("Enter Dynamic tool you want to move (x for exit): ");
             int numberOfTools;
-            switch (toolName)
+            Dictionary<int, DynamicEquipment> dictionary = new Dictionary<int, DynamicEquipment>();
+            int i = -1;
+            foreach (DynamicEquipment eq in Enum.GetValues(typeof(DynamicEquipment)))
             {
-                case "GAUZE":
-                    Console.WriteLine("Enter how much do you want to move: ");
-                    numberOfTools = Convert.ToInt32(Console.ReadLine());
-                    foreach (OverviewRoom receivingRoom in _manager.RoomManager.OverviewRooms)
-                        GiveEqToOvRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "GAUZE");
-                    foreach (OperatingRoom receivingRoom in _manager.RoomManager.OperatingRooms)
-                        GiveEqToOpRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "GAUZE");
-                    GiveEqToStock(receivingRoomId, numberOfTools, supplyingRoomId, _manager.RoomManager.StockRoom,
-                        "GAUZE");
-                    break;
-
-                case "BUCKLES":
-                    Console.WriteLine("Enter how much do you want to move: ");
-                    numberOfTools = Convert.ToInt32(Console.ReadLine());
-                    foreach (OverviewRoom receivingRoom in _manager.RoomManager.OverviewRooms)
-                        GiveEqToOvRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "BUCKLES");
-                    foreach (OperatingRoom receivingRoom in _manager.RoomManager.OperatingRooms)
-                        GiveEqToOpRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "BUCKLES");
-                    GiveEqToStock(receivingRoomId, numberOfTools, supplyingRoomId, _manager.RoomManager.StockRoom,
-                        "BUCKLES");
-                    break;
-
-                case "BANDAGES":
-                    Console.WriteLine("Enter how much do you want to move: ");
-                    numberOfTools = Convert.ToInt32(Console.ReadLine());
-                    foreach (OverviewRoom receivingRoom in _manager.RoomManager.OverviewRooms)
-                        GiveEqToOvRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "BANDAGES");
-                    foreach (OperatingRoom receivingRoom in _manager.RoomManager.OperatingRooms)
-                        GiveEqToOpRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "BANDAGES");
-                    GiveEqToStock(receivingRoomId, numberOfTools, supplyingRoomId, _manager.RoomManager.StockRoom,
-                        "BANDAGES");
-                    break;
-
-                case "PENCILS":
-                    Console.WriteLine("Enter how much do you want to move: ");
-                    numberOfTools = Convert.ToInt32(Console.ReadLine());
-                    foreach (OverviewRoom receivingRoom in _manager.RoomManager.OverviewRooms)
-                        GiveEqToOvRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "PENCILS");
-                    foreach (OperatingRoom receivingRoom in _manager.RoomManager.OperatingRooms)
-                        GiveEqToOpRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "PENCILS");
-                    GiveEqToStock(receivingRoomId, numberOfTools, supplyingRoomId, _manager.RoomManager.StockRoom,
-                        "PENCILS");
-                    break;
-
-                case "PAPER":
-                    Console.WriteLine("Enter how much do you want to move: ");
-                    numberOfTools = Convert.ToInt32(Console.ReadLine());
-                    foreach (OverviewRoom receivingRoom in _manager.RoomManager.OverviewRooms)
-                        GiveEqToOvRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "PAPER");
-                    foreach (OperatingRoom receivingRoom in _manager.RoomManager.OperatingRooms)
-                        GiveEqToOpRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, "PAPER");
-                    GiveEqToStock(receivingRoomId, numberOfTools, supplyingRoomId, _manager.RoomManager.StockRoom,
-                        "PAPER");
-                    break;
-                case "X":
-                    break;
-                default:
-                    Console.WriteLine("You didnt enter valid name.");
-                    break;
+                i++;
+                dictionary[i] = eq;
+                Console.WriteLine( i + ")" + " " + dictionary[i]);
             }
-
+            int chosenDynamicEq = ValidateInput();
+            DynamicEquipment chosen = dictionary[chosenDynamicEq];
+            Console.WriteLine("Enter how much do you want to move: ");
+            numberOfTools = Convert.ToInt32(Console.ReadLine());
+            foreach (OverviewRoom receivingRoom in _manager.RoomManager.OverviewRooms)
+                GiveEqToOvRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, chosen);
+            foreach (OperatingRoom receivingRoom in _manager.RoomManager.OperatingRooms)
+                GiveEqToOpRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, chosen);
+            GiveEqToStock(receivingRoomId, numberOfTools, supplyingRoomId, _manager.RoomManager.StockRoom,
+                        chosen);
             _manager.RoomManager.SaveData();
             Menu();
         }
@@ -1281,69 +1252,26 @@ namespace Usi_Project.Manage
         }
 
 
-        public void TakeEqFromOpGiveToOv(int numberOfTools, OperatingRoom supplyingRoom1, OverviewRoom receivingRoom, string type)
+        public void TakeEqFromOpGiveToOv(int numberOfTools, OperatingRoom supplyingRoom1, OverviewRoom receivingRoom, DynamicEquipment chosen)
         {
-            if (GetNumOfEqInOpRoom(supplyingRoom1, type) >= numberOfTools)
+            if (supplyingRoom1.DynamicEquipment[chosen] >= numberOfTools)
             {
-                switch (type)
-                {
-                    case "GAUZE":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
-                        break;
-                    case "BUCKLES":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
-                        break;
-                    case "BANDAGES":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
-                        break;
-                    case "PAPER":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
-                        break;
-                    case "PENCILS":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
-                        break;
-                }
+                supplyingRoom1.DynamicEquipment[chosen] -= numberOfTools;
+                receivingRoom.DynamicEquipment[chosen] += numberOfTools;
             }
             else
             {
                 Console.WriteLine("Not enough equipment in chosen room.");
-                
             }
         }
 
 
-        public void TakeEqFromOvGiveToOv(int numberOfTools, OverviewRoom supplyingRoom1, OverviewRoom receivingRoom, string type)
+        public void TakeEqFromOvGiveToOv(int numberOfTools, OverviewRoom supplyingRoom1, OverviewRoom receivingRoom, DynamicEquipment chosen)
         {
-            if (GetNumOfEqInOvRoom(supplyingRoom1, type) >= numberOfTools)
+            if (supplyingRoom1.DynamicEquipment[chosen] >= numberOfTools)
             {
-                switch (type)
-                {
-                    case "GAUZE":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
-                        break;
-                    case "BUCKLES":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
-                        break;
-                    case "BANDAGES":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
-                        break;
-                    case "PAPER":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
-                        break;
-                    case "PENCILS":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
-                        break;
-                }
+                supplyingRoom1.DynamicEquipment[chosen] -= numberOfTools;
+                receivingRoom.DynamicEquipment[chosen] += numberOfTools;
             }
             else
             {
@@ -1352,168 +1280,78 @@ namespace Usi_Project.Manage
         }
         
         
-        public void TakeEqFromStockGiveToOv(string supplyingRoomId, int numberOfTools, OverviewRoom receivingRoom, string type)
+        public void TakeEqFromStockGiveToOv(string supplyingRoomId, int numberOfTools, OverviewRoom receivingRoom, DynamicEquipment chosen)
         {
             if (_manager.RoomManager.StockRoom.Id == supplyingRoomId)
             {
-                if (GetNumOfEqInStockRoom(type) >= numberOfTools)
+                if (_manager.RoomManager.StockRoom.DynamicEquipment[chosen] >= numberOfTools)
                 {
-                    switch (type)
-                    {
-                        case "GAUZE":
-                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
-                            receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
-                            break;
-                        case "BUCKLES":
-                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
-                            receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
-                            break;
-                        case "BANDAGES":
-                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
-                            receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
-                            break;
-                        case "PAPER":
-                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
-                            receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
-                            break;
-                        case "PENCILS":
-                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
-                            receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
-                            break;
-                    }
+                    _manager.RoomManager.StockRoom.DynamicEquipment[chosen] -= numberOfTools;
+                    receivingRoom.DynamicEquipment[chosen] += numberOfTools;
                 }
                 else
                 {
                     Console.WriteLine("Not enough equipment in chosen room.");
-                    
                 }
             }
         }
         
 
-        public void GiveEqToOvRoom(string receivingRoomId, int numberOfTools, string supplyingRoomId, OverviewRoom receivingRoom, string type)
+        public void GiveEqToOvRoom(string receivingRoomId, int numberOfTools, string supplyingRoomId, OverviewRoom receivingRoom, DynamicEquipment chosen)
         {
             if (receivingRoom.Id == receivingRoomId)
             {
-                TakeEqFromStockGiveToOv(supplyingRoomId, numberOfTools, receivingRoom, type);
+                TakeEqFromStockGiveToOv(supplyingRoomId, numberOfTools, receivingRoom, chosen);
                 OperatingRoom supplyingRoom = CheckIfIdInOPRoom(supplyingRoomId);
                 if (supplyingRoom != null)
                 {
-                    TakeEqFromOpGiveToOv(numberOfTools, supplyingRoom, receivingRoom, type);
+                    TakeEqFromOpGiveToOv(numberOfTools, supplyingRoom, receivingRoom, chosen);
                 }
-
                 OverviewRoom supplyingRoom1 = CheckIfIdInOVRoom(supplyingRoomId);
                 if (supplyingRoom1 != null)
                 {
-                    TakeEqFromOvGiveToOv(numberOfTools, supplyingRoom1, receivingRoom, type);
+                    TakeEqFromOvGiveToOv(numberOfTools, supplyingRoom1, receivingRoom, chosen);
                 }
             }
         }
 
 
-        public void TakeEqFromOvGiveToOp(int numberOfTools, OverviewRoom supplyingRoom1, OperatingRoom receivingRoom, string type)
+        public void TakeEqFromOvGiveToOp(int numberOfTools, OverviewRoom supplyingRoom1, OperatingRoom receivingRoom, DynamicEquipment chosen)
         {
-            if (GetNumOfEqInOvRoom(supplyingRoom1, type) >= numberOfTools)
+            if (supplyingRoom1.DynamicEquipment[chosen] >= numberOfTools)
             {
-                switch (type)
-                {
-                    case "GAUZE":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
-                        break;
-                    case "BUCKLES":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
-                        break;
-                    case "BANDAGES":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
-                        break;
-                    case "PAPER":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
-                        break;
-                    case "PENCILS":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
-                        break;
-                }
+                supplyingRoom1.DynamicEquipment[chosen] -= numberOfTools;
+                receivingRoom.DynamicEquipment[chosen] += numberOfTools;
             }
             else
             {
                 Console.WriteLine("Not enough equipment in chosen room.");
-                
-                        
             }
         }
         
         
-        public void TakeEqFromOpGiveToOp(int numberOfTools, OperatingRoom supplyingRoom1, OperatingRoom receivingRoom, string type)
+        public void TakeEqFromOpGiveToOp(int numberOfTools, OperatingRoom supplyingRoom1, OperatingRoom receivingRoom, DynamicEquipment chosen)
         {
-            if (GetNumOfEqInOpRoom(supplyingRoom1, type) >= numberOfTools)
+            if (supplyingRoom1.DynamicEquipment[chosen] >= numberOfTools)
             {
-                switch (type)
-                {
-                    case "GAUZE":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
-                        break;
-                    case "BUCKLES":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
-                        break;
-                    case "BANDAGES":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
-                        break;
-                    case "PAPER":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
-                        break;
-                    case "PENCILS":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
-                        break;
-                }
+                supplyingRoom1.DynamicEquipment[chosen] -= numberOfTools;
+                receivingRoom.DynamicEquipment[chosen] += numberOfTools;
             }
             else
             {
                 Console.WriteLine("Not enough equipment in chosen room.");
-                
-                        
             }
         }
 
 
-        public void TakeEqFromStockGiveToOp(string supplyingRoomId, int numberOfTools, OperatingRoom receivingRoom, string type )
+        public void TakeEqFromStockGiveToOp(string supplyingRoomId, int numberOfTools, OperatingRoom receivingRoom, DynamicEquipment chosen )
         {
             if (_manager.RoomManager.StockRoom.Id == supplyingRoomId)
             {
-                if (GetNumOfEqInStockRoom(type) >= numberOfTools)
+                if (_manager.RoomManager.StockRoom.DynamicEquipment[chosen] >= numberOfTools)
                 {
-                    switch (type)
-                    {
-                        case "GAUZE":
-                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
-                            receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
-                            break;
-                        case "BUCKLES":
-                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
-                            receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
-                            break;
-                        case "BANDAGES":
-                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
-                            receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
-                            break;
-                        case "PAPER":
-                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
-                            receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
-                            break;
-                        case "PENCILS":
-                            _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
-                            receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
-                            break;
-                    }
+                    _manager.RoomManager.StockRoom.DynamicEquipment[chosen] -= numberOfTools;
+                    receivingRoom.DynamicEquipment[chosen] += numberOfTools;
                 }
                 else
                 {
@@ -1524,90 +1362,47 @@ namespace Usi_Project.Manage
         }
         
         
-        public void GiveEqToOpRoom(string receivingRoomId, int numberOfTools, string supplyingRoomId, OperatingRoom receivingRoom, string type)
+        public void GiveEqToOpRoom(string receivingRoomId, int numberOfTools, string supplyingRoomId, OperatingRoom receivingRoom, DynamicEquipment chosen)
         {
             if (receivingRoom.Id == receivingRoomId)
             {
-                TakeEqFromStockGiveToOp(supplyingRoomId, numberOfTools, receivingRoom, type);
+                TakeEqFromStockGiveToOp(supplyingRoomId, numberOfTools, receivingRoom, chosen);
                 OverviewRoom supplyingRoom = CheckIfIdInOVRoom(supplyingRoomId);
                 if (supplyingRoom != null)
                 {
-                    TakeEqFromOvGiveToOp(numberOfTools, supplyingRoom, receivingRoom, type);
+                    TakeEqFromOvGiveToOp(numberOfTools, supplyingRoom, receivingRoom, chosen);
                 }
 
                 OperatingRoom supplyingRoom1 = CheckIfIdInOPRoom(supplyingRoomId);
                 if (supplyingRoom1 != null)
                 {
-                    TakeEqFromOpGiveToOp(numberOfTools, supplyingRoom1, receivingRoom, type);
+                    TakeEqFromOpGiveToOp(numberOfTools, supplyingRoom1, receivingRoom, chosen);
                 }
             }
         }
         
         
-        public void TakeEqFromOvGiveToStock(int numberOfTools, OverviewRoom supplyingRoom1, StockRoom receivingRoom, string type)
+        public void TakeEqFromOvGiveToStock(int numberOfTools, OverviewRoom supplyingRoom1, StockRoom receivingRoom, DynamicEquipment chosen)
         {
-            if (GetNumOfEqInOvRoom(supplyingRoom1, type) >= numberOfTools)
+            if (supplyingRoom1.DynamicEquipment[chosen] >= numberOfTools)
             {
-                switch (type)
-                {
-                    case "GAUZE":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
-                        break;
-                    case "BUCKLES":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
-                        break;
-                    case "BANDAGES":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
-                        break;
-                    case "PAPER":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
-                        break;
-                    case "PENCILS":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
-                        break;
-                }
+                supplyingRoom1.DynamicEquipment[chosen] -= numberOfTools;
+                receivingRoom.DynamicEquipment[chosen] += numberOfTools;
             }
             else
             {
                 Console.WriteLine("Not enough equipment in chosen room.");
-                
-                        
             }
         }
         
         
-        public void TakeEqFromOpGiveToStock(int numberOfTools, OperatingRoom supplyingRoom1, StockRoom receivingRoom, string type)
+        public void TakeEqFromOpGiveToStock(int numberOfTools, OperatingRoom supplyingRoom1, StockRoom receivingRoom, DynamicEquipment chosen)
         {
-            if (GetNumOfEqInOpRoom(supplyingRoom1, type) >= numberOfTools)
+            if (supplyingRoom1.DynamicEquipment[chosen] >= numberOfTools)
             {
-                switch (type)
-                {
-                    case "GAUZE":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Gauze] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Gauze] += numberOfTools;
-                        break;
-                    case "BUCKLES":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Buckles] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Buckles] += numberOfTools;
-                        break;
-                    case "BANDAGES":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Bandages] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Bandages] += numberOfTools;
-                        break;
-                    case "PAPER":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Paper] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Paper] += numberOfTools;
-                        break;
-                    case "PENCILS":
-                        supplyingRoom1.DynamicEquipment[DynamicEquipment.Pencils] -= numberOfTools;
-                        receivingRoom.DynamicEquipment[DynamicEquipment.Pencils] += numberOfTools;
-                        break;
-                }
+                supplyingRoom1.DynamicEquipment[chosen] -= numberOfTools;
+                receivingRoom.DynamicEquipment[chosen] += numberOfTools;
+            
             }
             else
             {
@@ -1618,95 +1413,21 @@ namespace Usi_Project.Manage
 
         
         public void GiveEqToStock(string receivingRoomId, int numberOfTools, string supplyingRoomId,
-            StockRoom receivingRoom, string type)
+            StockRoom receivingRoom, DynamicEquipment chosen)
         {
             if (receivingRoom.Id == receivingRoomId)
             {
                 OverviewRoom supplyingRoom = CheckIfIdInOVRoom(supplyingRoomId);
                 if (supplyingRoom != null)
                 {
-                    TakeEqFromOvGiveToStock(numberOfTools, supplyingRoom, receivingRoom, type);
+                    TakeEqFromOvGiveToStock(numberOfTools, supplyingRoom, receivingRoom, chosen);
                 }
                 OperatingRoom supplyingRoom1 = CheckIfIdInOPRoom(supplyingRoomId);
                 if (supplyingRoom1 != null)
                 {
-                    TakeEqFromOpGiveToStock(numberOfTools, supplyingRoom1, receivingRoom, type);
+                    TakeEqFromOpGiveToStock(numberOfTools, supplyingRoom1, receivingRoom, chosen);
                 }
             }
-        }
-
-        public int GetNumOfEqInOvRoom(OverviewRoom room, string type)
-        {
-            int numOfEq = 0;
-            switch (type)
-            {
-                case "GAUZE":
-                    numOfEq = room.DynamicEquipment[DynamicEquipment.Gauze];
-                    break;
-                case "BUCKLES":
-                    numOfEq = room.DynamicEquipment[DynamicEquipment.Buckles];
-                    break;
-                case "BANDAGES":
-                    numOfEq = room.DynamicEquipment[DynamicEquipment.Bandages];
-                    break;
-                case "PAPER":
-                    numOfEq = room.DynamicEquipment[DynamicEquipment.Paper];
-                    break;
-                case "PENCILS":
-                    numOfEq = room.DynamicEquipment[DynamicEquipment.Pencils];
-                    break;
-            }
-            return numOfEq;
-        }
-        
-        
-        public int GetNumOfEqInOpRoom(OperatingRoom room, string type)
-        {
-            int numOfEq = 0;
-            switch (type)
-            {
-                case "GAUZE":
-                    numOfEq = room.DynamicEquipment[DynamicEquipment.Gauze];
-                    break;
-                case "BUCKLES":
-                    numOfEq = room.DynamicEquipment[DynamicEquipment.Buckles];
-                    break;
-                case "BANDAGES":
-                    numOfEq = room.DynamicEquipment[DynamicEquipment.Bandages];
-                    break;
-                case "PAPER":
-                    numOfEq = room.DynamicEquipment[DynamicEquipment.Paper];
-                    break;
-                case "PENCILS":
-                    numOfEq = room.DynamicEquipment[DynamicEquipment.Pencils];
-                    break;
-            }
-            return numOfEq;
-        }
-        
-        
-        public int GetNumOfEqInStockRoom( string type)
-        {
-            int numOfEq = 0;
-            switch (type)
-            {
-                case "GAUZE":
-                    numOfEq =  _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Gauze];
-                    break;
-                case "BUCKLES":
-                    numOfEq =  _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Buckles];
-                    break;
-                case "BANDAGES":
-                    numOfEq =  _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Bandages];
-                    break;
-                case "PAPER":
-                    numOfEq =  _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Paper];
-                    break;
-                case "PENCILS":
-                    numOfEq =  _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Pencils];
-                    break;
-            }
-            return numOfEq;
         }
     }
 }
