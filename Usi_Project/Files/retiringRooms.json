@@ -9,6 +9,7 @@
       "Closet": 3,
       "Bad": 25
     },
+    "DynamicEquipment": {},
     "Id": "C1",
     "Name": "Retiring room 1"
   },
@@ -22,6 +23,7 @@
       "Closet": 3,
       "Bad": 20
     },
+    "DynamicEquipment": {},
     "Id": "C2",
     "Name": "Retiring room 2"
   },
@@ -37,6 +39,7 @@
       "Table": 6,
       "Chair": 10
     },
+    "DynamicEquipment": {},
     "Id": "88",
     "Name": "Retiring Room 88"
   }

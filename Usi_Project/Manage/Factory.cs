@@ -20,6 +20,7 @@ namespace Usi_Project.Manage
         private TimerManager _timerManager;
         private Saver _saver;
         private RecipesManager _recipesManager;
+        private DynamicRequestManager _dynamicRequestManager;
 
         public Factory()
         {
@@ -46,6 +47,7 @@ namespace Usi_Project.Manage
             _saver = saver;
             _timerManager = new TimerManager(fileSettings.TimerFn, this);
             _recipesManager = new RecipesManager(fileSettings.RecipesFn, this);
+            _dynamicRequestManager = new DynamicRequestManager(fileSettings.DynamicReqFilename, this);
         }
 
         public RecipesManager RecipesManager
@@ -58,6 +60,12 @@ namespace Usi_Project.Manage
         {
             get => _requestManager;
             set => _requestManager = value;
+        }
+
+        public DynamicRequestManager DynamicRequestManager
+        {
+            get => _dynamicRequestManager;
+            set => _dynamicRequestManager = value;
         }
 
         public AnamnesaManager AnamnesaManager
@@ -86,6 +94,7 @@ namespace Usi_Project.Manage
             _anamnesaManager.LoadData();
             _requestManager.LoadData();
             _timerManager.LoadData();
+            _dynamicRequestManager.LoadData();
             
         }
         public TimerManager TimerManager

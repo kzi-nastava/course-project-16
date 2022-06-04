@@ -110,7 +110,7 @@ namespace Usi_Project.Manage
 //                        break;
                     case "x":
                         Console.WriteLine("Loging Out...");                       
-                        flagIner = false;
+                        flagInner = false;
                         break;
                     default:
                         Console.WriteLine("Invalid Input, try again.");
@@ -562,7 +562,13 @@ namespace Usi_Project.Manage
 
                         Console.WriteLine("Filing request...");
                         Requested requested = new Requested(patient.email, startTime, newTime, opt);
-                        _factory.RequestManager.Serialize(requested);
+                        _factory.RequestManager.Requested.Add(requested);
+                        using (StreamWriter file = File.CreateText(_factory.RequestManager.RequestFilename))
+                        {
+                            JsonSerializer serializer = new JsonSerializer();
+                            serializer.Formatting = Formatting.Indented;
+                            serializer.Serialize(file, _factory.RequestManager.Requested);
+                        }
                     }
                 }
             }
