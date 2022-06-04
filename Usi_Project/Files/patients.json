@@ -13,7 +13,8 @@
       "height": "177",
       "weight": "68",
       "diseases": "No diseases",
-      "allergens": "No allergens"
+      "allergens": "No allergens",
+      "referral": null
     }
   },
   {
@@ -30,7 +31,8 @@
       "height": "170",
       "weight": "65",
       "diseases": "No diseases",
-      "allergens": "No allergens"
+      "allergens": "No allergens",
+      "referral": null
     }
   }
 ]

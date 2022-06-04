@@ -32,9 +32,7 @@ namespace Usi_Project.DataSaver
                 serializer.Serialize(file, appointments);
             }
         }
-<<<<<<< Updated upstream
-        public void SavePatient(List<Patient> appointments)
-=======
+
         public void SaveRecipe(List<Recipes> recipes)
         {
             using (StreamWriter file = File.CreateText(_fileSettings.RecipesFn))
@@ -44,8 +42,10 @@ namespace Usi_Project.DataSaver
                 serializer.Serialize(file, recipes);
             }
         }
+
+
         public void SavePatient(List<Patient> patients)
->>>>>>> Stashed changes
+
         {
             using (StreamWriter file = File.CreateText(_fileSettings.PatientFilename))
             {
@@ -63,10 +63,8 @@ namespace Usi_Project.DataSaver
                 serializer.Serialize(file, anamnesas);
             }
         }
-        
-        
-        
 
-
+      
+        
     }
 }

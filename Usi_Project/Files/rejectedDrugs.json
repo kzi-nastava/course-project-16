@@ -1,0 +1,15 @@
+[
+  {
+    "Rejection": "Add Water for Injection in ingredients...",
+    "Verification": 1,
+    "Id": "518",
+    "Name": "Aducanumab",
+    "Producer": "DrugCompany China",
+    "ExpirationTime": 2,
+    "Ingredients": [
+      "L-Histidine",
+      "L-arginine",
+      "L-histidine monohydrate"
+    ]
+  }
+]

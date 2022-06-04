@@ -4,6 +4,11 @@
       "Ekg": 1,
       "Thermometer": 12
     },
+    "TimeOfRenovation": {
+      "Key": "0001-01-01T00:00:00",
+      "Value": "0001-01-01T00:00:00"
+    },
+    "ForRemove": false,
     "Furniture": {
       "Table": 5,
       "Chair": 3
@@ -16,6 +21,11 @@
       "Generator": 10,
       "Stethoscope": 3
     },
+    "TimeOfRenovation": {
+      "Key": "0001-01-01T00:00:00",
+      "Value": "0001-01-01T00:00:00"
+    },
+    "ForRemove": false,
     "Furniture": {
       "Closet": 2,
       "Bad": 40
@@ -28,6 +38,11 @@
       "Monitor": 2,
       "Xray": 1
     },
+    "TimeOfRenovation": {
+      "Key": "0001-01-01T00:00:00",
+      "Value": "0001-01-01T00:00:00"
+    },
+    "ForRemove": false,
     "Furniture": {
       "Table": 3,
       "Chair": 5
@@ -35,5 +50,4 @@
     "Id": "B3",
     "Name": "Overview room 3"
   }
-
 ]
