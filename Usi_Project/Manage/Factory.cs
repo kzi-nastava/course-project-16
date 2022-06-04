@@ -9,18 +9,18 @@ namespace Usi_Project.Manage
 {
     public class Factory
     {
-        private DirectorManager _directorManager;
-        private PatientManager _patientManager;
-        private SecretaryManager _secretaryManager;
-        private DoctorManager _doctorManager;
-        private RoomManager _roomManager;
-        private AppointmentManager _appointmentManager;
-        private AnamnesaManager _anamnesaManager;
-        private RequestManager _requestManager;
-        private TimerManager _timerManager;
-        private Saver _saver;
-        private RecipesManager _recipesManager;
-
+        private readonly DirectorManager _directorManager;
+        private readonly PatientManager _patientManager;
+        private readonly SecretaryManager _secretaryManager;
+        private readonly DoctorManager _doctorManager;
+        private readonly RoomManager _roomManager;
+        private readonly AppointmentManager _appointmentManager;
+        private readonly AnamnesaManager _anamnesaManager;
+        private readonly RequestManager _requestManager;
+        private readonly TimerManager _timerManager;
+        private readonly Saver _saver;
+        private readonly RecipesManager _recipesManager;
+        private readonly DrugManager _drugManager;
         public Factory()
         {
         }
@@ -28,7 +28,6 @@ namespace Usi_Project.Manage
         public Saver Saver
         {
             get => _saver;
-            set => _saver = value;
         }
         
         public Factory(FileSettings fileSettings, Saver saver)
@@ -46,34 +45,9 @@ namespace Usi_Project.Manage
             _saver = saver;
             _timerManager = new TimerManager(fileSettings.TimerFn, this);
             _recipesManager = new RecipesManager(fileSettings.RecipesFn, this);
+            _drugManager = new DrugManager(fileSettings.DrugsFn, fileSettings.RejectedDrugsFn);
         }
-
-        public RecipesManager RecipesManager
-        {
-            get => _recipesManager;
-            set => _recipesManager = value;
-        }
-
-        public RequestManager RequestManager
-        {
-            get => _requestManager;
-            set => _requestManager = value;
-        }
-
-        public AnamnesaManager AnamnesaManager
-        {
-            get => _anamnesaManager;
-            set => _anamnesaManager = value;
-           
         
-        }
-
-        public AppointmentManager AppointmentManager
-        {
-            get => _appointmentManager;
-            set => _appointmentManager = value;
-        }
-
         public void LoadData()
         {
 
@@ -86,19 +60,45 @@ namespace Usi_Project.Manage
             _anamnesaManager.LoadData();
             _requestManager.LoadData();
             _timerManager.LoadData();
+            _drugManager.LoadData();
             
+
         }
+
+        public RecipesManager RecipesManager
+        {
+            get => _recipesManager;
+        }
+
+        public RequestManager RequestManager
+        {
+            get => _requestManager;
+        }
+
+        public DrugManager DrugManager
+        {
+            get => _drugManager;
+        }
+
+        public AnamnesaManager AnamnesaManager
+        {
+            get => _anamnesaManager;
+        }
+
+        public AppointmentManager AppointmentManager
+        {
+            get => _appointmentManager;
+        }
+        
         public TimerManager TimerManager
         {
             get => _timerManager;
-            set => _timerManager = value;
 
         }
 
         public RoomManager RoomManager
         {
             get => _roomManager;
-            set => _roomManager = value;
         }
 
         public DirectorManager DirectorManager
