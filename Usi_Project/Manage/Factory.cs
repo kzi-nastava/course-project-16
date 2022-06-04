@@ -60,6 +60,7 @@ namespace Usi_Project.Manage
             _anamnesaManager.LoadData();
             _requestManager.LoadData();
             _timerManager.LoadData();
+            _recipesManager.LoadData();
             _drugManager.LoadData();
             
 
@@ -88,6 +89,7 @@ namespace Usi_Project.Manage
         public AppointmentManager AppointmentManager
         {
             get => _appointmentManager;
+
         }
         
         public TimerManager TimerManager

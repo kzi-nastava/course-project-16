@@ -68,13 +68,18 @@ namespace Usi_Project.Manage
             set => _manager = value;
         }
         
+        public string FormatAnamnesis(Anamnesa anamnesa)
+        {
+            return anamnesa.EmailDoctor + "\n" + anamnesa.EmailPatient + "\n" + anamnesa.Anamnesa1;
+        }
+
         // Function return list<Anamnesa> for entered email of user
         // if role==0 > entered doctorEmail
         // if role==1 > entered patientEmail
         public List<Anamnesa> ResolveAnamnesisForEmail(string email, int role)
         {
             List<Anamnesa> allAnamnesis = new List<Anamnesa>();
-            foreach (Anamnesa anamnesa in _anamnesa)
+            foreach (Anamnesa anamnesa in Anamnesa)
             {
                 if (role == 0 && anamnesa.EmailDoctor == email)
                 {
