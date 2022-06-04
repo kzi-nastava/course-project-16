@@ -156,6 +156,7 @@ namespace Usi_Project
             return IdOfRooms;
 
         }
+
         public void PrintEquipment()
         {
             Console.WriteLine("-----------------------------------------");
@@ -166,24 +167,6 @@ namespace Usi_Project
             }
 
         }
-        
-        
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        
+       
     }
 }

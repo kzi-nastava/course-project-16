@@ -142,14 +142,6 @@
     "StartTime": "2022-11-11T11:11:00",
     "EndTime": "2022-11-11T11:26:00",
     "Type": "OV"
-  },
-  {
-    "Status": "0",
-    "IdRoom": "B1",
-    "EmailDoctor": "veljkobubnjevic001@gmail.com",
-    "EmailPatient": "MilosK@gmail.com",
-    "StartTime": "2022-06-04T10:10:00",
-    "EndTime": "2022-06-04T10:40:00",
-    "Type": "OP"
+
   }
 ]

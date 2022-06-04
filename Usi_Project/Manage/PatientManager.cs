@@ -65,28 +65,27 @@ namespace Usi_Project.Manage
             get => _patientFileName;
         }
         public void Menu(Patient patient)
-        {
-            bool flagOut, flagInner = true;
-            flagOut = AntiTroll(patient);
+        {   
+            bool flagOut = AntiTroll(patient), flagInner = true;
             while (flagOut && flagInner)
             {
                 string inp;
-                Console.Clear();
+                // Console.Clear();
                 Console.WriteLine("**********Patient Menu**********");
                 Console.WriteLine("*[1] Show appointments         *");
                 Console.WriteLine("*[2] Create appointment        *");
                 Console.WriteLine("*[3] Update appointment        *");
                 Console.WriteLine("*[4] Personal Hospital History *");
                 Console.WriteLine("*[5] Search Doctors            *");
-                Console.WriteLine("*[6] Update Notifications      *");
-                Console.WriteLine("*[7] Fill Survey               *");
+                Console.WriteLine("*[6] Update Notifications Timer*");
+                Console.WriteLine("*[7] Show Notification         *");
+                Console.WriteLine("*[8] Fill Survey               *");
                 Console.WriteLine("*[X] Log Out                   *");
                 Console.WriteLine("********************************");
                 Console.Write("Your input: ");
                 inp = Console.ReadLine().ToLower();
                 switch (inp)
                 {
-                    // CRUD, Anti-Trol, izmena/brisanje terminna(1, 2, 3 + at)
                     case "1":
                         ShowAppointments(patient);
                         break;
@@ -97,20 +96,26 @@ namespace Usi_Project.Manage
                         UpdateAppointment(patient);
                         break;
                     case "4":
-                        PatientHistory(patient);
+                        PatientHistoryMenu(patient);
                         break;
-//                    case "5":
-//                        SearchDoctors();
-//                        break;
-//                    case "6":
-//                        ChangeNotifications();
-//                        break;
-//                   case "7":
+                    case "5":
+                        SearchDoctors(patient);
+                        break;
+                    case "6":
+                        UpdateNotificationsTimer(patient);
+                        break;
+                    case "7":
+                        ShowRecipeNotification(patient);
+                        break;
+//                   case "8":
 //                        FillSurvey();
 //                        break;
                     case "x":
                         Console.WriteLine("Loging Out...");                       
+
                         flagInner = false;
+                      //  flagIner = false;
+
                         break;
                     default:
                         Console.WriteLine("Invalid Input, try again.");
@@ -161,9 +166,11 @@ namespace Usi_Project.Manage
             List<Anamnesa> li = _factory.AnamnesaManager.ResolveAnamnesisForEmail(patient.email, 1);
             Console.WriteLine("**************************");
             Console.WriteLine("List of Anamnesis:");
+            Console.WriteLine("#############################################");
             foreach (Anamnesa anamnesa in li)
             {
-                Console.WriteLine(anamnesa.ToString());
+                Console.WriteLine(_factory.AnamnesaManager.FormatAnamnesis(anamnesa));
+                Console.WriteLine("#############################################");
             }
 
             string inp;
@@ -174,7 +181,7 @@ namespace Usi_Project.Manage
                 li.Sort(delegate(Anamnesa x, Anamnesa y) { return x.EmailDoctor.CompareTo(y.EmailDoctor);});
                 foreach (Anamnesa anamnesa in li)
                 {
-                    Console.WriteLine(anamnesa.ToString());
+                    Console.WriteLine(_factory.AnamnesaManager.FormatAnamnesis(anamnesa));
                 }
             }
         }
@@ -191,7 +198,7 @@ namespace Usi_Project.Manage
                 {
                     if (anamnesa.Anamnesa1.Contains(inp))
                     {
-                        Console.WriteLine(anamnesa.ToString());
+                        Console.WriteLine(_factory.AnamnesaManager.FormatAnamnesis(anamnesa));
                     }
                 }
                 Console.Write("Do You Wish To Continue Search[Y/N]: ");
@@ -225,43 +232,43 @@ namespace Usi_Project.Manage
                 return false;
             }
 
-            int changed = 0, deleted = 0, created = 0;
+            // int changed = 0, deleted = 0, created = 0;
             //Brojanje promena, brisanja i zakazivanja
-            foreach (Requested req in _factory.RequestManager.Requested)
-            {
-                if (req.EmailPatient == patient.email)
-                {
-                    if (req.Operation == "1")
-                    {
-                        changed++;
-                    } 
-                    else if (req.Operation == "2")
-                    {
-                        deleted++;
-                    } 
-                    else if (req.Operation == "3"){ 
-                        created++;
-                    }
-                }
-            }
-            if(changed > 4){
-                Console.WriteLine("U prethodnih mesec ste promenili termin vise od 4 puta!");
-                flag = false;
-            }else if(created > 8)
-            {
-                Console.WriteLine("U proteklih mesec ste napravili vise od 8 zahteva!");
-                flag = false;
-            }else if(deleted >4)
-            {
-                Console.WriteLine("U protekih mesec ste otkazali vise od 4 puta!");
-                flag = false;
-            }
-            if (!flag)
-            {
-                Console.WriteLine("Sorry, Your Account Has Been Blocked" +
-                                  "Contact Support, Much Luck!");
-                return false;
-            }
+            // foreach (Requested req in _factory.RequestManager.Requested)
+            // {
+            //     if (req.EmailPatient == patient.email)
+            //     {
+            //         if (req.Operation == "1")
+            //         {
+            //             changed++;
+            //         } 
+            //         else if (req.Operation == "2")
+            //         {
+            //             deleted++;
+            //         } 
+            //         else if (req.Operation == "3"){ 
+            //             created++;
+            //         }
+            //     }
+            // }
+            // if(changed > 4){
+            //     Console.WriteLine("In The Past Month You Have Changed Appointments More Then 4 Times!");
+            //     flag = false;
+            // }else if(created > 8)
+            // {
+            //     Console.WriteLine("In The Past Month You Have Generated More Than 8 Requests!");
+            //     flag = false;
+            // }else if(deleted >4)
+            // {
+            //     Console.WriteLine("In The Past Month You Have Canceled More Than 4 Appointments!");
+            //     flag = false;
+            // }
+            // if (!flag)
+            // {
+            //     Console.WriteLine("Sorry, Your Account Has Been Blocked" +
+            //                       "Contact Support, Much Luck!");
+            //     return false;
+            // }
 
             return true;
         }
@@ -471,19 +478,19 @@ namespace Usi_Project.Manage
             return roomId;
         }
         
-        private void CreateAppointment(Patient patient)
+        private void CreateAppointment(Patient patient, Doctor doctorForAppoint=null)
         {
             string appType;
             Console.Write("Do You Wish To Manually Make Appointment?[Y/N]: ");
             appType = Console.ReadLine();
             if (appType == "N" || appType == "n")
             {
-                AutoAppointment(patient);
+                AutoAppointment(patient, doctorForAppoint);
             }
             else
             {
-                Doctor doctorForAppoint;
-                doctorForAppoint = ResolveDoctorForAppointment();
+                if (doctorForAppoint is null)
+                    doctorForAppoint = ResolveDoctorForAppointment();
                 
 
                 DateTime appointTime;
@@ -499,9 +506,10 @@ namespace Usi_Project.Manage
             }
         }
 
-        private void AutoAppointment(Patient patient)
+        private void AutoAppointment(Patient patient, Doctor doctorForAppoint=null)
         {
-            Doctor doctorForAppoint = ResolveDoctorForAppointment(2);
+            if (doctorForAppoint is null)
+                doctorForAppoint = ResolveDoctorForAppointment(2);
 
             Console.WriteLine("Enter Date & Time, Time Delta Of 8 Hours Will Be Taken Into Consideration");
             DateTime timeDelta = ShowDateTimeUserInput();
@@ -509,11 +517,16 @@ namespace Usi_Project.Manage
             
             string roomId = ResolveRoomForAppointment(appointTime);
             
-            // _factory.AppointmentManager.Appointment.Add(new Appointment(doctorForAppoint.email,
-            //     patient.email, appointTime, appointTime.AddMinutes(15), "OV", roomId, "0"));
-            //
-            // Requested requested = new Requested(patient.email, appointTime, appointTime.AddMinutes(15), "1");
-            // _factory.RequestManager.Serialize(requested);
+
+             List<Appointment> appointments = _factory.AppointmentManager.Appointment;
+             Appointment appointment = new Appointment(doctorForAppoint.email,
+                 patient.email,
+                 appointTime, appointTime.AddMinutes(15), "OV", roomId, "0");
+             _factory.AppointmentManager.Appointment.Add(appointment);
+             _factory.Saver.SaveAppointment(appointments);
+            
+            Requested requested = new Requested(patient.email, appointTime, appointTime.AddMinutes(15), "1");
+            _factory.RequestManager.Serialize(requested);
         }
         
         private void UpdateAppointment(Patient patient)
@@ -573,11 +586,135 @@ namespace Usi_Project.Manage
                 }
             }
 
-        private void SearchDoctors(){}
-        
-        private void ChangeNotifications(){}
-        
-        private void FillSurvey(){}
+        private void SearchDoctors(Patient patient)
+        {
+            List<Doctor> docList = _factory.DoctorManager.Doctors;
+            List<Doctor> toSortList = new List<Doctor>();
+            while (true)
+            {
+                string opt, param;
+                Console.WriteLine("Search Parameter[else-Abort]");
+                Console.WriteLine("[1] Name");
+                Console.WriteLine("[2] Lastname");
+                Console.WriteLine("[3] Specialisation");
+                Console.Write("Your Choice: ");
+                opt = Console.ReadLine();
+                if (opt.ToLower() == "x")
+                    break;
+                if (opt == "1" || opt == "2" || opt == "3")
+                {
+                    Console.WriteLine("Enter Parameter For Search: ");
+                    param = Console.ReadLine();
+                    int i = 1;
+                    foreach (var doctor in docList)
+                    {
+                        if (opt == "1")
+                        {
+                            if (doctor.name == param)
+                            {
+                                Console.WriteLine("[" + i + "] " + doctor);
+                                i += 1;
+                                toSortList.Add(doctor);
+                            }
+                        }
+                        else if (opt == "2")
+                        {
+                            if (doctor.lastName == param)
+                            {
+                                Console.WriteLine("[" + i + "] " + doctor);
+                                i += 1;
+                                toSortList.Add(doctor);
+                            }
+                        }
+                        /*else
+                        {
+                            if (doctor.specialisation == param)
+                            {
+                                Console.WriteLine("[" + i + "] " + doctor);
+                                i += 1;
+                            toSortList.Add(doctor);
+                            }
+                          }  
+                        */
+                    }
+                    break;
+                }
+                Console.WriteLine("Invalid Input, Try Again...");
+            }
+            while (true)
+            {
+                string inp;
+                Console.Write("Do You Wish To Sort Data[Y/N]: ");
+                inp = Console.ReadLine();
+                if (inp.ToLower() == "y")
+                {
+                    toSortList.Sort(delegate(Doctor x, Doctor y) { return x.email.CompareTo(y.email); });
+                    foreach (var doc in toSortList)
+                    {
+                        Console.WriteLine(doc);
+                    }
+                }
+                break;
+            }
+            string inp2;
+            Console.Write("Do You Wish To Continue With Making Appointment[Y/N]: ");
+            inp2 = Console.ReadLine();
+            if (inp2.ToLower() == "y")
+            {
+                Console.Write("Enter Doctor Number: ");
+                var inpDoc = Convert.ToInt32(Console.ReadLine()) - 1;
+                CreateAppointment(patient, toSortList[inpDoc]);
+            }
+        }
+
+        private void UpdateNotificationsTimer(Patient patient)
+        {
+            List<Patient> patientsList = Patients;
+            Console.Write("Enter New Notification Timer: ");
+            int newNotificationTimer = Convert.ToInt32(Console.ReadLine());
+            foreach (var pat in patientsList)
+            {
+                if (pat.email == patient.email)
+                {
+                    pat.NotificationTimer = newNotificationTimer;
+                }
+            }
+            _factory.Saver.SavePatient(patientsList);
+        }
+
+        private List<Recipes> RecipesForPatient(Patient patient)
+        {
+            List<Recipes> recipesList = _factory.RecipesManager.Recipes;
+            List<Recipes> recipesForCurrentPatient = new List<Recipes>();
+            foreach (var recipe in recipesList)
+            {
+                if (recipe.emailPatient == patient.email)
+                {
+                    recipesForCurrentPatient.Add(recipe);
+                }
+            }
+
+            return recipesForCurrentPatient;
+        }
+
+        private void ShowRecipeNotification(Patient patient)
+        {
+            List <Recipes> recipeList= RecipesForPatient(patient);
+            foreach (var recipe in recipeList)
+            {
+                int numPerDay = Convert.ToInt32(recipe.timesADay.Split(":")[1]);    //2x     12h
+                int takeEveryNotification = 24 / numPerDay - patient.NotificationTimer;     //10h
+                DateTime currentDate = DateTime.Now;    //11
+                if (currentDate.Hour%12>takeEveryNotification && 
+                    currentDate.Hour%12<takeEveryNotification+patient.NotificationTimer)
+                {
+                    Console.WriteLine(recipe.cureName);
+                    Console.WriteLine(recipe.timeInstructions + "\n" + recipe.timeRelFood);
+                }
+            }
+        }
+        /*private void FillSurvey(){}
+        */
 
         private DateTime ShowDateTimeUserInput()
         {

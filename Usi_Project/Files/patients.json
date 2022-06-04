@@ -7,6 +7,7 @@
     "adress": "Branka Radicevica 32",
     "phone": "0652789563",
     "role": 2,
+    "NotificationTimer": 3,
     "Blocked": 0,
     "MedicalRecord": {
       "height": "140",
@@ -24,6 +25,7 @@
     "adress": "Marjanoviceva 14",
     "phone": "0652716893",
     "role": 2,
+    "NotificationTimer": 2,
     "Blocked": 2,
     "MedicalRecord": {
       "height": "170",
