@@ -77,7 +77,7 @@ namespace Usi_Project.Manage
             switch (chosenOption)
             {
                 case "1":
-                    CreatingPatientAppointment(doctor);
+                    CureVerification();
                     break;
                 
                 case "2":
@@ -726,6 +726,89 @@ namespace Usi_Project.Manage
                 break;
 
             }
+        }
+
+        public void CureNotVerified()
+        {
+            List<Drug> drugs = _manager.DrugManager.Drugs;
+            foreach(Drug drug  in drugs)
+            {
+                if (drug.Verification == Verification.NOT_VERIFIED)
+                    drug.Print();
+            }
+        }
+
+
+        public Drug VerifyDrug(Drug drug)
+        {
+            Console.WriteLine("Verify Drug");
+            Console.WriteLine("1) Drug Accepted" + "\n" + "2) Drug Cancceled");
+            drug.Print();
+            var chosenOption = Console.ReadLine();
+            switch (chosenOption)
+            {
+                case "1":
+                    drug.Verification = Verification.VERIFIED;
+                    _manager.DrugManager.SaveData();
+                    return drug;
+                    break;
+
+                case "2":
+                    Console.WriteLine("Problem about drug: ");
+                    var problem = Console.ReadLine();
+                    RejectedDrug rejectedDrug = new RejectedDrug(drug, problem);
+                    _manager.DrugManager.RejectedDrugs.Add(rejectedDrug);
+                    _manager.DrugManager.SaveData();
+                    return rejectedDrug;
+
+                    
+            }
+
+            return null;
+        }
+
+        public void CureVerification()
+        {
+            List<Drug> drugs = _manager.DrugManager.Drugs;
+            while(true)
+            {
+                CureNotVerified();
+                Console.WriteLine("Unesite id droge koju zelite");
+                Console.WriteLine("Unesite x za kraj");
+                string id = Console.ReadLine();
+                foreach(Drug d in drugs)
+                {
+                    if (d.Id == id)
+                        VerifyDrug(d);
+                }
+
+                if (id == "x")
+                    return;
+
+            }
+            
+            
+
+        }
+
+        public OverviewRoom FindOverviewRoom(string roomId)
+        {
+            foreach (var room in _manager.RoomManager.OverviewRooms)
+            {
+                if (room.Id == roomId)
+                {
+                    return room;
+                }
+                
+            }
+
+            return null;
+        }
+
+        public void UpdateDynamicTools()
+        {
+            
+            
         }
 
     }

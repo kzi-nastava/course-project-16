@@ -17,7 +17,6 @@ namespace Usi_Project.IOController
         {
             _factory.RoomManager.SaveData();
             _factory.DirectorManager.SaveData();
-            _factory.DrugManager.SaveData();
             Environment.Exit(0);
             
         }
