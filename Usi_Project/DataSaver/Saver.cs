@@ -25,7 +25,7 @@ namespace Usi_Project.DataSaver
 
         public void SaveAppointment(List<Appointment> appointments)
         {
-            using (StreamWriter file = File.CreateText(_fileSettings.AppointmentsFn))
+            using (StreamWriter file = File.CreateText(_fileSettings.AppointmentsFilename))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Formatting = Formatting.Indented;
@@ -45,7 +45,7 @@ namespace Usi_Project.DataSaver
 
         public void SaveRecipe(List<Recipes> recipes)
         {
-            using (StreamWriter file = File.CreateText(_fileSettings.RecipesFn))
+            using (StreamWriter file = File.CreateText(_fileSettings.RecipesFilename))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Formatting = Formatting.Indented;
@@ -67,7 +67,7 @@ namespace Usi_Project.DataSaver
 
         public void SaveAnamnesa(List<Anamnesa> anamnesas)
         {
-            using (StreamWriter file = File.CreateText(_fileSettings.AnamnesaFn))
+            using (StreamWriter file = File.CreateText(_fileSettings.AnamnesaFilename))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Formatting = Formatting.Indented;
@@ -77,7 +77,7 @@ namespace Usi_Project.DataSaver
 
         public void SaveRequests(List<Requested> requests)
         {
-            using (StreamWriter file = File.CreateText(_fileSettings.RequestedFn))
+            using (StreamWriter file = File.CreateText(_fileSettings.RequestedFilename))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Formatting = Formatting.Indented;

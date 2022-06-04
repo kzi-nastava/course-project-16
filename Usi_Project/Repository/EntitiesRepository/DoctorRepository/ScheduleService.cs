@@ -18,7 +18,7 @@ namespace Usi_Project.DoctorFuncions
             _doctorScheduleManager = doctorScheduleManager;
             _validation = validation;
         }
-        public DateTime CreateDate()
+        public static DateTime CreateDate()
         {
             Console.WriteLine("Enter Month");
             int monthStart = Convert.ToInt32(Console.ReadLine());
@@ -69,14 +69,14 @@ namespace Usi_Project.DoctorFuncions
         public void CreateOverviewAppointment(string patientEmail,Doctor doctor)
         {
             DateTime startTime = CreateDate();
-            var idRoom = _validation.GetIfFreeOverviewRoom(startTime, startTime.AddMinutes(15));
+            var idRoom = ValidationService.GetIfFreeOverviewRoom(startTime, startTime.AddMinutes(15));
             if (idRoom == null)
             {
                 Console.WriteLine("All rooms are busy in this term");
             }
             else
             {
-                if (_validation.CheckTime(startTime, startTime.AddMinutes(15), doctor))
+                if (ValidationService.CheckTime(startTime, startTime.AddMinutes(15), doctor))
                 {
                     List<Appointment> appointments = _doctorScheduleManager.AppointmentManager.Appointment;
                     Appointment app= new Appointment(doctor.email, patientEmail, startTime,startTime.AddMinutes(15) , "OV", idRoom,"0");
@@ -97,7 +97,7 @@ namespace Usi_Project.DoctorFuncions
             }
             else
             {
-                if (_validation.CheckTime(startTime, endTime, doctor))
+                if (ValidationService.CheckTime(startTime, endTime, doctor))
                 {
                     List<Appointment> appointments = _doctorScheduleManager.AppointmentManager.Appointment;
                     Appointment app= new Appointment(doctor.email, patientEmail, startTime,endTime , "OP", idRoom,"0");
@@ -115,7 +115,7 @@ namespace Usi_Project.DoctorFuncions
             DateTime etime = CreateDate();
             app.StartTime = stime;
             app.EndTime = etime;
-            if (_validation.CheckTime(stime, etime, doctor))
+            if (ValidationService.CheckTime(stime, etime, doctor))
             {
                 _doctorScheduleManager.Saver.SaveAppointment(appList);
             }
@@ -124,7 +124,7 @@ namespace Usi_Project.DoctorFuncions
         {
             Console.WriteLine("Enter room id");
             var idroom = Console.ReadLine();
-            if (_validation.CheckRoom(app.StartTime, app.EndTime, idroom))
+            if (ValidationService.CheckRoom(app.StartTime, app.EndTime, idroom))
             {
                 app.IdRoom = idroom;
                 _doctorScheduleManager.Saver.SaveAppointment(appList);

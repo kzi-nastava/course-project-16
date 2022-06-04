@@ -4,6 +4,8 @@ using Usi_Project.Settings;
 using Newtonsoft.Json;
 using Usi_Project.DataSaver;
 using Usi_Project.Manage;
+using Usi_Project.Repository.EntitiesRepository.DirectorRepository;
+using Usi_Project.Repository.RoomRepository;
 
 namespace Usi_Project.Repository
 {
@@ -39,16 +41,16 @@ namespace Usi_Project.Repository
             _patientManager = new PatientManager(fileSettings.PatientFilename, this);
             _secretaryManager = new SecretaryManager(fileSettings.SecretaryFilename, this);
             _doctorManager = new DoctorManager(fileSettings.DoctorFilename, this);
-            _roomManager = new RoomManager(fileSettings.OperatingRoomsFn, fileSettings.OverviewRoomsFn,
-                fileSettings.RetiringRoomsFn, fileSettings.StockRoomFn, this);
-            _appointmentManager = new AppointmentManager(fileSettings.AppointmentsFn, this);
-            _anamnesaManager = new AnamnesaManager(fileSettings.AnamnesaFn, this);
-            _requestManager = new RequestManager(fileSettings.RequestedFn, this);
+            _roomManager = new RoomManager(fileSettings.OperatingRoomsFilename, fileSettings.OverviewRoomsFilename,
+                fileSettings.RetiringRoomsFilename, fileSettings.StockRoomFilename, this);
+            _appointmentManager = new AppointmentManager(fileSettings.AppointmentsFilename, this);
+            _anamnesaManager = new AnamnesaManager(fileSettings.AnamnesaFilename, this);
+            _requestManager = new RequestManager(fileSettings.RequestedFilename, this);
             _saver = saver;
-            _timerManager = new TimerManager(fileSettings.TimerFn, this);
-            _recipesManager = new RecipesManager(fileSettings.RecipesFn, this);
+            _timerManager = new TimerManager(fileSettings.TimerFilename, this);
+            _recipesManager = new RecipesManager(fileSettings.RecipesFilename, this);
             _dynamicRequestManager = new DynamicRequestManager(fileSettings.DynamicReqFilename, this);
-            _drugManager = new DrugManager(fileSettings.DrugsFn, fileSettings.RejectedDrugsFn);
+            _drugManager = new DrugManager(fileSettings.DrugsFilename, fileSettings.RejectedDrugsFilename);
         }
 
 
@@ -66,7 +68,7 @@ namespace Usi_Project.Repository
             _requestManager.LoadData();
             _timerManager.LoadData();
             _dynamicRequestManager.LoadData();
-            
+            _drugManager.LoadData();
         }
         
         public TimerManager TimerManager

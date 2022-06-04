@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Usi_Project.DoctorFuncions;
 using Usi_Project.Users;
 
 namespace Usi_Project.Repository
@@ -85,7 +86,7 @@ namespace Usi_Project.Repository
             DateTime endTime = timeDelta.AddHours(4);
             while (true)
             {
-                if (!PatientManager._factory.DoctorManager.checkTime(startTime, startTime.AddMinutes(15),
+                if (!ValidationService.CheckTime(startTime, startTime.AddMinutes(15),
                         doctorForAppoint) && flag1)
                 {
                     startTime = startTime.AddMinutes(15);
@@ -95,7 +96,7 @@ namespace Usi_Project.Repository
                     flag1 = false;
                 }
                     
-                if (!PatientManager._factory.DoctorManager.checkTime(midTime, midTime.AddMinutes(15),
+                if (!ValidationService.CheckTime(startTime, startTime.AddMinutes(15),
                         doctorForAppoint) && flag2)
                 {
                     midTime = startTime.AddMinutes(15);
@@ -104,7 +105,7 @@ namespace Usi_Project.Repository
                 {
                     flag2 = false;
                 }
-                if (!PatientManager._factory.DoctorManager.checkTime(endTime, endTime.AddMinutes(15),
+                if (!ValidationService.CheckTime(startTime, startTime.AddMinutes(15),
                         doctorForAppoint) && flag3)
                 {
                     endTime = startTime.AddMinutes(15);
@@ -163,7 +164,7 @@ namespace Usi_Project.Repository
                 {
                     Console.WriteLine("To Soon For Making an Appointment, try again.");
                 }
-                else if (!PatientManager._factory.DoctorManager.checkTime(appointTime, appointTime.AddMinutes(15),
+                else if (!ValidationService.CheckTime(appointTime, appointTime.AddMinutes(15),
                              doctorForAppoint))
                 {
                     Console.WriteLine("Doctor Will Be Busy At This Moment!");
@@ -181,7 +182,7 @@ namespace Usi_Project.Repository
             string roomId;
             while (true)
             {
-                roomId = PatientManager._factory.DoctorManager.CheckRoomOverview(appointTime, appointTime.AddMinutes(15));
+                roomId = ValidationService.GetIfFreeOverviewRoom(appointTime, appointTime.AddMinutes(15));
                 if (roomId != null)
                 {
                     break;

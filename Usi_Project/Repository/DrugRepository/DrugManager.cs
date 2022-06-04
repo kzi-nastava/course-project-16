@@ -23,7 +23,6 @@ namespace Usi_Project.Manage
         public List<Drug> Drugs
         {
             get => _drugs;
-            set => _drugs = value;
         }
         
         public void LoadData()
@@ -38,9 +37,8 @@ namespace Usi_Project.Manage
         public List<RejectedDrug> RejectedDrugs
         {
             get => _rejectedDrugs;
-            set => _rejectedDrugs = value;
         }
-
+        
         public void PrintMenu()
         {
             while (true)

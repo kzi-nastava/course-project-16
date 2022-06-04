@@ -6,14 +6,14 @@ namespace Usi_Project.DoctorFuncions
 {
     public class ValidationService
     {
-        public Factory _validationManager;
+        public static Factory _validationManager;
 
         
         public ValidationService(Factory validationManager)
         {
             _validationManager = validationManager;
         }
-        public bool CheckTime(DateTime dateStart,DateTime dateEnd,Doctor doctor)
+        public static bool CheckTime(DateTime dateStart,DateTime dateEnd,Doctor doctor)
         {
             foreach (var appointment in _validationManager.AppointmentManager.Appointment)
             {
@@ -25,7 +25,7 @@ namespace Usi_Project.DoctorFuncions
             }
             return true;
         } 
-        public bool CheckRoom(DateTime dateStart,DateTime dateEnd,string roomId)
+        public static bool CheckRoom(DateTime dateStart,DateTime dateEnd,string roomId)
         {
             
             foreach (var appointment in _validationManager.AppointmentManager.Appointment)
@@ -39,7 +39,7 @@ namespace Usi_Project.DoctorFuncions
 
             return true;
         } 
-        public string GetIfFreeOverviewRoom(DateTime dateStart,DateTime dateEnd)
+        public static string GetIfFreeOverviewRoom(DateTime dateStart,DateTime dateEnd)
         {
             bool x = true;
             foreach (var room in _validationManager.RoomManager.OverviewRooms)
@@ -73,7 +73,7 @@ namespace Usi_Project.DoctorFuncions
             }
             return null;
         }
-        public string CheckOperation(DateTime dateStart,DateTime dateEnd)
+        public static string CheckOperation(DateTime dateStart,DateTime dateEnd)
         {
             bool x = true;
             foreach (var room in _validationManager.RoomManager.OperatingRooms)
@@ -112,7 +112,7 @@ namespace Usi_Project.DoctorFuncions
             }
         }
         
-        public bool CheckEmail(string email)
+        public static bool CheckEmail(string email)
         {
             foreach (Doctor doctor in _validationManager.DoctorManager.Doctors)
             {

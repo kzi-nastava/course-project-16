@@ -80,7 +80,7 @@ namespace Usi_Project.Repository
                 case "5":
                     ScheduleService sscCcl = new ScheduleService(doctor, _manager, validation);
 
-                    DateTime t = sscCcl.CreateDate();
+                    DateTime t = ScheduleService.CreateDate();
                     sscCcl.CancelAppointment(t);
                     break;
                 case "6":
