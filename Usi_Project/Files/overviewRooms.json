@@ -13,6 +13,13 @@
       "Table": 5,
       "Chair": 3
     },
+    "DynamicEquipment": {
+      "Gauze": 0,
+      "Buckles": 2,
+      "Bandages": 10,
+      "Paper": 11,
+      "Pencils": 6
+    },
     "Id": "B1",
     "Name": "Overview room 1"
   },
@@ -30,6 +37,13 @@
       "Closet": 2,
       "Bad": 40
     },
+    "DynamicEquipment": {
+      "Gauze": 10,
+      "Buckles": 3,
+      "Bandages": 10,
+      "Paper": 21,
+      "Pencils": 6
+    },
     "Id": "B2",
     "Name": "Overview room 2"
   },
@@ -46,6 +60,13 @@
     "Furniture": {
       "Table": 3,
       "Chair": 5
+    },
+    "DynamicEquipment": {
+      "Gauze": 22,
+      "Buckles": 5,
+      "Bandages": 10,
+      "Paper": 21,
+      "Pencils": 6
     },
     "Id": "B3",
     "Name": "Overview room 3"

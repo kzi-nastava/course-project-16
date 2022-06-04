@@ -17,12 +17,15 @@ namespace Usi_Project.Settings
         private readonly string _stockRoomFn;
         private readonly string _timerFn;
         private readonly string _recipesFn;
+        private readonly string _dynamicReqFn;
         private readonly string _drugsFn;
         private readonly string _rejectedDrugsFn;
+      
         public FileSettings(string doctorFilename, string patientFilename, string directorFilename,
             string secretaryFilename, string operatingRoomsFn, string overviewRoomsFn, string retiringRoomsFn,
             string appointmentsFn, string anamnesaFn, string requestedFn, 
-            string stockRoomFn, string timerFn, string recipesFn, string drugsFn, string rejectedDrugsFn)
+            string stockRoomFn, string timerFn, string recipesFn, string dynamicReqFn, string drugsFn, string rejectedDrugsFn)
+
         
         {
             _doctorFilename = doctorFilename;
@@ -38,6 +41,7 @@ namespace Usi_Project.Settings
             _stockRoomFn = stockRoomFn;
             _timerFn = timerFn;
             _recipesFn = recipesFn;
+            _dynamicReqFn = dynamicReqFn;
             _drugsFn = drugsFn;
             _rejectedDrugsFn = rejectedDrugsFn;
 
@@ -73,5 +77,7 @@ namespace Usi_Project.Settings
         public string StockRoomFn => _stockRoomFn;
 
         public string SecretaryFilename => _secretaryFilename;
+        
+        public string DynamicReqFilename => _dynamicReqFn;
     }
 }

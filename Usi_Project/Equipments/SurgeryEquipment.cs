@@ -7,7 +7,6 @@ namespace Usi_Project
         Clamps,
         Scissors,
         Scalpels,
-        CottonWool,
         Table,
         Lamp
     }

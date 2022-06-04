@@ -17,6 +17,12 @@ namespace Usi_Project
             _tools = new Dictionary<MedicalTool, int>();
         }
 
+        public OverviewRoom(string id, string name, Dictionary<Furniture, int> furniture, Dictionary<DynamicEquipment, int> dynamicTool, Dictionary<MedicalTool, int> tools) 
+            : base(id, name, furniture, dynamicTool)
+        {
+            _tools = tools;
+        }
+
         public OverviewRoom(string id, string name, Dictionary<Furniture, int> furniture) : base(id, name, furniture)
         {
             _tools = new Dictionary<MedicalTool, int>();
@@ -72,6 +78,13 @@ namespace Usi_Project
                 }
             }
         }
+
+        public void SaveData()
+        {
+            
+        }
+        
+        
         
         
     }

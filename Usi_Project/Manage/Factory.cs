@@ -9,6 +9,8 @@ namespace Usi_Project.Manage
 {
     public class Factory
     {
+
+        private DynamicRequestManager _dynamicRequestManager;
         private readonly DirectorManager _directorManager;
         private readonly PatientManager _patientManager;
         private readonly SecretaryManager _secretaryManager;
@@ -45,26 +47,10 @@ namespace Usi_Project.Manage
             _saver = saver;
             _timerManager = new TimerManager(fileSettings.TimerFn, this);
             _recipesManager = new RecipesManager(fileSettings.RecipesFn, this);
+            _dynamicRequestManager = new DynamicRequestManager(fileSettings.DynamicReqFilename, this);
             _drugManager = new DrugManager(fileSettings.DrugsFn, fileSettings.RejectedDrugsFn);
         }
         
-        public void LoadData()
-        {
-
-            _directorManager.LoadData();
-            _patientManager.LoadData();
-            _secretaryManager.LoadData();
-            _doctorManager.LoadData();
-            _roomManager.LoadData();
-            _appointmentManager.LoadData();
-            _anamnesaManager.LoadData();
-            _requestManager.LoadData();
-            _timerManager.LoadData();
-            _drugManager.LoadData();
-            
-
-        }
-
         public RecipesManager RecipesManager
         {
             get => _recipesManager;
@@ -80,6 +66,12 @@ namespace Usi_Project.Manage
             get => _drugManager;
         }
 
+        public DynamicRequestManager DynamicRequestManager
+        {
+            get => _dynamicRequestManager;
+            set => _dynamicRequestManager = value;
+        }
+
         public AnamnesaManager AnamnesaManager
         {
             get => _anamnesaManager;
@@ -88,6 +80,22 @@ namespace Usi_Project.Manage
         public AppointmentManager AppointmentManager
         {
             get => _appointmentManager;
+        }
+
+        public void LoadData()
+        {
+
+            _directorManager.LoadData();
+            _patientManager.LoadData();
+            _secretaryManager.LoadData();
+            _doctorManager.LoadData();
+            _roomManager.LoadData();
+            _appointmentManager.LoadData();
+            _anamnesaManager.LoadData();
+            _requestManager.LoadData();
+            _timerManager.LoadData();
+            _dynamicRequestManager.LoadData();
+            
         }
         
         public TimerManager TimerManager

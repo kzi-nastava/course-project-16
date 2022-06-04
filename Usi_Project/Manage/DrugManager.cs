@@ -156,22 +156,7 @@ namespace Usi_Project.Manage
             Drug newDrug = new Drug(id, name, producer, expirationTime, ingredients);
             _drugs.Add(newDrug);
         }
-
-        // private void CheckVerification()
-        // {
-        //     foreach (var VARIABLE in _drugs.ToList())
-        //     {
-        //         if (VARIABLE.Verification == Verification.NOT_VERIFIED)
-        //         {
-        //             
-        //             RejectedDrug rejectedDrug = new RejectedDrug(VARIABLE, "Ovaj lek nije dobar zbog neceg..");
-        //             _rejectedDrugs.Add(rejectedDrug);
-        //             _drugs.Remove(VARIABLE);
-        //         }
-        //     }
-        // }
         
-
         private Drug GetDrug()
         {
             while (true)

@@ -718,15 +718,130 @@ namespace Usi_Project.Manage
                     case "1":
                         CreateRecipes(app.EmailPatient);
                         break;
-                    case "2":
+                    case "x":
                         
                         break;
                 }
                 
-                break;
+                UpdateRoomEquipment(app);
+                
 
             }
         }
+
+       
+
+        void UpdateRoomEquipment(Appointment app)
+        {
+            foreach (var room in _manager.RoomManager.OverviewRooms)
+            {
+                if (room.Id == app.IdRoom)
+                {
+                    while (true)
+                    {
+                        Dictionary<int, DynamicEquipment> dictionary = new Dictionary<int, DynamicEquipment>();
+                        int i = 1;
+                        foreach (DynamicEquipment equipment in
+                                 (DynamicEquipment[]) Enum.GetValues(typeof(DynamicEquipment)))
+                        {
+                            Console.WriteLine(i + ") " + equipment);
+                            dictionary[i] = equipment;
+                            i++;
+                        }
+
+                        _manager.SecretaryManager.PrintEquipmentForOverviewRoom(app.IdRoom);
+                        Console.Write("Enter option or 0 for exit>> ");
+                        int option = Int32.Parse(Console.ReadLine());
+                        if (option == 0)
+                        {
+                            _manager.RoomManager.SaveData();
+                            return;
+                        }
+                            DynamicEquipment chosen = dictionary[option];
+                        while (true)
+                        {
+                            Console.WriteLine("Enter num");
+                            var num = Convert.ToInt32(Console.ReadLine());
+                            if (room.DynamicEquipment[chosen] - num > 0)
+                            {
+                                room.DynamicEquipment[chosen] -= num;
+                                break;
+
+
+                            }
+                        }
+                    }
+
+
+
+                }
+            }
+        }
+        // public void CureNotVerified()
+        // {
+        //     List<Drug> drugs = _manager.DrugManager.Drugs;
+        //     foreach(Drug drug  in drugs)
+        //     {
+        //         if (drug.Verification == Verification.NOT_VERIFIED)
+        //             drug.Print();
+        //     }
+        // }
+        //
+        //
+        // public Drug VerifyDrug(Drug drug)
+        // {
+        //     Console.WriteLine("Verify Drug");
+        //     Console.WriteLine("1) Drug Accepted" + "\n" + "2) Drug Cancceled");
+        //     drug.Print();
+        //     var chosenOption = Console.ReadLine();
+        //     switch (chosenOption)
+        //     {
+        //         case "1":
+        //             drug.Verification = Verification.VERIFIED;
+        //             _manager.DrugManager.SaveData();
+        //             return drug;
+        //             break;
+        //
+        //         case "2":
+        //             Console.WriteLine("Problem about drug: ");
+        //             var problem = Console.ReadLine();
+        //             RejectedDrug rejectedDrug = new RejectedDrug(drug, problem);
+        //             _manager.DrugManager.RejectedDrugs.Add(rejectedDrug);
+        //             _manager.DrugManager.SaveData();
+        //             return rejectedDrug;
+        //
+        //             
+        //     }
+        //
+        //     return null;
+        // }
+        //
+        // public void CureVerification()
+        // {
+        //     List<Drug> drugs = _manager.DrugManager.Drugs;
+        //     while(true)
+        //     {
+        //         CureNotVerified();
+        //         Console.WriteLine("Unesite id droge koju zelite");
+        //         Console.WriteLine("Unesite x za kraj");
+        //         string id = Console.ReadLine();
+        //         foreach(Drug d in drugs)
+        //         {
+        //             if (d.Id == id)
+        //                 VerifyDrug(d);
+        //         }
+        //
+        //         if (id == "x")
+        //             return;
+        //
+        //     }
+            
+            
+
+       // }
+        
+           
+              
 
         public void CureNotVerified()
         {
