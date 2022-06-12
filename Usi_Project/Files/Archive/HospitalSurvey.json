@@ -1,0 +1,10 @@
+[
+  {
+    "patientEmail": "MilosK@gmail.com", 
+    "QualityOfService": 4,
+    "OverallHygiene": 3,
+    "AreYouSatisfied": 4,
+    "WouldYouRecommend": 3,
+    "Comment": "Expensive."
+  }
+]

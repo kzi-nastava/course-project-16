@@ -20,11 +20,14 @@ namespace Usi_Project.Settings
         private readonly string _dynamicReqFilename;
         private readonly string _drugsFilename;
         private readonly string _rejectedDrugsFilename;
+        private readonly string _hospitalSurveyFilename;
       
         public FileSettings(string doctorFilename, string patientFilename, string directorFilename,
-            string secretaryFilename, string operatingRoomsFilename, string overviewRoomsFilename, string retiringRoomsFilename,
-            string appointmentsFilename, string anamnesaFilename, string requestedFilename,
-            string stockRoomFilename, string timerFilename, string recipesFilename, string dynamicReqFilename, string drugsFilename, string rejectedDrugsFilename)
+            string secretaryFilename, string operatingRoomsFilename, string overviewRoomsFilename, 
+            string retiringRoomsFilename, string appointmentsFilename, string anamnesaFilename, 
+            string requestedFilename, string stockRoomFilename, string timerFilename, string recipesFilename, 
+            string dynamicReqFilename, string drugsFilename, string rejectedDrugsFilename, 
+            string hospitalSurveyFilename)
         
         
         {
@@ -44,8 +47,10 @@ namespace Usi_Project.Settings
             _dynamicReqFilename = dynamicReqFilename;
             _drugsFilename = drugsFilename;
             _rejectedDrugsFilename = rejectedDrugsFilename;
-
+            _hospitalSurveyFilename = hospitalSurveyFilename;
         }
+
+        public string HospitalSurveyFilename => _hospitalSurveyFilename;
 
         public string DrugsFilename => _drugsFilename;
 

@@ -106,7 +106,7 @@ namespace Usi_Project.Repository
                         NotificationService.ShowRecipeNotification(patient);
                         break;
                    case "8":
-                        SurveyService.FillSurvey();
+                        SurveyService.SurveyMenu(patient);
                         break;
                     case "x":
                         Console.WriteLine("Loging Out...");

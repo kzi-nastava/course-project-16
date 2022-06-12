@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Usi_Project.DataSaver;
 using Usi_Project.Manage;
 using Usi_Project.Repository.EntitiesRepository.DirectorRepository;
+using Usi_Project.Repository.EntitiesRepository.Survey;
 using Usi_Project.Repository.RoomRepository;
 
 namespace Usi_Project.Repository
@@ -25,6 +26,7 @@ namespace Usi_Project.Repository
         private readonly Saver _saver;
         private readonly RecipesManager _recipesManager;
         private readonly DrugManager _drugManager;
+        private readonly HospitalSurveyManager _hospitalSurveyManager;
         public Factory()
         {
         }
@@ -51,6 +53,7 @@ namespace Usi_Project.Repository
             _recipesManager = new RecipesManager(fileSettings.RecipesFilename, this);
             _dynamicRequestManager = new DynamicRequestManager(fileSettings.DynamicReqFilename, this);
             _drugManager = new DrugManager(fileSettings.DrugsFilename, fileSettings.RejectedDrugsFilename);
+            _hospitalSurveyManager = new HospitalSurveyManager(fileSettings.HospitalSurveyFilename, this);
         }
 
 
@@ -70,6 +73,7 @@ namespace Usi_Project.Repository
             _dynamicRequestManager.LoadData();
             _drugManager.LoadData();
             _recipesManager.LoadData();
+            _hospitalSurveyManager.LoadData();
         }
         
         public TimerManager TimerManager
@@ -77,6 +81,8 @@ namespace Usi_Project.Repository
             get => _timerManager;
 
         }
+
+        public HospitalSurveyManager HospitalSurveyManager => _hospitalSurveyManager;
 
         public RoomManager RoomManager
         {
