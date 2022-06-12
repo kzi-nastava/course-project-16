@@ -33,7 +33,8 @@ namespace Usi_Project
                  "../../../Files/Archive/dynamicRequests.json", 
                  "../../../Files/Drugs/drugs.json",
                  "../../../Files/Drugs/rejectedDrugs.json",
-                 "../../../Files/Archive/HospitalSurvey.json");
+                 "../../../Files/Archive/hospitalSurvey.json",
+                 "../../../Files/Archive/doctorSurvey.json");
 
             Saver saver = new Saver(fileSettings);
             Factory factory = new Factory(fileSettings, saver);

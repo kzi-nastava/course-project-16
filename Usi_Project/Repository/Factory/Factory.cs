@@ -27,6 +27,7 @@ namespace Usi_Project.Repository
         private readonly RecipesManager _recipesManager;
         private readonly DrugManager _drugManager;
         private readonly HospitalSurveyManager _hospitalSurveyManager;
+        private readonly DoctorSurveyManager _doctorSurveyManager;
         public Factory()
         {
         }
@@ -54,6 +55,7 @@ namespace Usi_Project.Repository
             _dynamicRequestManager = new DynamicRequestManager(fileSettings.DynamicReqFilename, this);
             _drugManager = new DrugManager(fileSettings.DrugsFilename, fileSettings.RejectedDrugsFilename);
             _hospitalSurveyManager = new HospitalSurveyManager(fileSettings.HospitalSurveyFilename, this);
+            _doctorSurveyManager = new DoctorSurveyManager(fileSettings.DoctorSurveyFilename, this);
         }
 
 
@@ -74,6 +76,7 @@ namespace Usi_Project.Repository
             _drugManager.LoadData();
             _recipesManager.LoadData();
             _hospitalSurveyManager.LoadData();
+            _doctorSurveyManager.LoadData();
         }
         
         public TimerManager TimerManager
@@ -122,6 +125,8 @@ namespace Usi_Project.Repository
         public RequestManager RequestManager => _requestManager;
 
         public RecipesManager RecipesManager => _recipesManager;
+
+        public DoctorSurveyManager DoctorSurveyManager => _doctorSurveyManager;
 
         public DrugManager DrugManager => _drugManager;
     }

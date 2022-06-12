@@ -21,13 +21,14 @@ namespace Usi_Project.Settings
         private readonly string _drugsFilename;
         private readonly string _rejectedDrugsFilename;
         private readonly string _hospitalSurveyFilename;
+        private readonly string _doctorSurveyFilename;
       
         public FileSettings(string doctorFilename, string patientFilename, string directorFilename,
             string secretaryFilename, string operatingRoomsFilename, string overviewRoomsFilename, 
             string retiringRoomsFilename, string appointmentsFilename, string anamnesaFilename, 
             string requestedFilename, string stockRoomFilename, string timerFilename, string recipesFilename, 
             string dynamicReqFilename, string drugsFilename, string rejectedDrugsFilename, 
-            string hospitalSurveyFilename)
+            string hospitalSurveyFilename, string doctorSurveyFilename)
         
         
         {
@@ -48,7 +49,10 @@ namespace Usi_Project.Settings
             _drugsFilename = drugsFilename;
             _rejectedDrugsFilename = rejectedDrugsFilename;
             _hospitalSurveyFilename = hospitalSurveyFilename;
+            _doctorSurveyFilename = doctorSurveyFilename;
         }
+
+        public string DoctorSurveyFilename => _doctorSurveyFilename;
 
         public string HospitalSurveyFilename => _hospitalSurveyFilename;
 

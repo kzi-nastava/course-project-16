@@ -19,7 +19,7 @@ namespace Usi_Project.Repository
                 if (opt == "1" || opt == "2")
                     break;
                 
-                    Console.WriteLine("Invalid Input...");
+                Console.WriteLine("Invalid Input...");
             } 
 
             FillSurvey(patient, opt);
@@ -27,13 +27,12 @@ namespace Usi_Project.Repository
 
         private static void FillSurvey(Patient patient, string opt)
         {
-            List<HospitalSurvey> hospitalSurveys = PatientManager._factory.HospitalSurveyManager.HospitalS;
-            foreach (var hospitalSurvey in hospitalSurveys)
+            List<DoctorSurvey> doctorSurveys = PatientManager._factory.DoctorSurveyManager.DocotrS;
+            foreach (var doctorSurvey in doctorSurveys)
             {
-                if (hospitalSurvey.PatientEmail == patient.email)
+                if (doctorSurvey.PatientEmail == patient.email)
                 {
-                    Console.WriteLine("Usao i prosao");
-                    Console.WriteLine(hospitalSurvey);
+                    Console.WriteLine(doctorSurvey);
                 }
             }
         }

@@ -1,0 +1,13 @@
+[
+  {
+    "StartTime": "2022-06-08T13:00:00",
+    "EndTime": "2022-06-08T13:15:00",
+    "PatientEmail": "MilosK@gmail.com",
+    "DoctorEmail": "veljkobubnjevic001@gmail.com",
+    "QualityOfService": 2,
+    "OverallHygiene": 1,
+    "AreYouSatisfied": 2,
+    "WouldYouRecommend": 1,
+    "Comment": "Dirty."
+  }
+]
