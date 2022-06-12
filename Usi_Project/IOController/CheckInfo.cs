@@ -1,5 +1,6 @@
 using System;
-using Usi_Project.Manage;
+using Usi_Project.Repository;
+using Usi_Project.Repository.EntitiesRepository.DirectorRepository;
 using Usi_Project.Users;
 
 namespace Usi_Project.IOController
@@ -17,7 +18,6 @@ namespace Usi_Project.IOController
         {
             _factory.RoomManager.SaveData();
             _factory.DirectorManager.SaveData();
-            _factory.DrugManager.SaveData();
             Environment.Exit(0);
             
         }
@@ -62,12 +62,11 @@ namespace Usi_Project.IOController
                                                enteredPassword);
                                        if (secretary != null)
                                        {
-                                           _factory.SecretaryManager.Menu();
+                                           SecretaryManager.Menu();
                                            break;
                                        }
                                    
-                    } 
-                    Console.WriteLine("Not valid email/password combination, try again");
+                    }
                 }
             }
         }

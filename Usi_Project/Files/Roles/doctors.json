@@ -1,0 +1,29 @@
+[
+{
+  "email": "veljkobubnjevic001@gmail.com",
+  "password": "vekapass01",
+  "name": "Veljko",
+  "lastName":"Bubnjevic",
+  "adress": "Narodnog fronta 65",
+  "phone": "065734133",
+  "specialisation": "Cardiology"
+},
+  {
+    "email": "veljkoWick001@gmail.com",
+    "password": "vekapass01",
+    "name": "Veljko",
+    "lastName":"Wick",
+    "adress": "Narodnog fronta 65",
+    "phone": "065734133",
+    "specialisation": "Cardiology"
+  },
+  {
+    "email": "veljkoAvramovic001@gmail.com",
+    "password": "vekapass01",
+    "name": "Veljko",
+    "lastName":"Avramovic",
+    "adress": "Narodnog fronta 65",
+    "phone": "065734133",
+    "specialisation": "Cardiology"
+  }
+]

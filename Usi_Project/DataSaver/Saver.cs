@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Usi_Project.Appointments;
-using Usi_Project.Manage;
+using Usi_Project.Repository;
 using Usi_Project.Settings;
 using Newtonsoft.Json;
 using Usi_Project.Users;
@@ -12,7 +12,7 @@ namespace Usi_Project.DataSaver
     public class Saver
     {
         private FileSettings _fileSettings;
-     
+
 
         public Saver()
         {
@@ -25,7 +25,7 @@ namespace Usi_Project.DataSaver
 
         public void SaveAppointment(List<Appointment> appointments)
         {
-            using (StreamWriter file = File.CreateText(_fileSettings.AppointmentsFn))
+            using (StreamWriter file = File.CreateText(_fileSettings.AppointmentsFilename))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Formatting = Formatting.Indented;
@@ -33,9 +33,19 @@ namespace Usi_Project.DataSaver
             }
         }
 
+        public void SaveDynamicRequest(List<DynamicRequest> dynamicRequests)
+        {
+            using (StreamWriter file = File.CreateText(_fileSettings.DynamicReqFilename))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, dynamicRequests);
+            }
+        }
+
         public void SaveRecipe(List<Recipes> recipes)
         {
-            using (StreamWriter file = File.CreateText(_fileSettings.RecipesFn))
+            using (StreamWriter file = File.CreateText(_fileSettings.RecipesFilename))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Formatting = Formatting.Indented;
@@ -54,9 +64,10 @@ namespace Usi_Project.DataSaver
                 serializer.Serialize(file, patients);
             }
         }
+
         public void SaveAnamnesa(List<Anamnesa> anamnesas)
         {
-            using (StreamWriter file = File.CreateText(_fileSettings.AnamnesaFn))
+            using (StreamWriter file = File.CreateText(_fileSettings.AnamnesaFilename))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Formatting = Formatting.Indented;
@@ -64,7 +75,17 @@ namespace Usi_Project.DataSaver
             }
         }
 
-      
-        
-    }
+        public void SaveRequests(List<Requested> requests)
+        {
+            using (StreamWriter file = File.CreateText(_fileSettings.RequestedFilename))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, requests);
+            }
+        }
+    
+
+
+}
 }

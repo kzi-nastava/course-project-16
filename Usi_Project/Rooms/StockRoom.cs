@@ -29,6 +29,14 @@ namespace Usi_Project
 
         }
 
+        public StockRoom(string id, string name, Dictionary<Furniture, int> furniture, Dictionary<DynamicEquipment,
+            int> dynamicTool, Dictionary<SurgeryTool, int> surgeryEquipment, Dictionary<MedicalTool, int> medicalEquipment) 
+            : base(id, name, furniture, dynamicTool)
+        {
+            _surgeryEquipment = surgeryEquipment;
+            _medicalEquipment = medicalEquipment;
+        }
+
         public StockRoom(Dictionary<SurgeryTool, int> surgeryEquipment, Dictionary<MedicalTool, int> medicalEquipment)
         {
             _surgeryEquipment = surgeryEquipment;

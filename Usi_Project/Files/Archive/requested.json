@@ -1,0 +1,14 @@
+[
+  {
+    "EmailPatient": "MilosK@gmail.com",
+    "StartTime": "2022-06-08T12:00:00",
+    "NewTime": "2022-06-08T12:15:00",
+    "Operation": "1"
+  },
+  {
+    "EmailPatient": "MilosK@gmail.com",
+    "StartTime": "2022-05-08T12:00:00",
+    "NewTime": "2022-05-08T12:15:00",
+    "Operation": "1"
+  }
+]
