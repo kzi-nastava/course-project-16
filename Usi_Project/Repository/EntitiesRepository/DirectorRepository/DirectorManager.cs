@@ -151,13 +151,13 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             switch (option)
             {
                 case "1":
-                   RoomsViewer.ViewOperatingRooms(_factory, RoomsBrowser.FindOperatingRoom(_factory.RoomManager.OperatingRooms));
+                   RoomsViewer.ViewOperatingRooms(_factory, RoomsBrowser.FindOperatingRoom(_factory.RoomRepository.OperatingRooms));
                     break;
                 case "2":
-                    RoomsViewer.ViewOverviewRooms(_factory, RoomsBrowser.FindOverviewRoom(_factory.RoomManager.OverviewRooms));
+                    RoomsViewer.ViewOverviewRooms(_factory, RoomsBrowser.FindOverviewRoom(_factory.RoomRepository.OverviewRooms));
                     break;
                 case "3":
-                    RoomsViewer.ViewRetiringRoom(_factory, RoomsBrowser.FindRetiringRoom(_factory.RoomManager.RetiringRooms));
+                    RoomsViewer.ViewRetiringRoom(_factory, RoomsBrowser.FindRetiringRoom(_factory.RoomRepository.RetiringRooms));
                     break;
                 case "4":
                     RoomsViewer.ViewStockRoom(_factory);
@@ -168,7 +168,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
         public void CheckIfRenovationIsEnded()
         {
 
-            foreach (var operatingRoom in _factory.RoomManager.OperatingRooms.ToList())
+            foreach (var operatingRoom in _factory.RoomRepository.OperatingRooms.ToList())
             {
                 if (DateTime.Now >= operatingRoom.TimeOfRenovation.Value)
                 {
@@ -177,7 +177,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 }
             }
 
-            foreach (var overviewRoom in _factory.RoomManager.OverviewRooms.ToList())
+            foreach (var overviewRoom in _factory.RoomRepository.OverviewRooms.ToList())
             {
                 if (DateTime.Now >= overviewRoom.TimeOfRenovation.Value)
                 {
@@ -186,7 +186,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 }
             }
 
-            foreach (var retiringRoom in _factory.RoomManager.RetiringRooms.ToList())
+            foreach (var retiringRoom in _factory.RoomRepository.RetiringRooms.ToList())
             {
                 if (DateTime.Now >= retiringRoom.TimeOfRenovation.Value)
                 {

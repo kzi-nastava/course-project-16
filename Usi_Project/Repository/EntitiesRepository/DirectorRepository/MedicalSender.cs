@@ -7,12 +7,12 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
         {
             foreach (var tool in operatingRoom.SurgeryEquipments)
             {
-                if (!factory.RoomManager.StockRoom.SurgeryEquipment.ContainsKey(tool.Key))
+                if (!factory.RoomRepository.StockRoom.SurgeryEquipment.ContainsKey(tool.Key))
                 {
-                    factory.RoomManager.StockRoom.SurgeryEquipment[tool.Key] = tool.Value;
+                    factory.RoomRepository.StockRoom.SurgeryEquipment[tool.Key] = tool.Value;
                 }
 
-                factory.RoomManager.StockRoom.SurgeryEquipment[tool.Key] += tool.Value;
+                factory.RoomRepository.StockRoom.SurgeryEquipment[tool.Key] += tool.Value;
             }
         }
 
@@ -20,12 +20,12 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
         {
             foreach (var tool in overviewRoom.Tools)
             {
-                if (!factory.RoomManager.StockRoom.MedicalEquipment.ContainsKey(tool.Key))
+                if (!factory.RoomRepository.StockRoom.MedicalEquipment.ContainsKey(tool.Key))
                 {
-                    factory.RoomManager.StockRoom.MedicalEquipment[tool.Key] = tool.Value;
+                    factory.RoomRepository.StockRoom.MedicalEquipment[tool.Key] = tool.Value;
                 }
 
-                factory.RoomManager.StockRoom.MedicalEquipment[tool.Key] += tool.Value;
+                factory.RoomRepository.StockRoom.MedicalEquipment[tool.Key] += tool.Value;
             }
         }
     }

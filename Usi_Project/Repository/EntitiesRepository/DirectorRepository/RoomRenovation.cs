@@ -16,21 +16,21 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             switch (choise)
             {
                 case 1:
-                   OperatingRoom operatingRoom = RoomsBrowser.FindOperatingRoom(_factory.RoomManager.OperatingRooms);
+                   OperatingRoom operatingRoom = RoomsBrowser.FindOperatingRoom(_factory.RoomRepository.OperatingRooms);
                     var timeForRenovationRoom = CheckTimeForRenovationRoom(operatingRoom.Id);
                     if (timeForRenovationRoom.Item3)
                         operatingRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>(
                             timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
                     break;
                 case 2:
-                    OverviewRoom overviewRoom = RoomsBrowser.FindOverviewRoom(_factory.RoomManager.OverviewRooms);
+                    OverviewRoom overviewRoom = RoomsBrowser.FindOverviewRoom(_factory.RoomRepository.OverviewRooms);
                     timeForRenovationRoom = CheckTimeForRenovationRoom(overviewRoom.Id);
                     if (timeForRenovationRoom.Item3)
                         overviewRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>(
                             timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
                     break;
                 case 3:
-                    RetiringRoom  retiringRoom = RoomsBrowser.FindRetiringRoom(_factory.RoomManager.RetiringRooms);
+                    RetiringRoom  retiringRoom = RoomsBrowser.FindRetiringRoom(_factory.RoomRepository.RetiringRooms);
                     timeForRenovationRoom = CheckTimeForRenovationRoom(retiringRoom.Id);
                     if (timeForRenovationRoom.Item3)
                         retiringRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>(
@@ -68,25 +68,25 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                     break;
                 case 2:
                     Console.WriteLine("\nChoose operating room\n");
-                   OperatingRoom operatingRoom = RoomsBrowser.FindOperatingRoom(_factory.RoomManager.OperatingRooms);
+                   OperatingRoom operatingRoom = RoomsBrowser.FindOperatingRoom(_factory.RoomRepository.OperatingRooms);
                     Console.WriteLine("\nChoose  retiring room\n");
-                    RetiringRoom retiringRoom = RoomsBrowser.FindRetiringRoom(_factory.RoomManager.RetiringRooms);
+                    RetiringRoom retiringRoom = RoomsBrowser.FindRetiringRoom(_factory.RoomRepository.RetiringRooms);
                     if (IsBeingRenovated(operatingRoom) || IsBeingRenovated(retiringRoom))
                         return;
                     MergingRoomsOfDiffType.MergeOperatingAndRetiringRoom(_factory, operatingRoom, retiringRoom);
                     break;
                 case 4:
                     Console.WriteLine("\nChoose  retiring room\n");
-                    retiringRoom = RoomsBrowser.FindRetiringRoom(_factory.RoomManager.RetiringRooms);
+                    retiringRoom = RoomsBrowser.FindRetiringRoom(_factory.RoomRepository.RetiringRooms);
                     Console.WriteLine("\nChoose overview room\n");
-                    OverviewRoom overviewRoom = RoomsBrowser.FindOverviewRoom(_factory.RoomManager.OverviewRooms);
+                    OverviewRoom overviewRoom = RoomsBrowser.FindOverviewRoom(_factory.RoomRepository.OverviewRooms);
                     MergingRoomsOfDiffType.MergeRetiringRoomAndOverviewRoom(_factory, retiringRoom, overviewRoom);
                     break;
                 case 3:
                     Console.WriteLine("\nChoose  operating room\n");
-                    operatingRoom = RoomsBrowser.FindOperatingRoom(_factory.RoomManager.OperatingRooms);
+                    operatingRoom = RoomsBrowser.FindOperatingRoom(_factory.RoomRepository.OperatingRooms);
                     Console.WriteLine("\nChoose overview room\n");
-                    overviewRoom = RoomsBrowser.FindOverviewRoom(_factory.RoomManager.OverviewRooms);
+                    overviewRoom = RoomsBrowser.FindOverviewRoom(_factory.RoomRepository.OverviewRooms);
                     MergingRoomsOfDiffType.MergeOperatingAndOverviewRoom(_factory, operatingRoom, overviewRoom);
                     break;
                 }
@@ -104,15 +104,15 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             switch (choiseRoom)
             {
                 case 1:
-                    OperatingRoom room = RoomsBrowser.FindOperatingRoom(_factory.RoomManager.OperatingRooms);
+                    OperatingRoom room = RoomsBrowser.FindOperatingRoom(_factory.RoomRepository.OperatingRooms);
                     SplitRooms.SplitOperatingRoom(_factory, room);
                     break;
                 case 2:
-                    OverviewRoom overviewRoom = RoomsBrowser.FindOverviewRoom(_factory.RoomManager.OverviewRooms);
+                    OverviewRoom overviewRoom = RoomsBrowser.FindOverviewRoom(_factory.RoomRepository.OverviewRooms);
                     SplitRooms.SplitOverwievRoom(_factory,overviewRoom);
                     break;
                 case 3:
-                    RetiringRoom retiringRoom = RoomsBrowser.FindRetiringRoom(_factory.RoomManager.RetiringRooms);
+                    RetiringRoom retiringRoom = RoomsBrowser.FindRetiringRoom(_factory.RoomRepository.RetiringRooms);
                     SplitRooms.SplitRetiringRoom(_factory, retiringRoom);
                     break;
             }

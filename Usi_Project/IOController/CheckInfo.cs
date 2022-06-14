@@ -17,7 +17,7 @@ namespace Usi_Project.IOController
 
         private void SaveData()
         {
-            _factory.RoomManager.SaveData();
+            _factory.RoomRepository.SaveData();
             _factory.DirectorManager.SaveData();
             _factory.Saver.SaveDoctors(_factory.DoctorManager.Doctors);
             Environment.Exit(0);

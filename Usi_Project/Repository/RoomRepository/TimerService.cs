@@ -43,19 +43,19 @@ namespace Usi_Project.Repository
                     DateTime now = DateTime.Now;
                     if (now > timer.DateTime)
                     {
-                        OverviewRoom overviewRoom = _factory.RoomManager.GetOverviewRoomById(timer.IdRoom);
+                        OverviewRoom overviewRoom = _factory.RoomRepository.GetOverviewRoomById(timer.IdRoom);
                         if (med.Value  > 0)
                         {
                             if (overviewRoom.Tools.ContainsKey(med.Key))
                                 overviewRoom.Tools[med.Key] += med.Value;
                             else 
                                 overviewRoom.Tools[med.Key] = med.Value;
-                            _factory.RoomManager.StockRoom.MedicalEquipment[med.Key] -= med.Value;
+                            _factory.RoomRepository.StockRoom.MedicalEquipment[med.Key] -= med.Value;
                         }
                         else
                         {
                             overviewRoom.Tools[med.Key] += med.Value;
-                            _factory.RoomManager.StockRoom.MedicalEquipment[med.Key] += (-1) * med.Value;
+                            _factory.RoomRepository.StockRoom.MedicalEquipment[med.Key] += (-1) * med.Value;
                         }   
                     }
                 }
@@ -71,7 +71,7 @@ namespace Usi_Project.Repository
                     DateTime now = DateTime.Now;
                     if (now > timer.DateTime)
                     {
-                        OverviewRoom overviewRoom = _factory.RoomManager.GetOverviewRoomById(timer.IdRoom);
+                        OverviewRoom overviewRoom = _factory.RoomRepository.GetOverviewRoomById(timer.IdRoom);
                         if (overviewRoom != null)
                         {
                             if (med.Value > 0)
@@ -80,12 +80,12 @@ namespace Usi_Project.Repository
                                     overviewRoom.Furniture[med.Key] += med.Value;
                                 else 
                                     overviewRoom.Furniture[med.Key] = med.Value;
-                                _factory.RoomManager.StockRoom.Furniture[med.Key] -= med.Value;
+                                _factory.RoomRepository.StockRoom.Furniture[med.Key] -= med.Value;
                             }
                             else
                             {
                                 overviewRoom.Furniture[med.Key] += med.Value;
-                                _factory.RoomManager.StockRoom.Furniture[med.Key] += (-1) * med.Value;
+                                _factory.RoomRepository.StockRoom.Furniture[med.Key] += (-1) * med.Value;
                             }
                         }
                         else
@@ -97,7 +97,7 @@ namespace Usi_Project.Repository
 
         private static void RefreshFurnitureOperatingRoom(KeyValuePair<Furniture,int> med, Timer timer)
         {
-            OperatingRoom operatingRoom = _factory.RoomManager.GetOperatingRoomById(timer.IdRoom);
+            OperatingRoom operatingRoom = _factory.RoomRepository.GetOperatingRoomById(timer.IdRoom);
             if (operatingRoom != null)
             {
                 if (med.Value > 0)
@@ -106,12 +106,12 @@ namespace Usi_Project.Repository
                         operatingRoom.Furniture[med.Key] += med.Value;
                     else  
                         operatingRoom.Furniture[med.Key] = med.Value;
-                    _factory.RoomManager.StockRoom.Furniture[med.Key] -= med.Value;
+                    _factory.RoomRepository.StockRoom.Furniture[med.Key] -= med.Value;
                 }
                 else
                 {
                     operatingRoom.Furniture[med.Key] += med.Value;
-                    _factory.RoomManager.StockRoom.Furniture[med.Key] += (-1) * med.Value;
+                    _factory.RoomRepository.StockRoom.Furniture[med.Key] += (-1) * med.Value;
                 }
             }
             else RefreshFurnitureRetiringRoom(med, timer);
@@ -119,19 +119,19 @@ namespace Usi_Project.Repository
         
         private static void RefreshFurnitureRetiringRoom(KeyValuePair<Furniture,int> med, Timer timer)
         {
-            RetiringRoom retiringRoom = _factory.RoomManager.GetRetiringRoomById(timer.IdRoom);
+            RetiringRoom retiringRoom = _factory.RoomRepository.GetRetiringRoomById(timer.IdRoom);
             if (med.Value > 0) 
             {
                 if (retiringRoom.Furniture.ContainsKey(med.Key))
                     retiringRoom.Furniture[med.Key] += med.Value;
                 else
                     retiringRoom.Furniture[med.Key] = med.Value;
-                _factory.RoomManager.StockRoom.Furniture[med.Key] -= med.Value; 
+                _factory.RoomRepository.StockRoom.Furniture[med.Key] -= med.Value; 
             }
             else
             {
                    retiringRoom.Furniture[med.Key] += med.Value;
-                    _factory.RoomManager.StockRoom.Furniture[med.Key] += (-1) * med.Value; 
+                    _factory.RoomRepository.StockRoom.Furniture[med.Key] += (-1) * med.Value; 
             }
         }
     
@@ -147,19 +147,19 @@ namespace Usi_Project.Repository
                     DateTime now = DateTime.Now;
                     if (now > timer.DateTime)
                     {
-                        OperatingRoom operatingRoom = _factory.RoomManager.GetOperatingRoomById(timer.IdRoom);
+                        OperatingRoom operatingRoom = _factory.RoomRepository.GetOperatingRoomById(timer.IdRoom);
                         if (med.Value > 0)
                         {
                             if (operatingRoom.SurgeryEquipments.ContainsKey(med.Key))
                                 operatingRoom.SurgeryEquipments[med.Key] += med.Value;
                             else 
                                 operatingRoom.SurgeryEquipments[med.Key] = med.Value;
-                            _factory.RoomManager.StockRoom.SurgeryEquipment[med.Key] -= med.Value;
+                            _factory.RoomRepository.StockRoom.SurgeryEquipment[med.Key] -= med.Value;
                         }
                         else
                         {
                             operatingRoom.SurgeryEquipments[med.Key] += med.Value;
-                            _factory.RoomManager.StockRoom.SurgeryEquipment[med.Key] += (-1) * med.Value;
+                            _factory.RoomRepository.StockRoom.SurgeryEquipment[med.Key] += (-1) * med.Value;
                         }
                     }
                 }

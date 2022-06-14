@@ -139,15 +139,15 @@ namespace Usi_Project.Repository
             {
                 if (currentTime > _manager.DynamicRequestManager.DynamicRequests[i].TimeOfAddition)
                 {
-                    _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Gauze] +=
+                    _manager.RoomRepository.StockRoom.DynamicEquipment[DynamicEquipment.Gauze] +=
                         _manager.DynamicRequestManager.DynamicRequests[i].DynamicEquipment[DynamicEquipment.Gauze];
-                    _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Buckles] +=
+                    _manager.RoomRepository.StockRoom.DynamicEquipment[DynamicEquipment.Buckles] +=
                         _manager.DynamicRequestManager.DynamicRequests[i].DynamicEquipment[DynamicEquipment.Buckles];
-                    _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Bandages] +=
+                    _manager.RoomRepository.StockRoom.DynamicEquipment[DynamicEquipment.Bandages] +=
                         _manager.DynamicRequestManager.DynamicRequests[i].DynamicEquipment[DynamicEquipment.Bandages];
-                    _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Paper] +=
+                    _manager.RoomRepository.StockRoom.DynamicEquipment[DynamicEquipment.Paper] +=
                         _manager.DynamicRequestManager.DynamicRequests[i].DynamicEquipment[DynamicEquipment.Paper];
-                    _manager.RoomManager.StockRoom.DynamicEquipment[DynamicEquipment.Pencils] +=
+                    _manager.RoomRepository.StockRoom.DynamicEquipment[DynamicEquipment.Pencils] +=
                         _manager.DynamicRequestManager.DynamicRequests[i].DynamicEquipment[DynamicEquipment.Pencils];
                     _manager.DynamicRequestManager.DynamicRequests.Remove(_manager.DynamicRequestManager.DynamicRequests[i]);
                 }
@@ -159,7 +159,7 @@ namespace Usi_Project.Repository
                 serializer.Formatting = Formatting.Indented;
                 serializer.Serialize(file, _manager.DynamicRequestManager.DynamicRequests);
             }
-            _manager.RoomManager.SaveData();
+            _manager.RoomRepository.SaveData();
         }
         
         

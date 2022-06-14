@@ -189,7 +189,7 @@ namespace Usi_Project.Repository
             string roomId;
             while (true)
             {
-                roomId = PatientManager._factory.RoomManager.OverviewRooms[0].Id;
+                roomId = PatientManager._factory.RoomRepository.OverviewRooms[0].Id;
                 //roomId = ValidationService.GetIfFreeOverviewRoom(appointTime, appointTime.AddMinutes(15));
                 if (roomId != null)
                 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Usi_Project.Repository
 {
-    public class RoomChanger
+    public static class RoomChanger
     {
         public static void ChangeRetiringRoom(Factory _manager, RetiringRoom retiring)
         {

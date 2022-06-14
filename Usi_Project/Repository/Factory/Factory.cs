@@ -18,7 +18,7 @@ namespace Usi_Project.Repository
         private readonly PatientManager _patientManager;
         private readonly SecretaryManager _secretaryManager;
         private readonly DoctorManager _doctorManager;
-        private readonly RoomManager _roomManager;
+        private readonly RoomRepository.RoomRepository _roomRepository;
         private readonly AppointmentManager _appointmentManager;
         private readonly AnamnesaManager _anamnesaManager;
         private readonly RequestManager _requestManager;
@@ -38,8 +38,7 @@ namespace Usi_Project.Repository
             _patientManager = new PatientManager(fileSettings.PatientFilename, this);
             _secretaryManager = new SecretaryManager(fileSettings.SecretaryFilename, this);
             _doctorManager = new DoctorManager(fileSettings.DoctorFilename, this);
-            _roomManager = new RoomManager(fileSettings.OperatingRoomsFilename, fileSettings.OverviewRoomsFilename,
-                fileSettings.RetiringRoomsFilename, fileSettings.StockRoomFilename, fileSettings);
+            _roomRepository = new RoomRepository.RoomRepository(fileSettings);
             _appointmentManager = new AppointmentManager(fileSettings.AppointmentsFilename, this);
             _anamnesaManager = new AnamnesaManager(fileSettings.AnamnesaFilename, this);
             _requestManager = new RequestManager(fileSettings.RequestedFilename, this);
@@ -60,7 +59,7 @@ namespace Usi_Project.Repository
             _patientManager.LoadData();
             _secretaryManager.LoadData();
             _doctorManager.LoadData();
-            _roomManager.LoadData();
+            _roomRepository.LoadData();
             _appointmentManager.LoadData();
             _anamnesaManager.LoadData();
             _requestManager.LoadData();
@@ -80,9 +79,9 @@ namespace Usi_Project.Repository
 
         public HospitalSurveyManager HospitalSurveyManager => _hospitalSurveyManager;
 
-        public RoomManager RoomManager
+        public RoomRepository.RoomRepository RoomRepository
         {
-            get => _roomManager;
+            get => _roomRepository;
         }
 
         public DirectorManager DirectorManager

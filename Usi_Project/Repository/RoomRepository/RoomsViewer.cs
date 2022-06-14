@@ -17,7 +17,7 @@ namespace Usi_Project.Repository
                 switch (GetOption())
                 {
                     case "1":
-                        _manager.RoomManager.OverviewRooms.Remove(room);
+                        _manager.RoomRepository.OverviewRooms.Remove(room);
                         break;
                     case "2":
                         RoomChanger.ChangeOvRoom(_manager, room);
@@ -48,7 +48,7 @@ namespace Usi_Project.Repository
                 switch (GetOption())
                 {
                     case "1":
-                        _manager.RoomManager.OperatingRooms.Remove(operatingRoom);
+                        _manager.RoomRepository.OperatingRooms.Remove(operatingRoom);
                         break;
                     case "2":
                         RoomChanger.ChangeOpRoom(_manager, operatingRoom);
@@ -80,7 +80,7 @@ namespace Usi_Project.Repository
                 switch (GetOption())
                 {
                     case "1":
-                        _manager.RoomManager.RetiringRooms.Remove(room);
+                        _manager.RoomRepository.RetiringRooms.Remove(room);
                         break;
                     case "2":
                         RoomChanger.ChangeRetiringRoom(_manager, room);
@@ -95,7 +95,7 @@ namespace Usi_Project.Repository
         }
         public static void ViewStockRoom(Factory factory)
         {
-            factory.RoomManager.StockRoom.PrintRoom();
+            factory.RoomRepository.StockRoom.PrintRoom();
         }
 
         private static string GetOption()

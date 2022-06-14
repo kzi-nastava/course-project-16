@@ -50,7 +50,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             secondRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>(
                 timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
 
-            factory.RoomManager.OperatingRooms.Remove(room);
+            factory.RoomRepository.OperatingRooms.Remove(room);
 
         }
          
@@ -96,7 +96,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
             secondRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>(
                 timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
-            factory.RoomManager.OverviewRooms.Remove(room);
+            factory.RoomRepository.OverviewRooms.Remove(room);
 
         }
             
@@ -124,7 +124,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                     timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
 
                 MergeEquipments.SplitFurnitureThroughRooms(room, firstRoom, secondRoom);
-                factory.RoomManager.RetiringRooms.Remove(room);
+                factory.RoomRepository.RetiringRooms.Remove(room);
 
             }
 

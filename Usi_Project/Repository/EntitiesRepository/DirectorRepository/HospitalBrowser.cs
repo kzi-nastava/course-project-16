@@ -39,7 +39,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
 
         private static void SearchThroughOperatingRooms(Factory factory, string eq, int option)
         {
-            foreach (OperatingRoom op in factory.RoomManager.OperatingRooms)
+            foreach (OperatingRoom op in factory.RoomRepository.OperatingRooms)
             {
                 Console.WriteLine("---------------------");
                 Console.WriteLine(op.Name);
@@ -53,7 +53,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
 
         private static void SearchThroughOverviewRooms(Factory factory, string eq, int option)
         {
-            foreach (OverviewRoom op in factory.RoomManager.OverviewRooms)
+            foreach (OverviewRoom op in factory.RoomRepository.OverviewRooms)
             {
                 Console.WriteLine("---------------------");
                 Console.WriteLine(op.Name);
@@ -65,7 +65,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
 
         private static void SearchThroughRetiringRooms(Factory factory, string eq, int option)
         {
-            foreach (RetiringRoom op in factory.RoomManager.RetiringRooms)
+            foreach (RetiringRoom op in factory.RoomRepository.RetiringRooms)
             {
                 Console.WriteLine("---------------------");
                 Console.WriteLine(op.Name);
@@ -77,9 +77,9 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
 
         private static void SearchThroughStockRoom(Factory factory, string eq, int option)
         {
-            factory.RoomManager.StockRoom.PrintMedicalEquipment(eq, option);
-            factory.RoomManager.StockRoom.PrintSurgeryEquipment(eq, option);
-            factory.RoomManager.StockRoom.PrintFurniture(eq, option);
+            factory.RoomRepository.StockRoom.PrintMedicalEquipment(eq, option);
+            factory.RoomRepository.StockRoom.PrintSurgeryEquipment(eq, option);
+            factory.RoomRepository.StockRoom.PrintFurniture(eq, option);
         }
     }
 }
