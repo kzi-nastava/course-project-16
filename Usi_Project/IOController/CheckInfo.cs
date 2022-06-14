@@ -1,16 +1,25 @@
 using System;
-using Usi_Project.Manage;
+using Usi_Project.Repository;
+using Usi_Project.Repository.EntitiesRepository.DirectorRepository;
 using Usi_Project.Users;
 
 namespace Usi_Project.IOController
 {
-    public class CheckInfo
+    public class CheckInfo 
     {
         private Factory _factory;
 
         public CheckInfo(Factory factory)
         {
             _factory = factory;
+        }
+
+        private void SaveData()
+        {
+            _factory.RoomManager.SaveData();
+            _factory.DirectorManager.SaveData();
+            Environment.Exit(0);
+            
         }
 
         public void PrintMenu()
@@ -25,18 +34,13 @@ namespace Usi_Project.IOController
                         Console.WriteLine("Enter email or x for exit: ");
                         string enteredEmail = Console.ReadLine();
                         if (enteredEmail == "x")
-                        {
-                            _factory.RoomManager.SaveData();
-                            _factory.DirectorManager.SaveData();
-                            Environment.Exit(0);
-                        }
+                            SaveData();
                         Console.WriteLine("Enter password: ");
                         string enteredPassword = Console.ReadLine();
                         Director director = _factory.DirectorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
                         if (director != null)
                         {
                             DirectorManager.Menu();
-                            return;
                         }
                         
                         Doctor doctor =
@@ -58,7 +62,7 @@ namespace Usi_Project.IOController
                                                enteredPassword);
                                        if (secretary != null)
                                        {
-                                           _factory.SecretaryManager.Menu();
+                                           SecretaryManager.Menu();
                                            break;
                                        }
                                    

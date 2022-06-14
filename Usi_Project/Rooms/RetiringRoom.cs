@@ -14,21 +14,6 @@ namespace Usi_Project
         }
         public RetiringRoom(string id, string name, Dictionary<Furniture, int> furnitures) : base(id, name, furnitures)
         {}
-        
-        public void printRoom()
-        {
-            Console.WriteLine("=========================");
-            Console.WriteLine("ID: " + Id); 
-            Console.WriteLine("Name: " + Name);
-            Console.WriteLine("-------------------------");
-            Console.WriteLine("Furniture:");
-            Console.WriteLine("-------------------------");
-            foreach (var tools in Furniture)
-                Console.WriteLine("\t" + tools.Key + ": " + tools.Value);
-            Console.WriteLine("=========================");
-            
-        }
-  
     }
 
     }

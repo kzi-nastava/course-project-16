@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using Usi_Project.DataSaver;
 using Usi_Project.IOController;
-using Usi_Project.Manage;
+using Usi_Project.Repository;
 using Usi_Project.Settings;
 using System.Threading;
 
@@ -16,11 +16,24 @@ namespace Usi_Project
         static void Main(string[] args)
         {
             
-            FileSettings fileSettings = new FileSettings("../../../Files/doctors.json", "../../../Files/patients.json",
-                "../../../Files/director.json", "../../../Files/secretaries.json",
-                "../../../Files/operatingRooms.json", "../../../Files/overviewRooms.json",
-                "../../../Files/retiringRooms.json", "../../../Files/appointments.json","../../../Files/anamnesa.json","../../../Files/requested.json",
-                "../../../Files/stockRoom.json", "../../../Files/timer.json","../../../Files/recipes.json");
+             var  fileSettings = new FileSettings(
+                 "../../../Files/Roles/doctors.json", 
+                 "../../../Files/Roles/patients.json",
+                "../../../Files/Roles/director.json", 
+                 "../../../Files/Roles/secretaries.json",
+                "../../../Files/Rooms/operatingRooms.json",
+                 "../../../Files/Rooms/overviewRooms.json",
+                 "../../../Files/Rooms/retiringRooms.json",
+                 "../../../Files/Archive/appointments.json",
+                "../../../Files/Archive/anamnesa.json",
+                 "../../../Files/Archive/requested.json",
+                "../../../Files/Rooms/stockRoom.json", 
+                 "../../../Files/Archive/timer.json",
+                "../../../Files/Archive/recipes.json",
+                 "../../../Files/Archive/dynamicRequests.json", 
+                 "../../../Files/Drugs/drugs.json",
+                 "../../../Files/Drugs/rejectedDrugs.json");
+
             Saver saver = new Saver(fileSettings);
             Factory factory = new Factory(fileSettings, saver);
             factory.LoadData();

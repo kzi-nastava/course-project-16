@@ -18,6 +18,12 @@ namespace Usi_Project
             _surgeryEquipments = surgeryEquipments;
         }
 
+        public OperatingRoom(string id, string name, Dictionary<Furniture, int> furniture, Dictionary<DynamicEquipment, int> dynamicTool, Dictionary<SurgeryTool, int> surgeryEquipments)
+            : base(id, name, furniture, dynamicTool)
+        {
+            _surgeryEquipments = surgeryEquipments;
+        }
+
         public OperatingRoom(string id, string name) : base(id, name)
         {
             _surgeryEquipments = new Dictionary<SurgeryTool, int>();
@@ -67,6 +73,8 @@ namespace Usi_Project
                
             }
         }
+
+        
         
         
   

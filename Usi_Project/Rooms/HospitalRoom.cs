@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace Usi_Project
 {
@@ -9,6 +10,7 @@ namespace Usi_Project
         private string _name;
         private bool _forRemove;
         private Dictionary<Furniture, int> _furniture;
+        private Dictionary<DynamicEquipment, int> _dynamicTool;
         private KeyValuePair<DateTime, DateTime> _timeOfRenovation;
 
         public HospitalRoom()
@@ -17,6 +19,7 @@ namespace Usi_Project
             _name = "";
             _forRemove = false;
             _furniture = new Dictionary<Furniture, int>();
+            _dynamicTool = new Dictionary<DynamicEquipment, int>();
             _timeOfRenovation = new KeyValuePair<DateTime, DateTime>();
 
         }
@@ -37,6 +40,20 @@ namespace Usi_Project
         {
             get => _furniture;
             set => _furniture = value;
+        }
+        
+        public Dictionary<DynamicEquipment, int> DynamicEquipment
+        {
+            get => _dynamicTool;
+            set => _dynamicTool = value;
+        }
+
+        public HospitalRoom(string id, string name, Dictionary<Furniture, int> furniture, Dictionary<DynamicEquipment, int> dynamicTool)
+        {
+            _id = id;
+            _name = name;
+            _furniture = furniture;
+            _dynamicTool = dynamicTool;
         }
 
         public HospitalRoom(string id, string name, Dictionary<Furniture, int> furniture)
@@ -105,22 +122,51 @@ namespace Usi_Project
                 }
             }
         }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
         
+        public Dictionary<DynamicEquipment, int> PrintDynamicTools(Dictionary<DynamicEquipment, int> dict )
+        {
+            foreach (var dictionary in DynamicEquipment)
+            {
+                if (dict[dictionary.Key]== 0)
+                {
+                    dict[dictionary.Key] = dictionary.Value;
+                }
+                else
+                {
+                    dict[dictionary.Key] = dict[dictionary.Key] + dictionary.Value;
+                }
+            }
+            return dict;
+        }
+
+        public List<string> PrintLowSupplyEquipment(List<string> IdOfRooms)
+        {
+            Console.WriteLine("-----------------------------------------");
+            Console.WriteLine("Room: " + _id);
+            IdOfRooms.Add(_id);
+            foreach (var dictionary in DynamicEquipment)
+            {
+                
+                if (dictionary.Value == 0 )
+                    Console.WriteLine(dictionary.Key.ToString() + " OUT OF STOCK! ");
+                else if (dictionary.Value < 5 )
+                    Console.WriteLine(dictionary.Key.ToString() + " : "  + dictionary.Value);
+            }
+
+            return IdOfRooms;
+
+        }
+
+        public void PrintEquipment()
+        {
+            Console.WriteLine("-----------------------------------------");
+            Console.WriteLine("Room: " + _id);
+            foreach (var dictionary in DynamicEquipment)
+            {
+                Console.WriteLine(dictionary.Key.ToString() + " : "  + dictionary.Value);
+            }
+
+        }
+       
     }
 }
