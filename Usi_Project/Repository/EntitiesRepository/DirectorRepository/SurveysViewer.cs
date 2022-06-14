@@ -45,6 +45,33 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             }
         }
 
+        public static void PrintResultsOfHospitalSurvey(Factory factory)
+        {
+            double qualityOfService = 0;
+            double overallHygiene = 0;
+            double wouldYouRecommend = 0;
+            double numOfGrades = 0;
+            var comments = "";
+            foreach (var survey in factory.HospitalSurveyManager.HospitalS)
+            {
+                qualityOfService += survey.QualityOfService1;
+                overallHygiene += survey.OverallHygiene1;
+                wouldYouRecommend += survey.WouldYouRecommend1;
+                comments += survey.PatientEmail1 + ": " + survey.Comment + "\n";
+                numOfGrades += 1;
+            }
+            numOfGrades= (numOfGrades == 0) ? 1 : numOfGrades; 
+            Console.WriteLine("=========================================");
+            Console.WriteLine("Number of grades: " + numOfGrades);
+            Console.WriteLine("Quality: " + qualityOfService /  numOfGrades);
+            Console.WriteLine("Overall Hygiene: " + overallHygiene / numOfGrades);
+            Console.WriteLine("Would you recommend: " + wouldYouRecommend / numOfGrades);
+            Console.WriteLine("Comments:");
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine(comments);
+            Console.WriteLine("========================================");
+        }
+
         public static void ViewThreeBestDoctors(Factory factory)
         {
 

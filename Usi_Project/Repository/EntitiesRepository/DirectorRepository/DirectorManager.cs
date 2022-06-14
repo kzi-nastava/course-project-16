@@ -80,6 +80,9 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 var option = Console.ReadLine();
                 switch (option)
                 {
+                    case "1":
+                        SurveysViewer.PrintResultsOfHospitalSurvey(_factory);
+                        break;
                     case "2":
                         SurveysViewer.PrintResultsOfDoctorsSurvey(_factory);
                         break;
