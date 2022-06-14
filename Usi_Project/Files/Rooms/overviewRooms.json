@@ -1,74 +1,74 @@
 [
-  {
-    "Tools": {
-      "Ekg": 1,
-      "Thermometer": 12
-    },
-    "TimeOfRenovation": {
-      "Key": "0001-01-01T00:00:00",
-      "Value": "0001-01-01T00:00:00"
-    },
-    "ForRemove": false,
-    "Furniture": {
-      "Table": 5,
-      "Chair": 3
-    },
-    "DynamicEquipment": {
-      "Gauze": 10,
-      "Buckles": 4,
-      "Bandages": 10,
-      "Paper": 11,
-      "Pencils": 6
-    },
-    "Id": "B1",
-    "Name": "Overview room 1"
-  },
-  {
-    "Tools": {
-      "Generator": 10,
-      "Stethoscope": 3
-    },
-    "TimeOfRenovation": {
-      "Key": "0001-01-01T00:00:00",
-      "Value": "0001-01-01T00:00:00"
-    },
-    "ForRemove": false,
-    "Furniture": {
-      "Closet": 2,
-      "Bad": 40
-    },
-    "DynamicEquipment": {
-      "Gauze": 10,
-      "Buckles": 3,
-      "Bandages": 10,
-      "Paper": 21,
-      "Pencils": 8
-    },
-    "Id": "B2",
-    "Name": "Overview room 2"
-  },
-  {
-    "Tools": {
-      "Monitor": 2,
-      "Xray": 1
-    },
-    "TimeOfRenovation": {
-      "Key": "0001-01-01T00:00:00",
-      "Value": "0001-01-01T00:00:00"
-    },
-    "ForRemove": false,
-    "Furniture": {
-      "Table": 3,
-      "Chair": 5
-    },
-    "DynamicEquipment": {
-      "Gauze": 12,
-      "Buckles": 5,
-      "Bandages": 10,
-      "Paper": 21,
-      "Pencils": 6
-    },
-    "Id": "B3",
-    "Name": "Overview room 3"
-  }
+{
+"Tools": {
+"Ekg": 1,
+"Thermometer": 12
+},
+"TimeOfRenovation": {
+"Key": "0001-01-01T00:00:00",
+"Value": "0001-01-01T00:00:00"
+},
+"ForRemove": false,
+"Furniture": {
+"Table": 5,
+"Chair": 3
+},
+"DynamicEquipment": {
+"Gauze": 10,
+"Buckles": 4,
+"Bandages": 10,
+"Paper": 11,
+"Pencils": 6
+},
+"Id": "B1",
+"Name": "Overview room 1"
+},
+{
+"Tools": {
+"Generator": 10,
+"Stethoscope": 3
+},
+"TimeOfRenovation": {
+"Key": "0001-01-01T00:00:00",
+"Value": "0001-01-01T00:00:00"
+},
+"ForRemove": false,
+"Furniture": {
+"Closet": 2,
+"Bad": 40
+},
+"DynamicEquipment": {
+"Gauze": 10,
+"Buckles": 3,
+"Bandages": 10,
+"Paper": 21,
+"Pencils": 8
+},
+"Id": "B2",
+"Name": "Overview room 2"
+},
+{
+"Tools": {
+"Monitor": 2,
+"Xray": 1
+},
+"TimeOfRenovation": {
+"Key": "0001-01-01T00:00:00",
+"Value": "0001-01-01T00:00:00"
+},
+"ForRemove": false,
+"Furniture": {
+"Table": 3,
+"Chair": 5
+},
+"DynamicEquipment": {
+"Gauze": 12,
+"Buckles": 5,
+"Bandages": 10,
+"Paper": 21,
+"Pencils": 6
+},
+"Id": "B3",
+"Name": "Overview room 3"
+}
 ]

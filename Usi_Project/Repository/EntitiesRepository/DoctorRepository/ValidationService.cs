@@ -1,8 +1,8 @@
 using System;
 using Usi_Project.Repository;
 using Usi_Project.Users;
+namespace Usi_Project.Repository
 
-namespace Usi_Project.DoctorFuncions
 {
     public class ValidationService
     {

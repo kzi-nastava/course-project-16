@@ -66,8 +66,7 @@ namespace Usi_Project.IOController
                                            break;
                                        }
                                    
-                    } 
-                    Console.WriteLine("Not valid email/password combination, try again");
+                    }
                 }
             }
         }

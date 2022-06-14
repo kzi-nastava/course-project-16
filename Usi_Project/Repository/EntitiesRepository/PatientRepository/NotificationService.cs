@@ -39,11 +39,13 @@ namespace Usi_Project.Repository
         public static void ShowRecipeNotification(Patient patient)
         {
             List <Recipes> recipeList= RecipesForPatient(patient);
+            Console.WriteLine("broj "+recipeList.Count);
             foreach (var recipe in recipeList)
             {
                 int numPerDay = Convert.ToInt32(recipe.timesADay.Split(":")[1]);    //2x     12h
                 int takeEveryNotification = 24 / numPerDay - patient.NotificationTimer;     //10h
                 DateTime currentDate = DateTime.Now;    //11
+                Console.WriteLine("Notification Timer: " + patient.NotificationTimer);
                 if (currentDate.Hour%12>takeEveryNotification && 
                     currentDate.Hour%12<takeEveryNotification+patient.NotificationTimer)
                 {

@@ -9,6 +9,7 @@ namespace Usi_Project.Repository
 {
     public class PatientManager
     {
+
         private string _patientFileName;
         private List<Patient> _patients;
         public static Factory _factory;
@@ -88,7 +89,7 @@ namespace Usi_Project.Repository
                         PatientAppointmentService.ShowAppointments(patient);
                         break;
                     case "2":
-                        PatientAppointmentService.CreateAppointment(patient);
+                        PatientAppointmentService.CreateAppointment(patient, null);
                         break;
                     case "3":
                         ModificationRequestService.UpdateAppointment(patient);
@@ -106,8 +107,8 @@ namespace Usi_Project.Repository
                         NotificationService.ShowRecipeNotification(patient);
                         break;
                    case "8":
-                        SurveyService.FillSurvey();
-                        break;
+                       SurveyService.SurveyMenu(patient);
+                       break;
                     case "x":
                         Console.WriteLine("Loging Out...");
                         flagInner = false;

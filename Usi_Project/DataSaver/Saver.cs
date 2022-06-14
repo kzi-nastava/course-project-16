@@ -5,6 +5,7 @@ using Usi_Project.Appointments;
 using Usi_Project.Repository;
 using Usi_Project.Settings;
 using Newtonsoft.Json;
+using Usi_Project.Repository.EntitiesRepository.Survey;
 using Usi_Project.Users;
 
 namespace Usi_Project.DataSaver
@@ -30,6 +31,16 @@ namespace Usi_Project.DataSaver
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Formatting = Formatting.Indented;
                 serializer.Serialize(file, appointments);
+            }
+        }
+        
+        public void SaveHospitalSurvey(List<HospitalSurvey> hospitalSurveys)
+        {
+            using (StreamWriter file = File.CreateText(_fileSettings.DynamicReqFilename))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, hospitalSurveys);
             }
         }
 

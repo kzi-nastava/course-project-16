@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using Usi_Project.DoctorFuncions;
 using Usi_Project.Users;
@@ -8,6 +9,7 @@ namespace Usi_Project.Repository
     public class ResolveAppointmentDataService
     {
         
+        public ValidationService Validation = new ValidationService(PatientManager._factory);
         public static Doctor ResolveDoctorForAppointment(int autoFlag=0)
         {
             
@@ -39,7 +41,7 @@ namespace Usi_Project.Repository
                 int j = 0;
                 foreach (Doctor doctor in PatientManager._factory.DoctorManager.Doctors)
                 {
-                    if (j == inp - 1) //
+                    if (j == inp - 1) 
                     {
                         doctorForAppoint = doctor;
                     }
@@ -61,17 +63,17 @@ namespace Usi_Project.Repository
                 int j = 0;
                 foreach (Doctor doctor in PatientManager._factory.DoctorManager.Doctors)
                 {
-                    if (j == num - 1) //
+                    if (j == num - 1) 
                     {
                         doctorForAppoint = doctor;
                     }
 
                 }
-
-                if (doctorForAppoint is null)
+                doctorForAppoint = PatientManager._factory.DoctorManager.Doctors[0];
+                /*if (doctorForAppoint is null)
                 {
                     doctorForAppoint = PatientManager._factory.DoctorManager.Doctors[0];
-                }
+                }*/
             }
 
             return doctorForAppoint;
@@ -79,20 +81,23 @@ namespace Usi_Project.Repository
 
         public static DateTime AutoTimeForAppointment(Doctor doctorForAppoint, DateTime timeDelta)
         {
-            
             bool flag1=true, flag2=true, flag3=true;
             DateTime startTime = timeDelta.AddHours(-4);
             DateTime midTime = timeDelta;
             DateTime endTime = timeDelta.AddHours(4);
+            Console.WriteLine("haha "+doctorForAppoint);
+            
             while (true)
             {
                 if (!ValidationService.CheckTime(startTime, startTime.AddMinutes(15),
                         doctorForAppoint) && flag1)
                 {
+                    Console.WriteLine("usao");
                     startTime = startTime.AddMinutes(15);
                 }
                 else
                 {
+                    Console.WriteLine("usaoE");
                     flag1 = false;
                 }
                     
@@ -182,7 +187,8 @@ namespace Usi_Project.Repository
             string roomId;
             while (true)
             {
-                roomId = ValidationService.GetIfFreeOverviewRoom(appointTime, appointTime.AddMinutes(15));
+                roomId = PatientManager._factory.RoomManager.OverviewRooms[0].Id;
+                //roomId = ValidationService.GetIfFreeOverviewRoom(appointTime, appointTime.AddMinutes(15));
                 if (roomId != null)
                 {
                     break;

@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using Usi_Project.Appointments;
 using Usi_Project.Users;
 
@@ -20,7 +22,7 @@ namespace Usi_Project.Repository
 
         public static bool AntiTroll(Patient patient)
         {
-            bool flag = CheckBlockedStatus(patient);
+            /*bool flag = CheckBlockedStatus(patient);
             
             if (!flag)
                 return false;
@@ -61,7 +63,7 @@ namespace Usi_Project.Repository
                  Console.WriteLine("Sorry, Your Account Has Been Blocked" +
                                    "Contact Support, Much Luck!");
                  return false;
-            }
+            }*/
 
             return true;
         }

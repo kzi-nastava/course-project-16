@@ -1,38 +1,39 @@
+
 {
-  "SurgeryEquipment": {
-    "Clamps": 46,
-    "Defibrillator": 13,
-    "Lamp": 53,
-    "Scalpels": 67,
-    "Scissors": 72,
-    "Table": 39
-  },
-  "MedicalEquipment": {
-    "Ekg": 20,
-    "Generator": 30,
-    "Monitor": 17,
-    "Stethoscope": 40,
-    "Thermometer": 45,
-    "Xray": 17
-  },
-  "TimeOfRenovation": {
-    "Key": "0001-01-01T00:00:00",
-    "Value": "0001-01-01T00:00:00"
-  },
-  "ForRemove": false,
-  "Furniture": {
-    "Bad": 300,
-    "Chair": 600,
-    "Closet": 50,
-    "Table": 124
-  },
-  "DynamicEquipment": {
-    "Gauze": 297,
-    "Buckles": 950,
-    "Bandages": 1465,
-    "Paper": 686,
-    "Pencils": 306
-  },
-  "Id": "MAG",
-  "Name": "Stock room"
+"SurgeryEquipment": {
+"Clamps": 46,
+"Defibrillator": 13,
+"Lamp": 53,
+"Scalpels": 67,
+"Scissors": 72,
+"Table": 39
+},
+"MedicalEquipment": {
+"Ekg": 20,
+"Generator": 30,
+"Monitor": 17,
+"Stethoscope": 40,
+"Thermometer": 45,
+"Xray": 17
+},
+"TimeOfRenovation": {
+"Key": "0001-01-01T00:00:00",
+"Value": "0001-01-01T00:00:00"
+},
+"ForRemove": false,
+"Furniture": {
+"Bad": 300,
+"Chair": 600,
+"Closet": 50,
+"Table": 124
+},
+"DynamicEquipment": {
+"Gauze": 297,
+"Buckles": 950,
+"Bandages": 1465,
+"Paper": 686,
+"Pencils": 306
+},
+"Id": "MAG",
+"Name": "Stock room"
 }

@@ -1,14 +1,15 @@
+
 [
-  {
-    "EmailPatient": "veljkobubnjevic@gmail.com",
-    "StartTime": "2022-12-12T12:45:00",
-    "NewTime": "2022-12-12T15:00:00",
-    "Operation": "1"
-  },
-  {
-    "EmailPatient": "MilosK@gmail.com",
-    "StartTime": "2022-10-10T10:10:00",
-    "NewTime": "2023-10-10T10:10:00",
-    "Operation": "1"
-  }
+{
+"EmailPatient": "veljkobubnjevic@gmail.com",
+"StartTime": "2022-12-12T12:45:00",
+"NewTime": "2022-12-12T15:00:00",
+"Operation": "1"
+},
+{
+"EmailPatient": "MilosK@gmail.com",
+"StartTime": "2022-10-10T10:10:00",
+"NewTime": "2023-10-10T10:10:00",
+"Operation": "1"
+}
 ]

@@ -17,11 +17,12 @@ namespace Usi_Project.Repository
                 Console.WriteLine("[1] Name");
                 Console.WriteLine("[2] Lastname");
                 Console.WriteLine("[3] Specialisation");
+                Console.WriteLine("{4} Grade");
                 Console.Write("Your Choice: ");
                 opt = Console.ReadLine();
                 if (opt.ToLower() == "x")
                     break;
-                if (opt == "1" || opt == "2" || opt == "3")
+                if (opt == "1" || opt == "2" || opt == "3" || opt == "4")
                 {
                     Console.WriteLine("Enter Parameter For Search: ");
                     param = Console.ReadLine();
@@ -46,7 +47,7 @@ namespace Usi_Project.Repository
                                 toSortList.Add(doctor);
                             }
                         }
-                        /*else
+                        /*else if ()
                         {
                             if (doctor.specialisation == param)
                             {
@@ -54,7 +55,10 @@ namespace Usi_Project.Repository
                                 i += 1;
                             toSortList.Add(doctor);
                             }
-                          }  
+                          } 
+                          else{
+                          Console.WriteLine("Needs Grading Implementation of 3.8")
+                          } 
                         */
                     }
                     break;
