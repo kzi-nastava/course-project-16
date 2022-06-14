@@ -62,7 +62,7 @@ namespace Usi_Project.Repository
 
             while (true)
             {
-                Console.Write("Choose the number to see operating room: >>  ");
+                Console.Write("Choose the number to see retiring room: >>  ");
                 int p = Convert.ToInt32(Console.ReadLine());
                 if (dictionary.ContainsKey(p))
                     return dictionary[p];

@@ -2,50 +2,27 @@ namespace Usi_Project.Repository.EntitiesRepository.Survey
 {
     public class HospitalSurvey
     {
-        public string PatientEmail;
-        public int QualityOfService;
-        public int OverallHygiene;
-        public int WouldYouRecommend;
-        public string Comment;
+        public string patientEmail;
+        public int qualityOfService;
+        public int overallHygiene;
+        public int wouldYouRecommend;
+        public int areYouSatisfied;
+        public string comment;
 
-        public HospitalSurvey(string patientEmail, int qualityOfService, int overallHygiene, 
-            int wouldYouRecommend, string comment)
+        public HospitalSurvey(string patientEmail, int qualityOfService, int overallHygiene, int wouldYouRecommend, int areYouSatisfied, string comment)
         {
-            PatientEmail = patientEmail;
-            QualityOfService = qualityOfService;
-            OverallHygiene = overallHygiene;
-            WouldYouRecommend = wouldYouRecommend;
-            Comment = comment;
-        }
-
-        public string PatientEmail1
-        {
-            get => PatientEmail;
-            set => PatientEmail = value;
-        }
-
-        public int QualityOfService1
-        {
-            get => QualityOfService;
-            set => QualityOfService = value;
-        }
-
-        public int OverallHygiene1
-        {
-            get => OverallHygiene;
-            set => OverallHygiene = value;
-        }
-
-        public int WouldYouRecommend1
-        {
-            get => WouldYouRecommend;
-            set => WouldYouRecommend = value;
+            this.patientEmail = patientEmail;
+            this.qualityOfService = qualityOfService;
+            this.overallHygiene = overallHygiene;
+            this.wouldYouRecommend = wouldYouRecommend;
+            this.areYouSatisfied = areYouSatisfied;
+            this.comment = comment;
         }
 
         public override string ToString()
         {
-            return "Patient: " + PatientEmail + "\nQuality: " + QualityOfService + "\nHygiene: " + OverallHygiene 
-                + "\nRecommendation: " + WouldYouRecommend + "\nComment: " + Comment;
+            return "Patient: " + patientEmail + "\nQuality: " + qualityOfService + "\nHygiene: " + overallHygiene 
+                + "\nRecommendation: " + wouldYouRecommend + "\nSatisfaction:"+ areYouSatisfied + "\nComment: " + comment;
         }
     }
 }

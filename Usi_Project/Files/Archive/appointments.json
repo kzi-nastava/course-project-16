@@ -11,10 +11,69 @@
   {
     "Status": "0",
     "IdRoom": "B1",
-    "EmailDoctor": "veljkoAvramovic001@gmail.com",
+    "EmailDoctor": "milkica@gmail.com",
+    "EmailPatient": "Nevenka@gmail.com",
+    "StartTime": "2022-06-10T12:34:00",
+    "EndTime": "2022-06-10T12:49:00",
+    "Type": "OV"
+  },
+
+  {
+    "Status": "0",
+    "IdRoom": "B2",
+    "EmailDoctor": "marica@gmail.com",
+    "EmailPatient": "Jovana@gmail.com",
+    "StartTime": "2022-06-11T12:35:00",
+    "EndTime": "2022-06-12T12:50:00",
+    "Type": "OV"
+  },
+  {
+    "Status": "0",
+    "IdRoom": "B2",
+    "EmailDoctor": "marica@gmail.com",
+    "EmailPatient": "Mirko@gmail.com",
+    "StartTime": "2022-06-05T12:35:00",
+    "EndTime": "2022-06-05T12:50:00",
+    "Type": "OV"
+  },
+
+  {
+    "Status": "0",
+    "IdRoom": "B3",
+    "EmailDoctor": "ognjen@gmail.com",
+    "EmailPatient": "Jovana@gmail.com",
+    "StartTime": "2022-05-12T12:35:00",
+    "EndTime": "2022-05-12T12:50:00",
+    "Type": "OV"
+  },
+  
+  {
+    "Status": "0",
+    "IdRoom": "B3",
+    "EmailDoctor": "iva@gmail.com",
+    "EmailPatient": "Mirko@gmail.com",
+    "StartTime": "2022-05-28T12:35:00",
+    "EndTime": "2022-05-28T12:50:00",
+    "Type": "OV"
+  },
+
+  {
+    "Status": "0",
+    "IdRoom": "B2",
+    "EmailDoctor": "novica@gmail.com",
+    "EmailPatient": "Mirko@gmail.com",
+    "StartTime": "2022-06-02T12:35:00",
+    "EndTime": "2022-06-02T12:50:00",
+    "Type": "OV"
+  },
+
+  {
+    "Status": "0",
+    "IdRoom": "B1",
+    "EmailDoctor": "marija@gmail.com",
     "EmailPatient": "MilosK@gmail.com",
-    "StartTime": "2022-05-08T12:00:00",
-    "EndTime": "2022-05-08T12:15:00",
+    "StartTime": "2022-06-07T11:34:00",
+    "EndTime": "2022-06-07T11:49:00",
     "Type": "OV"
   }
 ]

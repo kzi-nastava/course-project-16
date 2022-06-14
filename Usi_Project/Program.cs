@@ -13,7 +13,7 @@ namespace Usi_Project
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             
              var  fileSettings = new FileSettings(
@@ -35,6 +35,7 @@ namespace Usi_Project
                  "../../../Files/Drugs/rejectedDrugs.json",
                  "../../../Files/Archive/hospitalSurvey.json",
                  "../../../Files/Archive/doctorSurvey.json");
+
 
             Saver saver = new Saver(fileSettings);
             Factory factory = new Factory(fileSettings, saver);

@@ -9,7 +9,8 @@ namespace Usi_Project.Repository
 {
     public class PatientManager
     {
-        private readonly string _patientFileName;
+
+        private string _patientFileName;
         private List<Patient> _patients;
         public static Factory _factory;
 
@@ -106,8 +107,8 @@ namespace Usi_Project.Repository
                         NotificationService.ShowRecipeNotification(patient);
                         break;
                    case "8":
-                        SurveyService.SurveyMenu(patient);
-                        break;
+                       SurveyService.SurveyMenu(patient);
+                       break;
                     case "x":
                         Console.WriteLine("Loging Out...");
                         flagInner = false;
@@ -144,12 +145,10 @@ namespace Usi_Project.Repository
                 else
                 {
                     dateTime = new DateTime(y, m, d, h, min, 0);
-                    break;
+                    return dateTime;
                 }
                 
             }
-
-            return dateTime;
         }
         
     }

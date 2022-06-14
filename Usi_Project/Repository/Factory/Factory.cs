@@ -31,12 +31,6 @@ namespace Usi_Project.Repository
         public Factory()
         {
         }
-
-        public Saver Saver
-        {
-            get => _saver;
-        }
-        
         public Factory(FileSettings fileSettings, Saver saver)
 
         {
@@ -45,7 +39,7 @@ namespace Usi_Project.Repository
             _secretaryManager = new SecretaryManager(fileSettings.SecretaryFilename, this);
             _doctorManager = new DoctorManager(fileSettings.DoctorFilename, this);
             _roomManager = new RoomManager(fileSettings.OperatingRoomsFilename, fileSettings.OverviewRoomsFilename,
-                fileSettings.RetiringRoomsFilename, fileSettings.StockRoomFilename, this);
+                fileSettings.RetiringRoomsFilename, fileSettings.StockRoomFilename, fileSettings);
             _appointmentManager = new AppointmentManager(fileSettings.AppointmentsFilename, this);
             _anamnesaManager = new AnamnesaManager(fileSettings.AnamnesaFilename, this);
             _requestManager = new RequestManager(fileSettings.RequestedFilename, this);
@@ -56,10 +50,9 @@ namespace Usi_Project.Repository
             _drugManager = new DrugManager(fileSettings.DrugsFilename, fileSettings.RejectedDrugsFilename);
             _hospitalSurveyManager = new HospitalSurveyManager(fileSettings.HospitalSurveyFilename, this);
             _doctorSurveyManager = new DoctorSurveyManager(fileSettings.DoctorSurveyFilename, this);
+
         }
-
-
-
+        
         public void LoadData()
         {
 
@@ -129,6 +122,11 @@ namespace Usi_Project.Repository
         public DoctorSurveyManager DoctorSurveyManager => _doctorSurveyManager;
 
         public DrugManager DrugManager => _drugManager;
+        
+        public Saver Saver
+        {
+            get => _saver;
+        }
     }
 
 }

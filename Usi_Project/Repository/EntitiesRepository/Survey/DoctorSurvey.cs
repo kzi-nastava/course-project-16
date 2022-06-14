@@ -1,92 +1,43 @@
 using System;
+using Usi_Project.Users;
 
 namespace Usi_Project.Repository.EntitiesRepository.Survey
 {
     public class DoctorSurvey
     {
-        public DateTime StartTime;
-        public DateTime EndTime;
-        public string PatientEmail;
-        public string DoctorEmail;
-        public int QualityOfService;
-        public int OverallHygiene;
-        public int AreYouSatisfied;
-        public int WouldYouRecommend;
-        public string Comment;
+        public DateTime startTime;
+        public DateTime endTime;
+        public string patientEmail;
+        public string doctorEmail;
+        public int qualityOfService;
+        public int overallHygiene;
+        public int areYouSatisfied;
+        public int wouldYouRecommend;
+        public string comment;
 
-        public DoctorSurvey(DateTime startTime, DateTime endTime, string patientEmail, string doctorEmail, int qualityOfService, int overallHygiene, int areYouSatisfied, int wouldYouRecommend, string comment)
+        public DoctorSurvey(DateTime startTime, DateTime endTime, string patientEmail, string doctorEmail, 
+            int qualityOfService, int overallHygiene, int areYouSatisfied, int wouldYouRecommend, string comment)
         {
-            StartTime = startTime;
-            EndTime = endTime;
-            PatientEmail = patientEmail;
-            DoctorEmail = doctorEmail;
-            QualityOfService = qualityOfService;
-            OverallHygiene = overallHygiene;
-            AreYouSatisfied = areYouSatisfied;
-            WouldYouRecommend = wouldYouRecommend;
-            Comment = comment;
+            this.startTime = startTime;
+            this.endTime = endTime;
+            this.patientEmail = patientEmail;
+            this.doctorEmail = doctorEmail;
+            this.qualityOfService = qualityOfService;
+            this.overallHygiene = overallHygiene;
+            this.areYouSatisfied = areYouSatisfied;
+            this.wouldYouRecommend = wouldYouRecommend;
+            this.comment = comment;
         }
 
-        public DateTime StartTime1
-        {
-            get => StartTime;
-            set => StartTime = value;
-        }
-
-        public DateTime EndTime1
-        {
-            get => EndTime;
-            set => EndTime = value;
-        }
-
-        public string PatientEmail1
-        {
-            get => PatientEmail;
-            set => PatientEmail = value;
-        }
-
-        public string DoctorEmail1
-        {
-            get => DoctorEmail;
-            set => DoctorEmail = value;
-        }
-
-        public int QualityOfService1
-        {
-            get => QualityOfService;
-            set => QualityOfService = value;
-        }
-
-        public int OverallHygiene1
-        {
-            get => OverallHygiene;
-            set => OverallHygiene = value;
-        }
-
-        public int AreYouSatisfied1
-        {
-            get => AreYouSatisfied;
-            set => AreYouSatisfied = value;
-        }
-
-        public int WouldYouRecommend1
-        {
-            get => WouldYouRecommend;
-            set => WouldYouRecommend = value;
-        }
-
-        public string Comment1
-        {
-            get => Comment;
-            set => Comment = value;
-        }
-
+        
         public override string ToString()
         {
-            return "Patient: " + PatientEmail + "\nAppointment Made: " + StartTime + "\nAppointment Finished: " + EndTime 
-                   + "\nQuality: " + QualityOfService + "\nHygiene: " + OverallHygiene + "\nRecommendation: "
-                   + WouldYouRecommend + "\nComment: " + Comment;
+            return "Patient: " + patientEmail + "\nDoctor: "+ doctorEmail +"\nAppointment Made: " + startTime 
+                   + "\nAppointment Finished: " + endTime + "\nQuality: " + qualityOfService + "\nHygiene: "
+                   + overallHygiene + "\nAre You Satisfied: " + areYouSatisfied + "\nRecommendation: "  +
+                   + wouldYouRecommend + "\nComment: " + comment;
 
         }
+
     }
 }

@@ -1,38 +1,75 @@
+
 [
+{
+  "email": "MilosK@gmail.com",
+  "password": "Miki123",
+  "name": "Milos",
+  "lastName": "Kicic",
+  "adress": "Branka Radicevica 32",
+  "phone": "0652789563",
+  "role": 2,
+  "NotificationTimer": 4,
+  "Blocked": 0,
+  "MedicalRecord": {
+  "height": "140",
+  "weight": "68",
+  "diseases": "No diseases",
+  "allergens": "No allergens",
+  "referral": null
+}
+},
+{
+  "email": "Mirko@gmail.com",
+  "password": "hehe",
+  "name": "Mirko",
+  "lastName": "Miric",
+  "adress": "Marjanoviceva 14",
+  "phone": "0652716893",
+  "role": 2,
+  "NotificationTimer": 2,
+  "Blocked": 2,
+  "MedicalRecord": {
+  "height": "170",
+  "weight": "65",
+  "diseases": "No diseases",
+  "allergens": "No allergens",
+  "referral": null
+}
+},
   {
-    "email": "MilosK@gmail.com",
-    "password": "Miki123",
-    "name": "Milos",
-    "lastName": "Kicic",
-    "adress": "Branka Radicevica 32",
-    "phone": "0652789563",
-    "role": 2,
-    "NotificationTimer": 4,
-    "Blocked": 0,
-    "MedicalRecord": {
-      "height": "140",
-      "weight": "68",
-      "diseases": "No diseases",
-      "allergens": "No allergens",
-      "referral": null
-    }
+  "email": "Jovana@gmail.com",
+  "password": "joka22",
+  "name": "Jovana",
+  "lastName": "Jovic",
+  "adress": "Omladinska 32",
+  "phone": "0652555223",
+  "role": 2,
+  "NotificationTimer": 4,
+  "Blocked": 0,
+  "MedicalRecord": {
+  "height": "110",
+  "weight": "50",
+  "diseases": "No diseases",
+  "allergens": "No allergens",
+  "referral": null
+}
   },
   {
-    "email": "Mirko@gmail.com",
-    "password": "hehe",
-    "name": "Mirko",
-    "lastName": "Miric",
-    "adress": "Marjanoviceva 14",
-    "phone": "0652716893",
-    "role": 2,
-    "NotificationTimer": 2,
-    "Blocked": 2,
-    "MedicalRecord": {
-      "height": "170",
-      "weight": "65",
-      "diseases": "No diseases",
-      "allergens": "No allergens",
-      "referral": null
-    }
+  "email": "Nevenka@gmail.com",
+  "password": "nena",
+  "name": "Nevenka",
+  "lastName": "Nevenkic",
+  "adress": "Sumadijska 32",
+  "phone": "0652222223",
+  "role": 2,
+  "NotificationTimer": 4,
+  "Blocked": 0,
+  "MedicalRecord": {
+  "height": "160",
+  "weight": "78",
+  "diseases": "No diseases",
+  "allergens": "No allergens",
+  "referral": null
+}
   }
 ]

@@ -1,29 +1,90 @@
 [
-{
-  "email": "veljkobubnjevic001@gmail.com",
-  "password": "vekapass01",
-  "name": "Veljko",
-  "lastName":"Bubnjevic",
-  "adress": "Narodnog fronta 65",
-  "phone": "065734133",
-  "specialisation": "Cardiology"
-},
   {
-    "email": "veljkoWick001@gmail.com",
+    "email": "veljkobubnjevic001@gmail.com",
     "password": "vekapass01",
     "name": "Veljko",
-    "lastName":"Wick",
+    "lastName": "Bubnjevic",
     "adress": "Narodnog fronta 65",
     "phone": "065734133",
-    "specialisation": "Cardiology"
+    "role": 0,
+    "Specialisation": "Cardiology",
+    "Grade": 1.5
   },
   {
-    "email": "veljkoAvramovic001@gmail.com",
-    "password": "vekapass01",
-    "name": "Veljko",
-    "lastName":"Avramovic",
+    "email": "milkica@gmail.com",
+    "password": "milkica",
+    "name": "Milkica",
+    "lastName": "Grbic",
+    "adress": "Sumadijska 65",
+    "phone": "065734133",
+    "role": 0,
+    "Specialisation": "Ophthalmology",
+    "Grade": 3.25
+  },
+  {
+    "email": "marica@gmail.com",
+    "password": "marica",
+    "name": "Marica",
+    "lastName": "Markovic",
+    "adress": "7. Jula 65",
+    "phone": "0657342342",
+    "role": 0,
+    "Specialisation": "Stomatology",
+    "Grade": 4.5
+  },
+  {
+    "email": "dragica@gmail.com",
+    "password": "draga",
+    "name": "Dragica",
+    "lastName": "Dragic",
     "adress": "Narodnog fronta 65",
     "phone": "065734133",
-    "specialisation": "Cardiology"
+    "role": 0,
+    "Specialisation": "Cardiology",
+    "Grade": 0.0
+  },
+  {
+    "email": "marija@gmail.com",
+    "password": "mara",
+    "name": "Marija",
+    "lastName": "Maric",
+    "adress": "Narodnog fronta 65",
+    "phone": "065734133",
+    "role": 0,
+    "Specialisation": "Medic",
+    "Grade": 3.75
+  },
+  {
+    "email": "novica@gmail.com",
+    "password": "novica",
+    "name": "Novica",
+    "lastName": "Novic",
+    "adress": "Narodnog fronta 65",
+    "phone": "065734133",
+    "role": 0,
+    "Specialisation": "Medic",
+    "Grade": 5.0
+  },
+  {
+    "email": "iva@gmail.com",
+    "password": "iva123",
+    "name": "Iva",
+    "lastName": "Pavic",
+    "adress": "Narodnog fronta 65",
+    "phone": "065734133",
+    "role": 0,
+    "Specialisation": "Ophthalmology",
+    "Grade": 1.5
+  },
+  {
+    "email": "ognjen@gmail.com",
+    "password": "ogi123",
+    "name": "Ognjen",
+    "lastName": "Ognjenovic",
+    "adress": "Narodnog fronta 65",
+    "phone": "065734133",
+    "role": 0,
+    "Specialisation": "Medic",
+    "Grade": 3.5
   }
 ]

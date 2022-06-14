@@ -33,16 +33,26 @@ namespace Usi_Project.DataSaver
                 serializer.Serialize(file, appointments);
             }
         }
-
+        
         public void SaveHospitalSurvey(List<HospitalSurvey> hospitalSurveys)
         {
-            using (StreamWriter file = File.CreateText(_fileSettings.DynamicReqFilename))
+            using (StreamWriter file = File.CreateText(_fileSettings.HospitalSurveyFilename))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Formatting = Formatting.Indented;
                 serializer.Serialize(file, hospitalSurveys);
             }
         }
+        public  void SaveDoctorSurvey(List<DoctorSurvey> doctorSurveys)
+        {
+            using (StreamWriter file = File.CreateText(_fileSettings.DoctorSurveyFilename))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, doctorSurveys);
+            }
+        }
+
         public void SaveDynamicRequest(List<DynamicRequest> dynamicRequests)
         {
             using (StreamWriter file = File.CreateText(_fileSettings.DynamicReqFilename))
@@ -75,6 +85,16 @@ namespace Usi_Project.DataSaver
             }
         }
 
+        public  void SaveDoctors(List<Doctor> doctors)
+        {
+            using (StreamWriter file = File.CreateText(_fileSettings.DoctorFilename))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, doctors);
+            }
+        }
+
         public void SaveAnamnesa(List<Anamnesa> anamnesas)
         {
             using (StreamWriter file = File.CreateText(_fileSettings.AnamnesaFilename))
@@ -94,8 +114,6 @@ namespace Usi_Project.DataSaver
                 serializer.Serialize(file, requests);
             }
         }
-    
-
-
-}
+        
+    }
 }

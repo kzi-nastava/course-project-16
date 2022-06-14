@@ -7,6 +7,7 @@ namespace Usi_Project.Users
     public class Doctor:User
     {
         private string _specialisation;
+        private double _grade;
 
 
         public Doctor()
@@ -17,11 +18,13 @@ namespace Usi_Project.Users
             : base(email, password, name, lastName, adress, phone, Role.Doctor)
         {
             _specialisation = specialisation;
+            _grade = 0;
         }
         public Doctor(string email, string password, string name, string lastName, string adress, string phone)
             : base(email, password, name, lastName, adress, phone, Role.Doctor)
         {
             _specialisation = null;
+            _grade = 0;
         }
 
         public string Specialisation
@@ -29,48 +32,15 @@ namespace Usi_Project.Users
             get => _specialisation;
             set => _specialisation = value;
         }
+        
 
-        public string Email
+        public double Grade
         {
-            get => email;
-            set => email = value;
+            get => _grade;
+            set => _grade = value;
         }
 
-        public string Password
-        {
-            get => password;
-            set => password = value;
-        }
 
-        public string Name
-        {
-            get => name;
-            set => name = value;
-        }
-
-        public string LastName
-        {
-            get => lastName;
-            set => lastName = value;
-        }
-
-        public string Adress
-        {
-            get => adress;
-            set => adress = value;
-        }
-
-        public string Phone
-        {
-            get => phone;
-            set => phone = value;
-        }
-
-        public Role Role
-        {
-            get => role;
-            set => role = value;
-        }
     }
     
     

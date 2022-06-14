@@ -1,13 +1,79 @@
 [
   {
-    "StartTime": "2022-06-08T13:00:00",
-    "EndTime": "2022-06-08T13:15:00",
-    "PatientEmail": "MilosK@gmail.com",
-    "DoctorEmail": "veljkobubnjevic001@gmail.com",
-    "QualityOfService": 2,
-    "OverallHygiene": 1,
-    "AreYouSatisfied": 2,
-    "WouldYouRecommend": 1,
-    "Comment": "Dirty."
+    "startTime": "2022-06-08T13:00:00",
+    "endTime": "2022-06-08T13:15:00",
+    "patientEmail": "MilosK@gmail.com",
+    "doctorEmail": "veljkobubnjevic001@gmail.com",
+    "qualityOfService": 2,
+    "overallHygiene": 1,
+    "areYouSatisfied": 2,
+    "wouldYouRecommend": 1,
+    "comment": "Dirty."
+  },
+  {
+    "startTime": "2022-06-10T12:34:00",
+    "endTime": "2022-06-10T12:49:00",
+    "patientEmail": "Nevenka@gmail.com",
+    "doctorEmail": "milkica@gmail.com",
+    "qualityOfService": 4,
+    "overallHygiene": 3,
+    "areYouSatisfied": 4,
+    "wouldYouRecommend": 2,
+    "comment": "Bad."
+  },
+  {
+    "startTime": "2022-06-11T12:35:00",
+    "endTime": "2022-06-12T12:50:00",
+    "patientEmail": "Jovana@gmail.com",
+    "doctorEmail": "marica@gmail.com",
+    "qualityOfService": 5,
+    "overallHygiene": 4,
+    "areYouSatisfied": 4,
+    "wouldYouRecommend": 4,
+    "comment": "Not bad, but can better."
+  },
+  {
+    "startTime": "2022-06-05T12:35:00",
+    "endTime": "2022-06-05T12:50:00",
+    "patientEmail": "Mirko@gmail.com",
+    "doctorEmail": "marica@gmail.com",
+    "qualityOfService": 5,
+    "overallHygiene": 4,
+    "areYouSatisfied": 5,
+    "wouldYouRecommend": 5,
+    "comment": "Excellent"
+  },
+  {
+    "startTime": "2022-05-12T12:35:00",
+    "endTime": "2022-05-12T12:50:00",
+    "patientEmail": "Jovana@gmail.com",
+    "doctorEmail": "ognjen@gmail.com",
+    "qualityOfService": 3,
+    "overallHygiene": 4,
+    "areYouSatisfied": 3,
+    "wouldYouRecommend": 4,
+    "comment": "Not bad, but can better."
+  },
+  {
+    "startTime": "2022-05-28T12:35:00",
+    "endTime": "2022-05-28T12:50:00",
+    "patientEmail": "Mirko@gmail.com",
+    "doctorEmail": "iva@gmail.com",
+    "qualityOfService": 1,
+    "overallHygiene": 2,
+    "areYouSatisfied": 2,
+    "wouldYouRecommend": 1,
+    "comment": "Terrible."
+  },
+  {
+    "startTime": "2022-06-02T12:35:00",
+    "endTime": "2022-06-02T12:50:00",
+    "patientEmail": "Mirko@gmail.com",
+    "doctorEmail": "novica@gmail.com",
+    "qualityOfService": 5,
+    "overallHygiene": 5,
+    "areYouSatisfied": 5,
+    "wouldYouRecommend": 5,
+    "comment": "The best doctor."
   }
 ]

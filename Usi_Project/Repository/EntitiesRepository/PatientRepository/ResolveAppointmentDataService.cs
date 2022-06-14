@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using Usi_Project.DoctorFuncions;
 using Usi_Project.Users;
@@ -44,6 +45,8 @@ namespace Usi_Project.Repository
                     {
                         doctorForAppoint = doctor;
                     }
+
+                    j++;
 
                 }
 

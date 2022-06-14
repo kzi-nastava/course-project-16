@@ -93,7 +93,10 @@ namespace Usi_Project.Repository
                 }
             }
         }
-        
+        public static void ViewStockRoom(Factory factory)
+        {
+            factory.RoomManager.StockRoom.PrintRoom();
+        }
 
         private static string GetOption()
         {

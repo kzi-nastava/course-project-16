@@ -1,10 +1,50 @@
 [
   {
-    "patientEmail": "MilosK@gmail.com", 
-    "QualityOfService": 4,
-    "OverallHygiene": 3,
-    "AreYouSatisfied": 4,
-    "WouldYouRecommend": 3,
-    "Comment": "Expensive."
+    "patientEmail": "MilosK@gmail.com",
+    "qualityOfService": 4,
+    "overallHygiene": 3,
+    "wouldYouRecommend": 3,
+    "areYouSatisfied": 4,
+    "comment": "Expensive."
+  },
+  {
+    "patientEmail": "Mirko@gmail.com",
+    "qualityOfService": 2,
+    "overallHygiene": 4,
+    "wouldYouRecommend": 3,
+    "areYouSatisfied": 5,
+    "comment": "The staff is very rude."
+  },
+  {
+    "patientEmail": "Jovana@gmail.com",
+    "qualityOfService": 5,
+    "overallHygiene": 5,
+    "wouldYouRecommend": 5,
+    "areYouSatisfied": 4,
+    "comment": "Hospital is very clean."
+  },
+  {
+    "patientEmail": "Nevenka@gmail.com",
+    "qualityOfService": 4,
+    "overallHygiene": 2,
+    "wouldYouRecommend": 4,
+    "areYouSatisfied": 2,
+    "comment": "Expensive and dirty."
+  },
+  {
+    "patientEmail": "Jovana@gmail.com",
+    "qualityOfService": 5,
+    "overallHygiene": 4,
+    "wouldYouRecommend": 4,
+    "areYouSatisfied": 4,
+    "comment": "Not bad."
+  },
+  {
+    "patientEmail": "MilosK@gmail.com",
+    "qualityOfService": 1,
+    "overallHygiene": 1,
+    "wouldYouRecommend": 1,
+    "areYouSatisfied": 1,
+    "comment": "Bad service"
   }
 ]
