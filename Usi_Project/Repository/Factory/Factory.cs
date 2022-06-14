@@ -39,7 +39,7 @@ namespace Usi_Project.Repository
             _secretaryManager = new SecretaryManager(fileSettings.SecretaryFilename, this);
             _doctorManager = new DoctorManager(fileSettings.DoctorFilename, this);
             _roomManager = new RoomManager(fileSettings.OperatingRoomsFilename, fileSettings.OverviewRoomsFilename,
-                fileSettings.RetiringRoomsFilename, fileSettings.StockRoomFilename, this);
+                fileSettings.RetiringRoomsFilename, fileSettings.StockRoomFilename, fileSettings);
             _appointmentManager = new AppointmentManager(fileSettings.AppointmentsFilename, this);
             _anamnesaManager = new AnamnesaManager(fileSettings.AnamnesaFilename, this);
             _requestManager = new RequestManager(fileSettings.RequestedFilename, this);
