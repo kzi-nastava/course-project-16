@@ -76,6 +76,16 @@ namespace Usi_Project.DataSaver
             }
         }
 
+        public  void SaveDoctors(List<Doctor> doctors)
+        {
+            using (StreamWriter file = File.CreateText(_fileSettings.DoctorFilename))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, doctors);
+            }
+        }
+
         public void SaveAnamnesa(List<Anamnesa> anamnesas)
         {
             using (StreamWriter file = File.CreateText(_fileSettings.AnamnesaFilename))

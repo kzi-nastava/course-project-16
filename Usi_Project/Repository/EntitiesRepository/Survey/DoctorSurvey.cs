@@ -1,4 +1,5 @@
 using System;
+using Usi_Project.Users;
 
 namespace Usi_Project.Repository.EntitiesRepository.Survey
 {
@@ -84,9 +85,12 @@ namespace Usi_Project.Repository.EntitiesRepository.Survey
         public override string ToString()
         {
             return "Patient: " + PatientEmail + "\nAppointment Made: " + StartTime + "\nAppointment Finished: " + EndTime 
-                   + "\nQuality: " + QualityOfService + "\nHygiene: " + OverallHygiene + "\nRecommendation: "
+                   + "\nQuality: " + QualityOfService + "\nHygiene: " + OverallHygiene + "\nAre You Satisfied: " +
+                   AreYouSatisfied
+                   + "\nRecommendation: "  +
                    + WouldYouRecommend + "\nComment: " + Comment;
 
         }
+
     }
 }

@@ -57,7 +57,11 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                     case "7":
                         _factory.DrugManager.PrintMenu();
                         break;
+                    case "8": 
+                        ViewSurveysResults();
+                        break;
                     case "x":
+                        Console.WriteLine("Logging out...");
                         return;
                     default:
                         Console.WriteLine("Invalid option entered, try again");
@@ -66,6 +70,37 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 }
 
             }
+        }
+
+        private static void  ViewSurveysResults()
+        {
+            while (true)
+            {
+                DirectorMenus.PrintSurveysMenu();
+                var option = Console.ReadLine();
+                switch (option)
+                {
+                    case "2":
+                        SurveysViewer.PrintResultsOfDoctorsSurvey(_factory);
+                        break;
+                    case "3":
+                        SurveysViewer.ViewThreeBestDoctors(_factory);
+                        break;
+                    case "4":
+                        SurveysViewer.ViewThreeWorseDoctors(_factory);
+                        break;
+                    case "x":
+                        return;
+                    default:
+                    {
+                        Console.WriteLine("Wrong input.");
+                        continue;
+                    }
+                }
+                
+            }
+ 
+            
         }
 
         public void SaveData()
@@ -122,6 +157,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                     RoomsViewer.ViewRetiringRoom(_factory, RoomsBrowser.FindRetiringRoom(_factory.RoomManager.RetiringRooms));
                     break;
                 case "4":
+                    RoomsViewer.ViewStockRoom(_factory);
                     break;
             }
         }

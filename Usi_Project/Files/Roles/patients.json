@@ -35,5 +35,41 @@
   "allergens": "No allergens",
   "referral": null
 }
+},
+  {
+  "email": "Jovana@gmail.com",
+  "password": "joka22",
+  "name": "Jovana",
+  "lastName": "Jovic",
+  "adress": "Omladinska 32",
+  "phone": "0652555223",
+  "role": 2,
+  "NotificationTimer": 4,
+  "Blocked": 0,
+  "MedicalRecord": {
+  "height": "110",
+  "weight": "50",
+  "diseases": "No diseases",
+  "allergens": "No allergens",
+  "referral": null
 }
+  },
+  {
+  "email": "Nevenka@gmail.com",
+  "password": "nena",
+  "name": "Nevenka",
+  "lastName": "Nevenkic",
+  "adress": "Sumadijska 32",
+  "phone": "0652222223",
+  "role": 2,
+  "NotificationTimer": 4,
+  "Blocked": 0,
+  "MedicalRecord": {
+  "height": "160",
+  "weight": "78",
+  "diseases": "No diseases",
+  "allergens": "No allergens",
+  "referral": null
+}
+  }
 ]

@@ -14,6 +14,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             Console.WriteLine("5) - Scheduling room renovation");
             Console.WriteLine("6) - Scheduling multiple room renovation");
             Console.WriteLine("7) - Drug and ingredient management");
+            Console.WriteLine("8) - Survey results");
             Console.WriteLine("x) - Exit.");
             Console.WriteLine(">> ");
         }
@@ -66,8 +67,19 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             Console.WriteLine("1. View Operating rooms");
             Console.WriteLine("2. View Overview rooms");
             Console.WriteLine("3. View Retiring rooms");
-            Console.WriteLine("3. View Stock room");
+            Console.WriteLine("4. View Stock room");
             Console.Write(">> ");
+        }
+
+        public static void PrintSurveysMenu()
+        {
+            Console.WriteLine("Choose one of the options below: ");
+            Console.WriteLine("1. View results of hospital surveys");
+            Console.WriteLine("2. View results of doctors surveys");
+            Console.WriteLine("3. View three best doctors");
+            Console.WriteLine("4. View three worse doctors");
+            Console.WriteLine("x  Back");
+            Console.WriteLine(">> ");
         }
     }
 }

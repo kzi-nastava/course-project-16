@@ -9,5 +9,87 @@
     "AreYouSatisfied": 2,
     "WouldYouRecommend": 1,
     "Comment": "Dirty."
+  },
+
+  {
+    "StartTime": "2022-06-10T12:34:00",
+    "EndTime": "2022-06-10T12:49:00",
+    "PatientEmail": "Nevenka@gmail.com",
+    "DoctorEmail": "milkica@gmail.com",
+    "QualityOfService": 4,
+    "OverallHygiene": 3,
+    "AreYouSatisfied": 4,
+    "WouldYouRecommend": 2,
+    "Comment": "Bad."
+  },
+  {
+    "StartTime": "2022-06-11T12:35:00",
+    "EndTime": "2022-06-12T12:50:00",
+    "PatientEmail": "Jovana@gmail.com",
+    "DoctorEmail": "marica@gmail.com",
+    "QualityOfService": 5,
+    "OverallHygiene": 4,
+    "AreYouSatisfied": 4,
+    "WouldYouRecommend": 4,
+    "Comment": "Not bad, but can better."
+  },
+  {
+    "StartTime": "2022-06-05T12:35:00",
+    "EndTime": "2022-06-05T12:50:00",
+    "PatientEmail": "Mirko@gmail.com",
+    "DoctorEmail": "marica@gmail.com",
+    "QualityOfService": 5,
+    "OverallHygiene": 4,
+    "AreYouSatisfied": 5,
+    "WouldYouRecommend": 5,
+    "Comment": "Excellent"
+  },
+
+  {
+    "StartTime": "2022-05-12T12:35:00",
+    "EndTime": "2022-05-12T12:50:00",
+    "PatientEmail": "Jovana@gmail.com",
+    "DoctorEmail":"ognjen@gmail.com",
+    "QualityOfService": 3,
+    "OverallHygiene": 4,
+    "AreYouSatisfied": 3,
+    "WouldYouRecommend": 4,
+    "Comment": "Not bad, but can better."
+  },
+
+  {
+    "StartTime": "2022-05-28T12:35:00",
+    "EndTime": "2022-05-28T12:50:00",
+    "PatientEmail": "Mirko@gmail.com",
+    "DoctorEmail":"iva@gmail.com",
+    "QualityOfService": 1,
+    "OverallHygiene": 2,
+    "AreYouSatisfied": 2,
+    "WouldYouRecommend": 1,
+    "Comment": "Terrible."
+  },
+
+  {
+    "StartTime": "2022-06-02T12:35:00",
+    "EndTime": "2022-06-02T12:50:00",
+    "PatientEmail": "Mirko@gmail.com",
+    "DoctorEmail":"novica@gmail.com",
+    "QualityOfService": 5,
+    "OverallHygiene": 5,
+    "AreYouSatisfied": 5,
+    "WouldYouRecommend": 5,
+    "Comment": "The best doctor."
+  },
+
+  {
+    "StartTime": "2022-06-07T11:34:00",
+    "EndTime": "2022-06-07T11:49:00",
+    "PatientEmail": "MilosK@gmail.com",
+    "DoctorEmail":"marija@gmail.com",
+    "QualityOfService": 4,
+    "OverallHygiene": 3,
+    "AreYouSatisfied": 4,
+    "WouldYouRecommend": 4,
+    "Comment": "Good."
   }
 ]

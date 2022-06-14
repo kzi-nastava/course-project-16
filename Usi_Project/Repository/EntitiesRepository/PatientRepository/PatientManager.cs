@@ -145,12 +145,10 @@ namespace Usi_Project.Repository
                 else
                 {
                     dateTime = new DateTime(y, m, d, h, min, 0);
-                    break;
+                    return dateTime;
                 }
                 
             }
-
-            return dateTime;
         }
         
     }

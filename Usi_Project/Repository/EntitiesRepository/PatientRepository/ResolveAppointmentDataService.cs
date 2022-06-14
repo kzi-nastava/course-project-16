@@ -46,6 +46,8 @@ namespace Usi_Project.Repository
                         doctorForAppoint = doctor;
                     }
 
+                    j++;
+
                 }
 
                 if (doctorForAppoint is null)

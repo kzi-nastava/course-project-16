@@ -36,6 +36,9 @@ namespace Usi_Project.Repository.EntitiesRepository.Survey
             JsonSerializerSettings json = new JsonSerializerSettings
                 {PreserveReferencesHandling = PreserveReferencesHandling.Objects};
             _docotrS = JsonConvert.DeserializeObject<List<DoctorSurvey>>(File.ReadAllText(_doctorSurveyFN), json);
-        }        
+        }
+        
+        
+        
     }
 }

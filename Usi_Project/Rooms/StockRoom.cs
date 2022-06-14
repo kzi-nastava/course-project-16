@@ -69,6 +69,9 @@ namespace Usi_Project
             Console.WriteLine("-------------------------");
             foreach (var tools in _medicalEquipment)
                 Console.WriteLine("\t" + tools.Key + ": " + tools.Value);
+            Console.WriteLine("-------------------------");
+            Console.WriteLine("Surgery Equipments:");
+            Console.WriteLine("-------------------------");
             foreach (var surgeryTools in _surgeryEquipment)
                 Console.WriteLine("\t" + surgeryTools.Key + ": " + surgeryTools.Value);
             Console.WriteLine("=========================");
