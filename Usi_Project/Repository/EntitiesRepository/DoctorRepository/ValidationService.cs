@@ -42,7 +42,7 @@ namespace Usi_Project.Repository
         public static string GetIfFreeOverviewRoom(DateTime dateStart,DateTime dateEnd)
         {
             bool x = true;
-            foreach (var room in _validationManager.RoomManager.OverviewRooms)
+            foreach (var room in _validationManager.RoomRepository.OverviewRooms)
             {
                 foreach (var appointment in _validationManager.AppointmentManager.Appointment)
                 {
@@ -60,7 +60,7 @@ namespace Usi_Project.Repository
         public string GetIfFreeOperatingRoom(DateTime dateStart,DateTime dateEnd)
         {
             bool x = true;
-            foreach (var room in _validationManager.RoomManager.OperatingRooms)
+            foreach (var room in _validationManager.RoomRepository.OperatingRooms)
             {
                 foreach (var appointment in _validationManager.AppointmentManager.Appointment)
                 {
@@ -76,7 +76,7 @@ namespace Usi_Project.Repository
         public static string CheckOperation(DateTime dateStart,DateTime dateEnd)
         {
             bool x = true;
-            foreach (var room in _validationManager.RoomManager.OperatingRooms)
+            foreach (var room in _validationManager.RoomRepository.OperatingRooms)
             {
                 foreach (var appointment in _validationManager.AppointmentManager.Appointment)
                 {

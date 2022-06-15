@@ -28,6 +28,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                         wouldYouRecommend += doctorSurvey.wouldYouRecommend;
                         numOfAppointments += 1;
                         comments += doctorSurvey.comment + "\n";
+                   
                     }
                 }
 

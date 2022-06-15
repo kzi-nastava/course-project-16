@@ -44,7 +44,7 @@ namespace Usi_Project.Repository
             int choice = int.Parse(Console.ReadLine());
             Console.WriteLine("How much you want to add? >> ");
             int num = int.Parse(Console.ReadLine());
-            if (_manager.RoomManager.StockRoom.MedicalEquipment[(MedicalTool) choice] >= num)
+            if (_manager.RoomRepository.StockRoom.MedicalEquipment[(MedicalTool) choice] >= num)
             {
                 var time = RoomChanger.GetTime();
                 dict[(MedicalTool) choice] = num;
@@ -56,7 +56,7 @@ namespace Usi_Project.Repository
             else
             {
                 Console.WriteLine("Stock room just have " +
-                                  _manager.RoomManager.StockRoom.MedicalEquipment[(MedicalTool) choice] + " " +
+                                  _manager.RoomRepository.StockRoom.MedicalEquipment[(MedicalTool) choice] + " " +
                                   ((MedicalTool) choice) + "s.");
             }
         }
@@ -100,7 +100,7 @@ namespace Usi_Project.Repository
             Console.WriteLine("How much you want to add? >> ");
             int num = int.Parse(Console.ReadLine());
 
-            if (_manager.RoomManager.StockRoom.SurgeryEquipment[(SurgeryTool) choice] >= num)
+            if (_manager.RoomRepository.StockRoom.SurgeryEquipment[(SurgeryTool) choice] >= num)
             {
                 var time = RoomChanger.GetTime();
                 dict[(SurgeryTool) choice] = num;
@@ -112,7 +112,7 @@ namespace Usi_Project.Repository
             else
             {
                 Console.WriteLine("Stock room just have " + 
-                                  _manager.RoomManager.StockRoom.SurgeryEquipment[(SurgeryTool) choice] + " " +
+                                  _manager.RoomRepository.StockRoom.SurgeryEquipment[(SurgeryTool) choice] + " " +
                                   ((SurgeryTool) choice) + "s.");
             }
         }

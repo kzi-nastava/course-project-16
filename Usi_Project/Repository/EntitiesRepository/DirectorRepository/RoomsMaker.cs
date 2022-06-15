@@ -11,7 +11,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 bool ind = false;
                 Console.WriteLine("Input id of new Overview Room >> ");
                 string id = Console.ReadLine();
-                foreach (OverviewRoom overviewRoom in factory.RoomManager.OverviewRooms)
+                foreach (OverviewRoom overviewRoom in factory.RoomRepository.OverviewRooms)
                 {
                     if (overviewRoom.Id == id)
                     {
@@ -25,7 +25,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 Console.WriteLine("Input name of new Overview room >> ");
                 string name = Console.ReadLine();
                 OverviewRoom newRoom = new OverviewRoom(id, name);
-                factory.RoomManager.OverviewRooms.Add(newRoom);
+                factory.RoomRepository.OverviewRooms.Add(newRoom);
                 return newRoom;
             }
         }
@@ -36,7 +36,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             {
                 Console.WriteLine("Input id of new Operating Room >> ");
                 var id = Console.ReadLine();
-                foreach (var operatingRoom in factory.RoomManager.OperatingRooms)
+                foreach (var operatingRoom in factory.RoomRepository.OperatingRooms)
                 {
                     if (operatingRoom.Id == id)
                     {
@@ -47,7 +47,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 Console.WriteLine("Input name of new Operating room >> ");
                 var roomName = Console.ReadLine();
                 OperatingRoom ovpRoom = new OperatingRoom(id, roomName);
-                factory.RoomManager.OperatingRooms.Add(ovpRoom);
+                factory.RoomRepository.OperatingRooms.Add(ovpRoom);
                 return ovpRoom;
             }
         }
@@ -58,7 +58,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             {
                 Console.WriteLine("Input id of new Retiring Room >> ");
                 string id = Console.ReadLine();
-                foreach (RetiringRoom retiringRoom in factory.RoomManager.RetiringRooms)
+                foreach (RetiringRoom retiringRoom in factory.RoomRepository.RetiringRooms)
                 {
                     if (retiringRoom.Id == id)
                     {
@@ -69,7 +69,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 Console.WriteLine("Input name of new Retiring room >> ");
                 string roomName = Console.ReadLine();
                 RetiringRoom newRetiringRoom = new RetiringRoom(id, roomName);
-                factory.RoomManager.RetiringRooms.Add(newRetiringRoom);
+                factory.RoomRepository.RetiringRooms.Add(newRetiringRoom);
                 return newRetiringRoom;
             }
         }

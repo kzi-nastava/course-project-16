@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.IO;
 using System;
-using System.Diagnostics.CodeAnalysis;
+
 using Usi_Project.Settings;
+using Usi_Project;
 
 namespace Usi_Project.Repository.RoomRepository
 {
-    public class RoomManager : IRoomRepository
+    public class RoomRepository :  IRoomRepository
     {
         
         private StockRoom _stockRoom;
@@ -16,8 +17,9 @@ namespace Usi_Project.Repository.RoomRepository
         private List<OperatingRoom> _operatingRooms;
         private List<RetiringRoom> _retiringRooms;
         
-        public RoomManager(string operatingRoomsFn, string overviewRoomsFn, string retiringRoomsFn, string stockRoomFn,
-            FileSettings fileSettings)
+
+        public RoomRepository(FileSettings fileSettings)
+
         {
             _fileSettings = fileSettings;
             _operatingRooms = new List<OperatingRoom>();
@@ -86,6 +88,13 @@ namespace Usi_Project.Repository.RoomRepository
             _overviewRooms.Remove(room);
         }
 
+
+        public void UpdateRetiringRoom(RetiringRoom room)
+        {
+            var findRoom = GetRetiringRoomById(room.Id);
+            findRoom.Name = room.Name;
+        }
+
         public void LoadData()
         {
             
@@ -133,12 +142,12 @@ namespace Usi_Project.Repository.RoomRepository
         public StockRoom StockRoom
         {
             get => _stockRoom;
-            set => _stockRoom = value;
+
         }
         
         public List<OverviewRoom> OverviewRooms
         {
-            get => _overviewRooms;
+            get { return _overviewRooms;  }
         }
         public List<OperatingRoom> OperatingRooms
         {

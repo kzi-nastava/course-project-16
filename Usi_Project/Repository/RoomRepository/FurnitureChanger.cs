@@ -70,7 +70,7 @@ namespace Usi_Project.Repository
               Console.WriteLine("How much you want to add? >> ");
               int num = int.Parse(Console.ReadLine());
             
-              if (_manager.RoomManager.StockRoom.Furniture[(Furniture) choice] >= num)
+              if (_manager.RoomRepository.StockRoom.Furniture[(Furniture) choice] >= num)
               {
                   var time = RoomChanger.GetTime();
                   dict[(Furniture) choice] = num;
@@ -81,7 +81,7 @@ namespace Usi_Project.Repository
               else
               {
                   Console.WriteLine("Stock room just have " + 
-                                    _manager.RoomManager.StockRoom.Furniture[(Furniture) choice] + " " +
+                                    _manager.RoomRepository.StockRoom.Furniture[(Furniture) choice] + " " +
                                     ((Furniture) choice).ToString() + "s.");
               }
            
@@ -149,7 +149,7 @@ namespace Usi_Project.Repository
               Console.WriteLine("How much you want to add? >> ");
               int num = int.Parse(Console.ReadLine());
             
-              if (_manager.RoomManager.StockRoom.Furniture[(Furniture) choice] >= num)
+              if (_manager.RoomRepository.StockRoom.Furniture[(Furniture) choice] >= num)
               {
                   var time = RoomChanger.GetTime();
                   dict[(Furniture) choice] = num;
@@ -160,7 +160,7 @@ namespace Usi_Project.Repository
               else
               {
                   Console.WriteLine("Stock room just have " + 
-                                    _manager.RoomManager.StockRoom.Furniture[(Furniture) choice] + " " +
+                                    _manager.RoomRepository.StockRoom.Furniture[(Furniture) choice] + " " +
                                     ((Furniture) choice).ToString() + "s.");
               }
            

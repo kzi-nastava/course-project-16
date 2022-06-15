@@ -43,7 +43,8 @@ namespace Usi_Project.DataSaver
                 serializer.Serialize(file, hospitalSurveys);
             }
         }
-        public  void SaveDoctorSurvey(List<DoctorSurvey> doctorSurveys)
+
+        public void SaveDoctorSurvey(List<DoctorSurvey> doctorSurveys)
         {
             using (StreamWriter file = File.CreateText(_fileSettings.DoctorSurveyFilename))
             {

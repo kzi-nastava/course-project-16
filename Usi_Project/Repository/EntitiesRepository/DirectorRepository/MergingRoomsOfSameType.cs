@@ -31,9 +31,9 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
         private static void MergeRetiringRooms(Factory _factory)
         {
             Console.WriteLine("\nChoose first overview room\n");
-            RetiringRoom first = RoomsBrowser.FindRetiringRoom(_factory.RoomManager.RetiringRooms);
+            RetiringRoom first = RoomsBrowser.FindRetiringRoom(_factory.RoomRepository.RetiringRooms);
             Console.WriteLine("\nChoose second overview room\n");
-            RetiringRoom second = RoomsBrowser.FindRetiringRoom(_factory.RoomManager.RetiringRooms);
+            RetiringRoom second = RoomsBrowser.FindRetiringRoom(_factory.RoomRepository.RetiringRooms);
             if (first.Id == second.Id)
             {
                 Console.WriteLine("Input two different rooms!");
@@ -58,9 +58,9 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
         private static void MergeOverviewRooms(Factory _factory)
         {
             Console.WriteLine("\nChoose first overview room\n");
-            OverviewRoom first = RoomsBrowser.FindOverviewRoom(_factory.RoomManager.OverviewRooms);
+            OverviewRoom first = RoomsBrowser.FindOverviewRoom(_factory.RoomRepository.OverviewRooms);
             Console.WriteLine("\nChoose second overview room\n");
-            OverviewRoom second = RoomsBrowser.FindOverviewRoom(_factory.RoomManager.OverviewRooms);
+            OverviewRoom second = RoomsBrowser.FindOverviewRoom(_factory.RoomRepository.OverviewRooms);
             if (first.Id == second.Id)
             {
                 Console.WriteLine("Input two different rooms!");
@@ -87,9 +87,9 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
         {
 
             Console.WriteLine("\nChoose first operating room\n");
-            OperatingRoom first = RoomsBrowser.FindOperatingRoom(_factory.RoomManager.OperatingRooms);
+            OperatingRoom first = RoomsBrowser.FindOperatingRoom(_factory.RoomRepository.OperatingRooms);
             Console.WriteLine("\nChoose second operating room\n");
-            OperatingRoom second = RoomsBrowser.FindOperatingRoom(_factory.RoomManager.OperatingRooms);
+            OperatingRoom second = RoomsBrowser.FindOperatingRoom(_factory.RoomRepository.OperatingRooms);
             if (first.Id == second.Id)
             {
                 Console.WriteLine("Input two different rooms!");

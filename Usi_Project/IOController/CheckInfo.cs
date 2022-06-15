@@ -17,7 +17,7 @@ namespace Usi_Project.IOController
 
         private void SaveData()
         {
-            _factory.RoomManager.SaveData();
+            _factory.RoomRepository.SaveData();
             _factory.DirectorManager.SaveData();
             _factory.Saver.SaveDoctors(_factory.DoctorManager.Doctors);
             Environment.Exit(0);
@@ -29,12 +29,13 @@ namespace Usi_Project.IOController
             while (true)
             {
                 Console.WriteLine("Enter email or x for exit: ");
-                var enteredEmail = "MilosK@gmail.com";//Console.ReadLine();
+                var enteredEmail = Console.ReadLine();
                 if (enteredEmail == "x")
                     SaveData();
                 Console.WriteLine("Enter password: ");
-                string enteredPassword = "Miki123";//Console.ReadLine();
+                string enteredPassword = Console.ReadLine();
 
+                
                 Director director = _factory.DirectorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
                 if (director != null)
                 {

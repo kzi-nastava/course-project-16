@@ -13,12 +13,12 @@ namespace Usi_Project.Repository
     {
         public void PrintAllOutOfStockDynamicTool()
         {
-            Dictionary<DynamicEquipment, int> nekaList = SecretaryManager._manager.RoomManager.StockRoom.DynamicEquipment;
-            foreach (OperatingRoom operatingRoom in SecretaryManager._manager.RoomManager.OperatingRooms)
+            Dictionary<DynamicEquipment, int> nekaList = SecretaryManager._manager.RoomRepository.StockRoom.DynamicEquipment;
+            foreach (OperatingRoom operatingRoom in SecretaryManager._manager.RoomRepository.OperatingRooms)
             {
                 nekaList = operatingRoom.PrintDynamicTools(nekaList);
             }
-            foreach (OverviewRoom overviewRoom in SecretaryManager._manager.RoomManager.OverviewRooms)
+            foreach (OverviewRoom overviewRoom in SecretaryManager._manager.RoomRepository.OverviewRooms)
             {
                 nekaList = overviewRoom.PrintDynamicTools(nekaList);
             }
