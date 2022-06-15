@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
+using Usi_Project.roomRepository.EntitiesRepository.DirectorRepository;
 
 namespace Usi_Project.Repository
 {
     public static class RoomChanger
     {
-        public static void ChangeRetiringRoom(Factory _manager, RetiringRoom retiring)
+        public static void ChangeRetiringRoom(RetiringRoom retiring)
         {
             if (!retiring.IsDateTimeOfRenovationDefault())
             {
-                _manager.DirectorManager.CheckIfRenovationIsEnded();
+                DirectorManager.CheckIfRenovationIsEnded();
                 if (!retiring.IsDateTimeOfRenovationDefault())
                 {
                     Console.WriteLine("The room is being renovated until  " + retiring.TimeOfRenovation.Value);
@@ -41,11 +42,11 @@ namespace Usi_Project.Repository
             }
         }
 
-        public static void ChangeOvRoom(Factory _manager, OverviewRoom overview)
+        public static void ChangeOvRoom(RoomRepository _manager, OverviewRoom overview, TimerManager timerManager)
         {
             if (!overview.IsDateTimeOfRenovationDefault())
             {
-                _manager.DirectorManager.CheckIfRenovationIsEnded();
+                DirectorManager.CheckIfRenovationIsEnded();
                 if (!overview.IsDateTimeOfRenovationDefault())
                 {
                     Console.WriteLine("The room is being renovated until  " + overview.TimeOfRenovation.Value);
@@ -70,11 +71,11 @@ namespace Usi_Project.Repository
                         break;
                     }
                     case "2":
-                        FurnitureChanger.ChangeFurnitureInOvRoom(_manager, overview);
+                        FurnitureChanger.ChangeFurnitureInOvRoom(_manager, overview, timerManager);
                         break;
                         
                     case "3":
-                        EquipmentChanger.ChangeMedicalTools(_manager, overview);
+                        EquipmentChanger.ChangeMedicalTools(_manager, overview, timerManager);
                         break;
                     case "x":
                         return;
@@ -85,7 +86,7 @@ namespace Usi_Project.Repository
             }
         }
         
-         public static void ChangeOpRoom(Factory factory, OperatingRoom operatingRoom)
+         public static void ChangeOpRoom(RoomRepository repository, OperatingRoom operatingRoom, TimerManager timerManager)
         {
             if (!operatingRoom.IsDateTimeOfRenovationDefault())
             {
@@ -111,10 +112,10 @@ namespace Usi_Project.Repository
                         break;
                     }
                     case "2":
-                        FurnitureChanger.ChangeFurnitureInOpRoom(factory, operatingRoom);
+                        FurnitureChanger.ChangeFurnitureInOpRoom(repository, operatingRoom, timerManager);
                         break;
                     case "3":
-                        EquipmentChanger.ChangeSurgeryTools(factory, operatingRoom);
+                        EquipmentChanger.ChangeSurgeryTools(repository, operatingRoom, timerManager);
                         break;
                     case "x":
                         return;

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Usi_Project.Users;
 
-namespace Usi_Project.Repository.RoomRepository
+namespace Usi_Project.Repository
 {
     public interface IRoomRepository
     { 

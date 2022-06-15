@@ -6,7 +6,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
     public class HospitalBrowser
     {
 
-        public static void SearchHospitalEquipments(Factory factory)
+        public static void SearchHospitalEquipments(RoomRepository repository)
         {
             Console.WriteLine("Enter equipment: >> ");
             string eq = Console.ReadLine();
@@ -19,27 +19,27 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
 
             DirectorMenus.PrintQuantityMenu();
             int option2 = Int32.Parse(Console.ReadLine());
-            Search(factory, eq, options, option2);
+            Search(repository, eq, options, option2);
         }
         
-        private static void Search(Factory factory, string eq, List<int> options1, int option2)
+        private static void Search(RoomRepository repository, string eq, List<int> options1, int option2)
         {
             foreach (var q in options1)
             {
                 if (q == 1)
-                    SearchThroughOperatingRooms(factory, eq.ToLower(), option2);
+                    SearchThroughOperatingRooms(repository, eq.ToLower(), option2);
                 else if (q == 2)
-                    SearchThroughOverviewRooms(factory, eq.ToLower(), option2);
+                    SearchThroughOverviewRooms(repository, eq.ToLower(), option2);
                 else if (q == 3)
-                    SearchThroughRetiringRooms(factory, eq.ToLower(), option2);
+                    SearchThroughRetiringRooms(repository, eq.ToLower(), option2);
                 else if (q == 4)
-                    SearchThroughStockRoom(factory, eq.ToLower(), option2);
+                    SearchThroughStockRoom(repository, eq.ToLower(), option2);
             }
         }
 
-        private static void SearchThroughOperatingRooms(Factory factory, string eq, int option)
+        private static void SearchThroughOperatingRooms(RoomRepository repository, string eq, int option)
         {
-            foreach (OperatingRoom op in factory.RoomRepository.OperatingRooms)
+            foreach (OperatingRoom op in repository.OperatingRooms)
             {
                 Console.WriteLine("---------------------");
                 Console.WriteLine(op.Name);
@@ -51,9 +51,9 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             }
         }
 
-        private static void SearchThroughOverviewRooms(Factory factory, string eq, int option)
+        private static void SearchThroughOverviewRooms(RoomRepository repository, string eq, int option)
         {
-            foreach (OverviewRoom op in factory.RoomRepository.OverviewRooms)
+            foreach (OverviewRoom op in repository.OverviewRooms)
             {
                 Console.WriteLine("---------------------");
                 Console.WriteLine(op.Name);
@@ -63,9 +63,9 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             }
         }
 
-        private static void SearchThroughRetiringRooms(Factory factory, string eq, int option)
+        private static void SearchThroughRetiringRooms(RoomRepository repository, string eq, int option)
         {
-            foreach (RetiringRoom op in factory.RoomRepository.RetiringRooms)
+            foreach (RetiringRoom op in repository.RetiringRooms)
             {
                 Console.WriteLine("---------------------");
                 Console.WriteLine(op.Name);
@@ -75,11 +75,11 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
         }
         
 
-        private static void SearchThroughStockRoom(Factory factory, string eq, int option)
+        private static void SearchThroughStockRoom(RoomRepository repository, string eq, int option)
         {
-            factory.RoomRepository.StockRoom.PrintMedicalEquipment(eq, option);
-            factory.RoomRepository.StockRoom.PrintSurgeryEquipment(eq, option);
-            factory.RoomRepository.StockRoom.PrintFurniture(eq, option);
+            repository.StockRoom.PrintMedicalEquipment(eq, option);
+            repository.StockRoom.PrintSurgeryEquipment(eq, option);
+            repository.StockRoom.PrintFurniture(eq, option);
         }
     }
 }

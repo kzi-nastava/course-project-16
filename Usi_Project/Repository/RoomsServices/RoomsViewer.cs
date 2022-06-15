@@ -1,10 +1,11 @@
 using System;
+using Usi_Project.roomRepository.EntitiesRepository.DirectorRepository;
 
 namespace Usi_Project.Repository
 {
-    public class RoomsViewer
+    public static class RoomsViewer
     {
-        public  static void ViewOverviewRooms(Factory _manager, OverviewRoom room)
+        public  static void ViewOverviewRooms(RoomRepository _repository, OverviewRoom room, TimerManager _manager=null)
         {
             if (!room.IsDateTimeOfRenovationDefault())
             {
@@ -17,10 +18,10 @@ namespace Usi_Project.Repository
                 switch (GetOption())
                 {
                     case "1":
-                        _manager.RoomRepository.OverviewRooms.Remove(room);
+                        _repository.OverviewRooms.Remove(room);
                         break;
                     case "2":
-                        RoomChanger.ChangeOvRoom(_manager, room);
+                        RoomChanger.ChangeOvRoom(_repository, room, _manager);
                         break;
                     case "x":
                         return;
@@ -31,11 +32,11 @@ namespace Usi_Project.Repository
             }
         }
 
-        public static  void ViewOperatingRooms(Factory _manager, OperatingRoom operatingRoom)
+        public static  void ViewOperatingRooms(RoomRepository _repository, OperatingRoom operatingRoom, TimerManager _manager)
         {
             if (!operatingRoom.IsDateTimeOfRenovationDefault())
             {
-                _manager.DirectorManager.CheckIfRenovationIsEnded();
+                DirectorManager.CheckIfRenovationIsEnded();
                 if (!operatingRoom.IsDateTimeOfRenovationDefault())
                 {
                     Console.WriteLine("The room is being renovated until  " + operatingRoom.TimeOfRenovation.Value);
@@ -48,10 +49,10 @@ namespace Usi_Project.Repository
                 switch (GetOption())
                 {
                     case "1":
-                        _manager.RoomRepository.OperatingRooms.Remove(operatingRoom);
+                        _repository.OperatingRooms.Remove(operatingRoom);
                         break;
                     case "2":
-                        RoomChanger.ChangeOpRoom(_manager, operatingRoom);
+                        RoomChanger.ChangeOpRoom( _repository, operatingRoom, _manager);
                         break;
                     case "x":
                         return;
@@ -62,12 +63,12 @@ namespace Usi_Project.Repository
             }
         }
         
-        public static void ViewRetiringRoom(Factory _manager, RetiringRoom room)
+        public static void ViewRetiringRoom(RoomRepository _repository, RetiringRoom room)
         {
    
             if (!room.IsDateTimeOfRenovationDefault())
             {
-                _manager.DirectorManager.CheckIfRenovationIsEnded();
+                DirectorManager.CheckIfRenovationIsEnded();
                 if (!room.IsDateTimeOfRenovationDefault())
                 {
                     Console.WriteLine("The room is being renovated until  " + room.TimeOfRenovation.Value);
@@ -80,10 +81,10 @@ namespace Usi_Project.Repository
                 switch (GetOption())
                 {
                     case "1":
-                        _manager.RoomRepository.RetiringRooms.Remove(room);
+                        _repository.RetiringRooms.Remove(room);
                         break;
                     case "2":
-                        RoomChanger.ChangeRetiringRoom(_manager, room);
+                        RoomChanger.ChangeRetiringRoom(room);
                         break;
                     case "x":
                         return;
@@ -93,9 +94,9 @@ namespace Usi_Project.Repository
                 }
             }
         }
-        public static void ViewStockRoom(Factory factory)
+        public static void ViewStockRoom(RoomRepository repository)
         {
-            factory.RoomRepository.StockRoom.PrintRoom();
+            repository.StockRoom.PrintRoom();
         }
 
         private static string GetOption()

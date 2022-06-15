@@ -5,7 +5,7 @@ namespace Usi_Project.Repository
 {
     public class FurnitureChanger
     {
-      public static void ChangeFurnitureInOpRoom(Factory factory, OperatingRoom operatingRoom)
+      public static void ChangeFurnitureInOpRoom(RoomRepository repository, OperatingRoom operatingRoom, TimerManager _manager)
           {
               while (true)
               {
@@ -16,7 +16,7 @@ namespace Usi_Project.Repository
                   switch (Console.ReadLine())
                   {
                       case "1":
-                          AddNewFurniture(factory, operatingRoom);
+                          AddNewFurniture(repository, operatingRoom, _manager);
                           break;
                       case "2":
                           RemoveCurrentFurniture(operatingRoom);
@@ -30,7 +30,7 @@ namespace Usi_Project.Repository
               }
           }
         
-          public static void ChangeFurnitureInOvRoom(Factory _factory, OverviewRoom overviewRoom)
+          public static void ChangeFurnitureInOvRoom(RoomRepository _repository, OverviewRoom overviewRoom, TimerManager _manager)
           {
               while (true)
               {
@@ -41,7 +41,7 @@ namespace Usi_Project.Repository
                   switch (Console.ReadLine())
                   {
                       case "1":
-                          AddNewFurniture(_factory, overviewRoom);
+                          AddNewFurniture(_repository, overviewRoom, _manager);
                           break;
                       case "2":
                           RemoveCurrentFurniture(overviewRoom);
@@ -55,7 +55,7 @@ namespace Usi_Project.Repository
               }
           }
           
-          private static void AddNewFurniture(Factory _manager, OperatingRoom operatingRoom)
+          private static void AddNewFurniture(RoomRepository repository, OperatingRoom operatingRoom, TimerManager _manager)
           {
               Dictionary<Furniture, int> dict = new Dictionary<Furniture, int>();
               Console.WriteLine("Choose what you want to add: ");
@@ -70,18 +70,18 @@ namespace Usi_Project.Repository
               Console.WriteLine("How much you want to add? >> ");
               int num = int.Parse(Console.ReadLine());
             
-              if (_manager.RoomRepository.StockRoom.Furniture[(Furniture) choice] >= num)
+              if (repository.StockRoom.Furniture[(Furniture) choice] >= num)
               {
                   var time = RoomChanger.GetTime();
                   dict[(Furniture) choice] = num;
                   Timer timer = new Timer(time, operatingRoom.Id);
                   timer.FurnitureDict = dict;
-                  _manager.TimerManager.Timers.Add(timer);
+                  _manager.Timers.Add(timer);
               }
               else
               {
                   Console.WriteLine("Stock room just have " + 
-                                    _manager.RoomRepository.StockRoom.Furniture[(Furniture) choice] + " " +
+                                    repository.StockRoom.Furniture[(Furniture) choice] + " " +
                                     ((Furniture) choice).ToString() + "s.");
               }
            
@@ -134,7 +134,7 @@ namespace Usi_Project.Repository
                       break;
               }
           }
-          private static void AddNewFurniture(Factory _manager, OverviewRoom overviewRoom)
+          private static void AddNewFurniture(RoomRepository _repository, OverviewRoom overviewRoom, TimerManager _timerManager)
           {
               Dictionary<Furniture, int> dict = new Dictionary<Furniture, int>();
               Console.WriteLine("Choose what you want to add: ");
@@ -149,18 +149,18 @@ namespace Usi_Project.Repository
               Console.WriteLine("How much you want to add? >> ");
               int num = int.Parse(Console.ReadLine());
             
-              if (_manager.RoomRepository.StockRoom.Furniture[(Furniture) choice] >= num)
+              if ( _repository.StockRoom.Furniture[(Furniture) choice] >= num)
               {
                   var time = RoomChanger.GetTime();
                   dict[(Furniture) choice] = num;
                   Timer timer = new Timer(time, overviewRoom.Id);
                   timer.FurnitureDict = dict;
-                  _manager.TimerManager.Timers.Add(timer);
+                  _timerManager.Timers.Add(timer);
               }
               else
               {
                   Console.WriteLine("Stock room just have " + 
-                                    _manager.RoomRepository.StockRoom.Furniture[(Furniture) choice] + " " +
+                                    _repository.StockRoom.Furniture[(Furniture) choice] + " " +
                                     ((Furniture) choice).ToString() + "s.");
               }
            

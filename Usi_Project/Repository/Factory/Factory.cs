@@ -6,7 +6,7 @@ using Usi_Project.DataSaver;
 using Usi_Project.Manage;
 using Usi_Project.Repository.EntitiesRepository.DirectorRepository;
 using Usi_Project.Repository.EntitiesRepository.Survey;
-using Usi_Project.Repository.RoomRepository;
+using Usi_Project.roomRepository.EntitiesRepository.DirectorRepository;
 
 namespace Usi_Project.Repository
 {
@@ -18,7 +18,7 @@ namespace Usi_Project.Repository
         private readonly PatientManager _patientManager;
         private readonly SecretaryManager _secretaryManager;
         private readonly DoctorManager _doctorManager;
-        private readonly RoomRepository.RoomRepository _roomRepository;
+        private readonly RoomRepository _roomRepository;
         private readonly AppointmentManager _appointmentManager;
         private readonly AnamnesaManager _anamnesaManager;
         private readonly RequestManager _requestManager;
@@ -34,11 +34,10 @@ namespace Usi_Project.Repository
         public Factory(FileSettings fileSettings, Saver saver)
 
         {
-            _directorManager = new DirectorManager(fileSettings.DirectorFilename, this);
             _patientManager = new PatientManager(fileSettings.PatientFilename, this);
             _secretaryManager = new SecretaryManager(fileSettings.SecretaryFilename, this);
             _doctorManager = new DoctorManager(fileSettings.DoctorFilename, this);
-            _roomRepository = new RoomRepository.RoomRepository(fileSettings);
+            _roomRepository = new RoomRepository(fileSettings);
             _appointmentManager = new AppointmentManager(fileSettings.AppointmentsFilename, this);
             _anamnesaManager = new AnamnesaManager(fileSettings.AnamnesaFilename, this);
             _requestManager = new RequestManager(fileSettings.RequestedFilename, this);
@@ -49,6 +48,7 @@ namespace Usi_Project.Repository
             _drugManager = new DrugManager(fileSettings.DrugsFilename, fileSettings.RejectedDrugsFilename);
             _hospitalSurveyManager = new HospitalSurveyManager(fileSettings.HospitalSurveyFilename, this);
             _doctorSurveyManager = new DoctorSurveyManager(fileSettings.DoctorSurveyFilename, this);
+            _directorManager = new DirectorManager(fileSettings.DirectorFilename, _roomRepository, _hospitalSurveyManager, _doctorSurveyManager, _timerManager, _drugManager, _doctorManager);
 
         }
         
@@ -79,7 +79,7 @@ namespace Usi_Project.Repository
 
         public HospitalSurveyManager HospitalSurveyManager => _hospitalSurveyManager;
 
-        public RoomRepository.RoomRepository RoomRepository
+        public RoomRepository RoomRepository
         {
             get => _roomRepository;
         }

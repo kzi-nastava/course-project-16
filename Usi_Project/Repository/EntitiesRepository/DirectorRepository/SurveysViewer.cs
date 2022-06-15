@@ -2,15 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using Usi_Project.Repository.EntitiesRepository.Survey;
 using Usi_Project.Users;
 
 namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
 {
     public class SurveysViewer
     {
-        public static void PrintResultsOfDoctorsSurvey(Factory factory)
+        public static void PrintResultsOfDoctorsSurvey(DoctorSurveyManager doctorSurveyManager, DoctorManager doctorManager)
         {
-            foreach (var doctor in factory.DoctorManager.Doctors)
+            foreach (var doctor in doctorManager.Doctors)
             {
                 double qualityOfService = 0;
                 double overallHygiene = 0;
@@ -18,7 +19,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 double wouldYouRecommend = 0;
                 double numOfAppointments = 0;
                 var comments = "";
-                foreach (var doctorSurvey in factory.DoctorSurveyManager.DocotrS)
+                foreach (var doctorSurvey in doctorSurveyManager.DocotrS)
                 {
                     if (doctor.email == doctorSurvey.doctorEmail)
                     {
@@ -46,14 +47,14 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             }
         }
 
-        public static void PrintResultsOfHospitalSurvey(Factory factory)
+        public static void PrintResultsOfHospitalSurvey(HospitalSurveyManager hospitalSurvey)
         {
             double qualityOfService = 0;
             double overallHygiene = 0;
             double wouldYouRecommend = 0;
             double numOfGrades = 0;
             var comments = "";
-            foreach (var survey in factory.HospitalSurveyManager.HospitalS)
+            foreach (var survey in hospitalSurvey.HospitalS)
             {
                 qualityOfService += survey.qualityOfService;
                 overallHygiene += survey.overallHygiene;
@@ -73,17 +74,17 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             Console.WriteLine("========================================");
         }
 
-        public static void ViewThreeBestDoctors(Factory factory)
+        public static void ViewThreeBestDoctors(List<Doctor> doctors)
         {
 
-            List<Doctor> sortedDoctorsByGrade = factory.DoctorManager.Doctors.OrderByDescending(doctor => doctor.Grade).ToList();
+            List<Doctor> sortedDoctorsByGrade = doctors.OrderByDescending(doctor => doctor.Grade).ToList();
             PrintChosenDoctors(sortedDoctorsByGrade);
 
         }
 
-        public static void ViewThreeWorseDoctors(Factory factory)
+        public static void ViewThreeWorseDoctors(List<Doctor> doctors)
         {
-            List<Doctor> sortedDoctorsByGrade = factory.DoctorManager.Doctors.OrderBy(doctor => doctor.Grade).ToList();
+            List<Doctor> sortedDoctorsByGrade = doctors.OrderBy(doctor => doctor.Grade).ToList();
             for (int i = 0; i < sortedDoctorsByGrade.Count; i++)
             {
                 if (sortedDoctorsByGrade[i].Grade == 0)

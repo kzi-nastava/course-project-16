@@ -3,21 +3,37 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Usi_Project.Manage;
+using Usi_Project.Repository;
+using Usi_Project.Repository.EntitiesRepository.DirectorRepository;
+using Usi_Project.Repository.EntitiesRepository.Survey;
 using Usi_Project.Users;
 
-namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
+namespace Usi_Project.roomRepository.EntitiesRepository.DirectorRepository
 {
     public class DirectorManager
     {
         private readonly string _directorFilename;
         private Director _director;
-        private static Factory _factory;
+        private static RoomRepository _roomRepository;
+        private static HospitalSurveyManager _hospitalSurvey;
+        private static DoctorSurveyManager _doctorSurvey;
+        private static TimerManager _timerManager;
+        private static DrugManager _drugManager;
+        private static DoctorManager _doctorManager;
 
-        public DirectorManager(string directorFilename, Factory factory)
+        public DirectorManager(string directorFilename, RoomRepository roomRepository,
+                                HospitalSurveyManager hospitalSurvey, DoctorSurveyManager doctorSurvey,
+                                TimerManager timerManager, DrugManager drugManager, DoctorManager doctorManager)
+                                
         {
             _directorFilename = directorFilename;
-            _factory = factory;
-
+            _roomRepository = roomRepository;
+            _hospitalSurvey = hospitalSurvey;
+            _doctorSurvey = doctorSurvey;
+            _doctorManager = doctorManager;
+            _timerManager = timerManager;
+            _drugManager = drugManager;
         }
 
         public void LoadData()
@@ -42,20 +58,20 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                         CreateHospitalRooms();
                         break;
                     case "3":
-                        HospitalBrowser.SearchHospitalEquipments(_factory);
+                        HospitalBrowser.SearchHospitalEquipments(_roomRepository);
                         break;
                     case "4":
-                        _factory.TimerManager.RefreshEquipments();
-                        _factory.DirectorManager.CheckIfRenovationIsEnded();
+                        _timerManager.RefreshEquipments();
+                        CheckIfRenovationIsEnded();
                         break;
                     case "5":
-                        RoomRenovation.Renovation(_factory);
+                        RoomRenovation.Renovation(_roomRepository);
                         break;
                     case "6":
-                        RoomRenovation.MultipleRoomRenovation(_factory);
+                        RoomRenovation.MultipleRoomRenovation(_roomRepository);
                         break;
                     case "7":
-                        _factory.DrugManager.PrintMenu();
+                        _drugManager.PrintMenu();
                         break;
                     case "8": 
                         ViewSurveysResults();
@@ -81,16 +97,16 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 switch (option)
                 {
                     case "1":
-                        SurveysViewer.PrintResultsOfHospitalSurvey(_factory);
+                        SurveysViewer.PrintResultsOfHospitalSurvey(_hospitalSurvey);
                         break;
                     case "2":
-                        SurveysViewer.PrintResultsOfDoctorsSurvey(_factory);
+                        SurveysViewer.PrintResultsOfDoctorsSurvey(_doctorSurvey, _doctorManager);
                         break;
                     case "3":
-                        SurveysViewer.ViewThreeBestDoctors(_factory);
+                        SurveysViewer.ViewThreeBestDoctors(_doctorManager.Doctors);
                         break;
                     case "4":
-                        SurveysViewer.ViewThreeWorseDoctors(_factory);
+                        SurveysViewer.ViewThreeWorseDoctors(_doctorManager.Doctors);
                         break;
                     case "x":
                         return;
@@ -124,13 +140,13 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        RoomsMaker.CreateOverviewRoom(_factory);
+                        RoomsMaker.CreateOverviewRoom(_roomRepository);
                         break;
                     case "2":
-                        RoomsMaker.CreateOperatingRoom(_factory);
+                        RoomsMaker.CreateOperatingRoom(_roomRepository);
                         break;
                     case "3":
-                        RoomsMaker.CreateRetiringRoom(_factory);
+                        RoomsMaker.CreateRetiringRoom(_roomRepository);
                         break;
                     case "x":
                         return;
@@ -151,24 +167,24 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             switch (option)
             {
                 case "1":
-                   RoomsViewer.ViewOperatingRooms(_factory, RoomsBrowser.FindOperatingRoom(_factory.RoomRepository.OperatingRooms));
+                   RoomsViewer.ViewOperatingRooms(_roomRepository, RoomsBrowser.FindOperatingRoom(_roomRepository.OperatingRooms), _timerManager);
                     break;
                 case "2":
-                    RoomsViewer.ViewOverviewRooms(_factory, RoomsBrowser.FindOverviewRoom(_factory.RoomRepository.OverviewRooms));
+                    RoomsViewer.ViewOverviewRooms(_roomRepository, RoomsBrowser.FindOverviewRoom(_roomRepository.OverviewRooms), _timerManager);
                     break;
                 case "3":
-                    RoomsViewer.ViewRetiringRoom(_factory, RoomsBrowser.FindRetiringRoom(_factory.RoomRepository.RetiringRooms));
+                    RoomsViewer.ViewRetiringRoom(_roomRepository, RoomsBrowser.FindRetiringRoom(_roomRepository.RetiringRooms));
                     break;
                 case "4":
-                    RoomsViewer.ViewStockRoom(_factory);
+                    RoomsViewer.ViewStockRoom(_roomRepository);
                     break;
             }
         }
 
-        public void CheckIfRenovationIsEnded()
+        public static void CheckIfRenovationIsEnded()
         {
 
-            foreach (var operatingRoom in _factory.RoomRepository.OperatingRooms.ToList())
+            foreach (var operatingRoom in _roomRepository.OperatingRooms.ToList())
             {
                 if (DateTime.Now >= operatingRoom.TimeOfRenovation.Value)
                 {
@@ -177,7 +193,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 }
             }
 
-            foreach (var overviewRoom in _factory.RoomRepository.OverviewRooms.ToList())
+            foreach (var overviewRoom in _roomRepository.OverviewRooms.ToList())
             {
                 if (DateTime.Now >= overviewRoom.TimeOfRenovation.Value)
                 {
@@ -186,7 +202,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 }
             }
 
-            foreach (var retiringRoom in _factory.RoomRepository.RetiringRooms.ToList())
+            foreach (var retiringRoom in _roomRepository.RetiringRooms.ToList())
             {
                 if (DateTime.Now >= retiringRoom.TimeOfRenovation.Value)
                 {

@@ -6,7 +6,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
 {
     public class MergingRoomsOfDiffType
     {
-        public static void MergeOperatingAndOverviewRoom(Factory factory, OperatingRoom operatingRoom, OverviewRoom overviewRoom)
+        public static void MergeOperatingAndOverviewRoom(RoomRepository RoomRepository, OperatingRoom operatingRoom, OverviewRoom overviewRoom)
         {
 
             Console.WriteLine("1) Merge into new Operating room");
@@ -19,18 +19,18 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             switch (choiseRoom)
             {
                 case 1:
-                    OperatingRoom newOperatingRoom = RoomsMaker.CreateOperatingRoom(factory);
+                    OperatingRoom newOperatingRoom = RoomsMaker.CreateOperatingRoom(RoomRepository);
                     newOperatingRoom.SurgeryEquipments = operatingRoom.SurgeryEquipments;
                     newOperatingRoom.Furniture = MergeEquipments.MergeFurniture(operatingRoom, overviewRoom);
-                    MedicalSender.SendMedicalEquipmentToStockRoom(factory, overviewRoom);
+                    MedicalSender.SendMedicalEquipmentToStockRoom(RoomRepository, overviewRoom);
                     Console.WriteLine("Medical Equipments from overview room send to Stock Room.");
                     SetTimeForRenovation(newOperatingRoom, timeForRenovation.Item1, timeForRenovation.Item2);
                     break;
                 case 2:
-                    OverviewRoom newOverviewRoom = RoomsMaker.CreateOverviewRoom(factory);
+                    OverviewRoom newOverviewRoom = RoomsMaker.CreateOverviewRoom(RoomRepository);
                     newOverviewRoom.Tools = overviewRoom.Tools;
                     newOverviewRoom.Furniture = MergeEquipments.MergeFurniture(operatingRoom, overviewRoom);
-                    MedicalSender.SendSurgeryEquipmentToStockRoom(factory, operatingRoom);
+                    MedicalSender.SendSurgeryEquipmentToStockRoom(RoomRepository, operatingRoom);
                     Console.WriteLine("Surgery Equipments from overview room send to Stock Room.");
                     SetTimeForRenovation(newOverviewRoom, timeForRenovation.Item1, timeForRenovation.Item2);
                     break;
@@ -41,7 +41,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
 
         }
         
-        public static void MergeRetiringRoomAndOverviewRoom(Factory factory, RetiringRoom retiringRoom, OverviewRoom overviewRoom)
+        public static void MergeRetiringRoomAndOverviewRoom(RoomRepository RoomRepository, RetiringRoom retiringRoom, OverviewRoom overviewRoom)
         {
 
             Console.WriteLine("1) Merge into new Retiring room");
@@ -55,15 +55,15 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             switch (choiseRoom)
             {
                 case 1:
-                    RetiringRoom newRetiringRoom = RoomsMaker.CreateRetiringRoom(factory);
+                    RetiringRoom newRetiringRoom = RoomsMaker.CreateRetiringRoom(RoomRepository);
                     newRetiringRoom.Furniture = MergeEquipments.MergeFurniture(retiringRoom, overviewRoom);
-                    MedicalSender.SendMedicalEquipmentToStockRoom(factory, overviewRoom);
+                    MedicalSender.SendMedicalEquipmentToStockRoom(RoomRepository, overviewRoom);
                     Console.WriteLine("Medical Equipments from overview room send to Stock Room.");
                     SetTimeForRenovation(newRetiringRoom, timeForRenovation.Item1, timeForRenovation.Item2);
 
                     break;
                 case 2:
-                    OverviewRoom newOverviewRoom = RoomsMaker.CreateOverviewRoom(factory);
+                    OverviewRoom newOverviewRoom = RoomsMaker.CreateOverviewRoom(RoomRepository);
                     newOverviewRoom.Tools = overviewRoom.Tools;
                     newOverviewRoom.Furniture = MergeEquipments.MergeFurniture(retiringRoom, overviewRoom);
                     ;
@@ -86,7 +86,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             
         }
         
-        public  static void MergeOperatingAndRetiringRoom(Factory factory, OperatingRoom operatingRoom, RetiringRoom retiringRoom)
+        public  static void MergeOperatingAndRetiringRoom(RoomRepository repository, OperatingRoom operatingRoom, RetiringRoom retiringRoom)
         {
             
             Console.WriteLine("1) Merge into new Retiring room");
@@ -99,14 +99,14 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             switch (choiseRoom)
             {
                 case 1:
-                    RetiringRoom newRetiringRoom = RoomsMaker.CreateRetiringRoom(factory);
+                    RetiringRoom newRetiringRoom = RoomsMaker.CreateRetiringRoom(repository);
                     newRetiringRoom.Furniture = MergeEquipments.MergeFurniture(retiringRoom, operatingRoom);
-                    MedicalSender.SendSurgeryEquipmentToStockRoom(factory, operatingRoom);
+                    MedicalSender.SendSurgeryEquipmentToStockRoom(repository, operatingRoom);
                     Console.WriteLine("Surgery Equipments from operating room send to Stock Room.");
                     SetTimeForRenovation(newRetiringRoom, timeForRenovation.Item1, timeForRenovation.Item2);
                     break;
                 case 2:
-                    OperatingRoom newOperatingRoom = RoomsMaker.CreateOperatingRoom(factory);
+                    OperatingRoom newOperatingRoom = RoomsMaker.CreateOperatingRoom(repository);
                     newOperatingRoom.Furniture = MergeEquipments.MergeFurniture(retiringRoom, operatingRoom);
                     newOperatingRoom.SurgeryEquipments = operatingRoom.SurgeryEquipments;
                     SetTimeForRenovation(newOperatingRoom, timeForRenovation.Item1, timeForRenovation.Item2);

@@ -46,41 +46,5 @@
     "wouldYouRecommend": 1,
     "areYouSatisfied": 1,
     "comment": "Bad service"
-  },
-
-  {
-    "patientEmail": "Mirko@gmail.com",
-    "QualityOfService": 2,
-    "OverallHygiene": 4,
-    "AreYouSatisfied": 5,
-    "WouldYouRecommend": 3,
-    "Comment": "The staff is very rude."
-  },
-
-  {
-    "patientEmail": "Jovana@gmail.com",
-    "QualityOfService": 5,
-    "OverallHygiene": 5,
-    "AreYouSatisfied": 4,
-    "WouldYouRecommend": 5,
-    "Comment": "Hospital is very clean."
-  },
-
-  {
-    "patientEmail": "Nevenka@gmail.com",
-    "QualityOfService": 4,
-    "OverallHygiene": 2,
-    "AreYouSatisfied": 2,
-    "WouldYouRecommend": 4,
-    "Comment": "Expensive and dirty."
-  },
-
-  {
-    "patientEmail": "Jovana@gmail.com",
-    "QualityOfService": 5,
-    "OverallHygiene": 4,
-    "AreYouSatisfied": 4,
-    "WouldYouRecommend": 4,
-    "Comment": "Not bad."
   }
 ]

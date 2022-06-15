@@ -6,7 +6,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
     public class SplitRooms
     {
  
-         public  static  void SplitOperatingRoom(Factory factory, OperatingRoom room)
+         public  static  void SplitOperatingRoom(RoomRepository factory, OperatingRoom room)
         {
             if (!room.IsDateTimeOfRenovationDefault())
             {
@@ -50,11 +50,11 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             secondRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>(
                 timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
 
-            factory.RoomRepository.OperatingRooms.Remove(room);
+            factory.OperatingRooms.Remove(room);
 
         }
          
-         public static void SplitOverwievRoom(Factory factory, OverviewRoom room)
+         public static void SplitOverwievRoom(RoomRepository factory, OverviewRoom room)
         {
             if (!room.IsDateTimeOfRenovationDefault())
             {
@@ -96,11 +96,11 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
             secondRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>(
                 timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
-            factory.RoomRepository.OverviewRooms.Remove(room);
+            factory.OverviewRooms.Remove(room);
 
         }
             
-        public static void SplitRetiringRoom(Factory factory, RetiringRoom room)
+        public static void SplitRetiringRoom(RoomRepository factory, RetiringRoom room)
             {
                 if (!room.IsDateTimeOfRenovationDefault())
                 {
@@ -124,7 +124,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                     timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
 
                 MergeEquipments.SplitFurnitureThroughRooms(room, firstRoom, secondRoom);
-                factory.RoomRepository.RetiringRooms.Remove(room);
+                factory.RetiringRooms.Remove(room);
 
             }
 

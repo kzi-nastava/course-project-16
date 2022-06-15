@@ -6,7 +6,7 @@ using System;
 using Usi_Project.Settings;
 using Usi_Project;
 
-namespace Usi_Project.Repository.RoomRepository
+namespace Usi_Project.Repository
 {
     public class RoomRepository :  IRoomRepository
     {

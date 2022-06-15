@@ -5,7 +5,7 @@ namespace Usi_Project.Repository
 {
     public class EquipmentChanger
     {
-        public static void ChangeMedicalTools(Factory factory, OverviewRoom overviewRoom)
+        public static void ChangeMedicalTools(RoomRepository repository, OverviewRoom overviewRoom, TimerManager timerManager)
         {
             while (true)
             {
@@ -17,10 +17,10 @@ namespace Usi_Project.Repository
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        AddNewMedicalToolFromStockRoom(factory, overviewRoom);
+                        AddNewMedicalToolFromStockRoom(repository, overviewRoom, timerManager);
                         break;
                     case "3":
-                        RemoveMedicalTool(factory, overviewRoom);
+                        RemoveMedicalTool(repository, overviewRoom, timerManager);
                         break;
                     case "x":
                         return;
@@ -30,7 +30,8 @@ namespace Usi_Project.Repository
                 }
             }
         }
-        private static void AddNewMedicalToolFromStockRoom(Factory _manager, OverviewRoom overviewRoom)
+        private static void AddNewMedicalToolFromStockRoom(RoomRepository _repository, OverviewRoom overviewRoom,
+            TimerManager _manager)
         {
             Dictionary<MedicalTool, int> dict = new Dictionary<MedicalTool, int>();
             Console.WriteLine("Choose what you want to add: ");
@@ -44,24 +45,24 @@ namespace Usi_Project.Repository
             int choice = int.Parse(Console.ReadLine());
             Console.WriteLine("How much you want to add? >> ");
             int num = int.Parse(Console.ReadLine());
-            if (_manager.RoomRepository.StockRoom.MedicalEquipment[(MedicalTool) choice] >= num)
+            if (_repository.StockRoom.MedicalEquipment[(MedicalTool) choice] >= num)
             {
                 var time = RoomChanger.GetTime();
                 dict[(MedicalTool) choice] = num;
                 Timer timer = new Timer(time, overviewRoom.Id);
                 timer.MedicalDict = dict;
-                _manager.TimerManager.Timers.Add(timer);
+                _manager.Timers.Add(timer);
 
             }
             else
             {
                 Console.WriteLine("Stock room just have " +
-                                  _manager.RoomRepository.StockRoom.MedicalEquipment[(MedicalTool) choice] + " " +
+                                  _repository.StockRoom.MedicalEquipment[(MedicalTool) choice] + " " +
                                   ((MedicalTool) choice) + "s.");
             }
         }
         
-         public static void ChangeSurgeryTools(Factory factory, OperatingRoom operatingRoom)
+         public static void ChangeSurgeryTools(RoomRepository repository, OperatingRoom operatingRoom, TimerManager _manager)
         {
             while (true)
             {
@@ -72,10 +73,10 @@ namespace Usi_Project.Repository
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        AddNewSurgeryTool(factory, operatingRoom);
+                        AddNewSurgeryTool(repository, operatingRoom, _manager);
                         break;
                     case "2":
-                        RemoveSurgeryTool(factory, operatingRoom);
+                        RemoveSurgeryTool(_manager, operatingRoom);
                         break;
                     case "x":
                         return;
@@ -85,7 +86,7 @@ namespace Usi_Project.Repository
                 }
             }
         }
-        private static void AddNewSurgeryTool(Factory _manager, OperatingRoom operatingRoom)
+        private static void AddNewSurgeryTool(RoomRepository repository, OperatingRoom operatingRoom, TimerManager _manager)
         {
             Dictionary<SurgeryTool, int> dict = new Dictionary<SurgeryTool, int>();
             Console.WriteLine("Choose what you want to add: ");
@@ -100,24 +101,24 @@ namespace Usi_Project.Repository
             Console.WriteLine("How much you want to add? >> ");
             int num = int.Parse(Console.ReadLine());
 
-            if (_manager.RoomRepository.StockRoom.SurgeryEquipment[(SurgeryTool) choice] >= num)
+            if (repository.StockRoom.SurgeryEquipment[(SurgeryTool) choice] >= num)
             {
                 var time = RoomChanger.GetTime();
                 dict[(SurgeryTool) choice] = num;
                 Timer timer = new Timer(time, operatingRoom.Id);
                 timer.SurgeryDict = dict;
-                _manager.TimerManager.Timers.Add(timer);
+                _manager.Timers.Add(timer);
 
             }
             else
             {
                 Console.WriteLine("Stock room just have " + 
-                                  _manager.RoomRepository.StockRoom.SurgeryEquipment[(SurgeryTool) choice] + " " +
+                                  repository.StockRoom.SurgeryEquipment[(SurgeryTool) choice] + " " +
                                   ((SurgeryTool) choice) + "s.");
             }
         }
         
-        private static void RemoveSurgeryTool(Factory _manager, OperatingRoom operatingRoom)
+        private static void RemoveSurgeryTool(TimerManager _manager, OperatingRoom operatingRoom)
         {
             Dictionary<SurgeryTool, int> dict = new Dictionary<SurgeryTool, int>();
             Console.WriteLine("Choose what you want to remove: ");
@@ -149,13 +150,13 @@ namespace Usi_Project.Repository
                 dict[(SurgeryTool) choice] = -num;
                 Timer timer = new Timer(time, operatingRoom.Id);
                 timer.SurgeryDict = dict;
-                _manager.TimerManager.Timers.Add(timer);
+                _manager.Timers.Add(timer);
             }
             else
                 Console.WriteLine("You don’t have that much equipment");
         }
         
-        private static void RemoveMedicalTool(Factory _manager, OverviewRoom overviewRoom)
+        private static void RemoveMedicalTool(RoomRepository _repository, OverviewRoom overviewRoom, TimerManager _manager)
         {
             Dictionary<MedicalTool, int> dict = new Dictionary<MedicalTool, int>();
             Console.WriteLine("Choose what you want to remove: ");
@@ -171,7 +172,7 @@ namespace Usi_Project.Repository
                 dict[(MedicalTool) choice] = -num;
                 Timer timer = new Timer(time, overviewRoom.Id);
                 timer.MedicalDict = dict;
-                _manager.TimerManager.Timers.Add(timer);
+                _manager.Timers.Add(timer);
             }
             else
                 Console.WriteLine("You don’t have that much equipment");
