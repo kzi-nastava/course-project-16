@@ -4,7 +4,6 @@ using Usi_Project.Settings;
 using Newtonsoft.Json;
 using Usi_Project.DataSaver;
 using Usi_Project.Manage;
-using Usi_Project.Repository.EntitiesRepository.DirectorRepository;
 using Usi_Project.Repository.EntitiesRepository.Survey;
 using Usi_Project.roomRepository.EntitiesRepository.DirectorRepository;
 
@@ -25,7 +24,7 @@ namespace Usi_Project.Repository
         private readonly TimerManager _timerManager;
         private readonly Saver _saver;
         private readonly RecipesManager _recipesManager;
-        private readonly DrugManager _drugManager;
+        private readonly DrugRepository _drugRepository;
         private readonly HospitalSurveyManager _hospitalSurveyManager;
         private readonly DoctorSurveyManager _doctorSurveyManager;
         public Factory()
@@ -45,10 +44,10 @@ namespace Usi_Project.Repository
             _timerManager = new TimerManager(fileSettings.TimerFilename, this);
             _recipesManager = new RecipesManager(fileSettings.RecipesFilename, this);
             _dynamicRequestManager = new DynamicRequestManager(fileSettings.DynamicReqFilename, this);
-            _drugManager = new DrugManager(fileSettings.DrugsFilename, fileSettings.RejectedDrugsFilename);
+            _drugRepository = new DrugRepository(fileSettings.DrugsFilename, fileSettings.RejectedDrugsFilename);
             _hospitalSurveyManager = new HospitalSurveyManager(fileSettings.HospitalSurveyFilename, this);
             _doctorSurveyManager = new DoctorSurveyManager(fileSettings.DoctorSurveyFilename, this);
-            _directorManager = new DirectorManager(fileSettings.DirectorFilename, _roomRepository, _hospitalSurveyManager, _doctorSurveyManager, _timerManager, _drugManager, _doctorManager);
+            _directorManager = new DirectorManager(fileSettings.DirectorFilename, _roomRepository, _hospitalSurveyManager, _doctorSurveyManager, _timerManager, _drugRepository, _doctorManager);
 
         }
         
@@ -65,7 +64,7 @@ namespace Usi_Project.Repository
             _requestManager.LoadData();
             _timerManager.LoadData();
             _dynamicRequestManager.LoadData();
-            _drugManager.LoadData();
+            _drugRepository.LoadData();
             _recipesManager.LoadData();
             _hospitalSurveyManager.LoadData();
             _doctorSurveyManager.LoadData();
@@ -120,7 +119,7 @@ namespace Usi_Project.Repository
 
         public DoctorSurveyManager DoctorSurveyManager => _doctorSurveyManager;
 
-        public DrugManager DrugManager => _drugManager;
+        public DrugRepository DrugRepository => _drugRepository;
         
         public Saver Saver
         {

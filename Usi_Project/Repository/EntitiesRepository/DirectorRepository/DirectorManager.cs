@@ -19,12 +19,12 @@ namespace Usi_Project.roomRepository.EntitiesRepository.DirectorRepository
         private static HospitalSurveyManager _hospitalSurvey;
         private static DoctorSurveyManager _doctorSurvey;
         private static TimerManager _timerManager;
-        private static DrugManager _drugManager;
+        private static DrugRepository _drugRepository;
         private static DoctorManager _doctorManager;
 
         public DirectorManager(string directorFilename, RoomRepository roomRepository,
                                 HospitalSurveyManager hospitalSurvey, DoctorSurveyManager doctorSurvey,
-                                TimerManager timerManager, DrugManager drugManager, DoctorManager doctorManager)
+                                TimerManager timerManager, DrugRepository drugRepository, DoctorManager doctorManager)
                                 
         {
             _directorFilename = directorFilename;
@@ -33,7 +33,7 @@ namespace Usi_Project.roomRepository.EntitiesRepository.DirectorRepository
             _doctorSurvey = doctorSurvey;
             _doctorManager = doctorManager;
             _timerManager = timerManager;
-            _drugManager = drugManager;
+            _drugRepository = drugRepository;
         }
 
         public void LoadData()
@@ -71,7 +71,7 @@ namespace Usi_Project.roomRepository.EntitiesRepository.DirectorRepository
                         RoomRenovation.MultipleRoomRenovation(_roomRepository);
                         break;
                     case "7":
-                        _drugManager.PrintMenu();
+                        _drugRepository.GetOptions();
                         break;
                     case "8": 
                         ViewSurveysResults();

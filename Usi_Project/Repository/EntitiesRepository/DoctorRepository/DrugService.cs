@@ -20,7 +20,7 @@ namespace Usi_Project.DoctorFuncions
 
         public void PrintDrugsForVerification()
         {
-            List<Drug> drugs = _drugManager.DrugManager.Drugs;
+            List<Drug> drugs = _drugManager.DrugRepository.Drugs;
             foreach(Drug drug  in drugs)
             {
                 if (drug.Verification == Verification.NOT_VERIFIED)
@@ -37,7 +37,7 @@ namespace Usi_Project.DoctorFuncions
             {
                 case "1":
                     drug.Verification = Verification.VERIFIED;
-                    _drugManager.DrugManager.SaveData();
+                    _drugManager.DrugRepository.SaveData();
                     return drug;
                     break;
 
@@ -45,15 +45,15 @@ namespace Usi_Project.DoctorFuncions
                     Console.WriteLine("Problem about drug: ");
                     var problem = Console.ReadLine();
                     RejectedDrug rejectedDrug = new RejectedDrug(drug, problem);
-                    _drugManager.DrugManager.RejectedDrugs.Add(rejectedDrug);
-                    _drugManager.DrugManager.SaveData();
+                    _drugManager.DrugRepository.RejectedDrugs.Add(rejectedDrug);
+                    _drugManager.DrugRepository.SaveData();
                     return rejectedDrug;
             }
             return null;
         }
         public void DrugsVerification()
         {
-            List<Drug> drugs = _drugManager.DrugManager.Drugs;
+            List<Drug> drugs = _drugManager.DrugRepository.Drugs;
             while(true)
             {
                 PrintDrugsForVerification();

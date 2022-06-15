@@ -2,17 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using Usi_Project.Repository;
+
 
 namespace Usi_Project.Manage
 {
-    public class DrugManager 
+    public class DrugRepository 
     {
         private readonly string _drugsFilename;
         private readonly string _rejectedDrugsFilename;
         private List<Drug> _drugs;
         private List<RejectedDrug> _rejectedDrugs;
 
-        public DrugManager(string drugsFilename, string rejectedDrugsFilename)
+        public DrugRepository(string drugsFilename, string rejectedDrugsFilename)
         {
             _drugsFilename = drugsFilename;
             _rejectedDrugsFilename = rejectedDrugsFilename;
@@ -39,19 +41,11 @@ namespace Usi_Project.Manage
             get => _rejectedDrugs;
         }
         
-        public void PrintMenu()
+        public void GetOptions()
         {
             while (true)
-            { 
-                Console.WriteLine("Choose one of the options below: ");
-                Console.WriteLine("1) - Adding new drugs to the system");
-                Console.WriteLine("2) - View drugs");
-                Console.WriteLine("3) - View rejected drugs");
-                Console.WriteLine("x) - Back");
-                Console.Write(">> ");
-                string option = Console.ReadLine();
-                option ??= "x";
-                Console.WriteLine();
+            {
+                var option = DrugViewer.PrintMenu();
                 switch (option)
                 {
                     case "1":
