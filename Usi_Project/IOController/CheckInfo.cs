@@ -32,10 +32,9 @@ namespace Usi_Project.IOController
                 var enteredEmail = Console.ReadLine();
                 if (enteredEmail == "x")
                     SaveData();
-                // Console.WriteLine("Enter password: ");
-                // string enteredPassword = Console.ReadLine();
-                enteredEmail = "rock@gmail.com"; // del
-                var enteredPassword = "rock";        // del
+                Console.WriteLine("Enter password: ");
+                string enteredPassword = Console.ReadLine();
+
                 
                 Director director = _factory.DirectorManager.CheckPersonalInfo(enteredEmail, enteredPassword);
                 if (director != null)

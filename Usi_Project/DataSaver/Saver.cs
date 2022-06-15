@@ -36,11 +36,21 @@ namespace Usi_Project.DataSaver
         
         public void SaveHospitalSurvey(List<HospitalSurvey> hospitalSurveys)
         {
-            using (StreamWriter file = File.CreateText(_fileSettings.DynamicReqFilename))
+            using (StreamWriter file = File.CreateText(_fileSettings.HospitalSurveyFilename))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Formatting = Formatting.Indented;
                 serializer.Serialize(file, hospitalSurveys);
+            }
+        }
+
+        public void SaveDoctorSurvey(List<DoctorSurvey> doctorSurveys)
+        {
+            using (StreamWriter file = File.CreateText(_fileSettings.DoctorSurveyFilename))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, doctorSurveys);
             }
         }
 
@@ -105,8 +115,6 @@ namespace Usi_Project.DataSaver
                 serializer.Serialize(file, requests);
             }
         }
-    
-
-
-}
+        
+    }
 }

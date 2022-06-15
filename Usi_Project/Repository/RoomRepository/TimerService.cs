@@ -43,7 +43,9 @@ namespace Usi_Project.Repository
                     DateTime now = DateTime.Now;
                     if (now > timer.DateTime)
                     {
+
                         OverviewRoom overviewRoom = _factory.RoomRepository.GetOverviewRoomById(timer.IdRoom);
+
                         if (med.Value  > 0)
                         {
                             if (overviewRoom.Tools.ContainsKey(med.Key))
@@ -71,6 +73,7 @@ namespace Usi_Project.Repository
                     DateTime now = DateTime.Now;
                     if (now > timer.DateTime)
                     {
+
                         OverviewRoom overviewRoom = _factory.RoomRepository.GetOverviewRoomById(timer.IdRoom);
                         if (overviewRoom != null)
                         {
@@ -97,7 +100,9 @@ namespace Usi_Project.Repository
 
         private static void RefreshFurnitureOperatingRoom(KeyValuePair<Furniture,int> med, Timer timer)
         {
+
             OperatingRoom operatingRoom = _factory.RoomRepository.GetOperatingRoomById(timer.IdRoom);
+
             if (operatingRoom != null)
             {
                 if (med.Value > 0)
@@ -119,7 +124,9 @@ namespace Usi_Project.Repository
         
         private static void RefreshFurnitureRetiringRoom(KeyValuePair<Furniture,int> med, Timer timer)
         {
+
             RetiringRoom retiringRoom = _factory.RoomRepository.GetRetiringRoomById(timer.IdRoom);
+
             if (med.Value > 0) 
             {
                 if (retiringRoom.Furniture.ContainsKey(med.Key))
@@ -147,7 +154,9 @@ namespace Usi_Project.Repository
                     DateTime now = DateTime.Now;
                     if (now > timer.DateTime)
                     {
+
                         OperatingRoom operatingRoom = _factory.RoomRepository.GetOperatingRoomById(timer.IdRoom);
+
                         if (med.Value > 0)
                         {
                             if (operatingRoom.SurgeryEquipments.ContainsKey(med.Key))

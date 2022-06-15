@@ -20,14 +20,15 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 var comments = "";
                 foreach (var doctorSurvey in factory.DoctorSurveyManager.DocotrS)
                 {
-                    if (doctor.email == doctorSurvey.DoctorEmail1)
+                    if (doctor.email == doctorSurvey.doctorEmail)
                     {
-                        qualityOfService += doctorSurvey.QualityOfService1;
-                        overallHygiene += doctorSurvey.OverallHygiene1;
-                        areYouSatisfied += doctorSurvey.AreYouSatisfied1;
-                        wouldYouRecommend += doctorSurvey.WouldYouRecommend1;
+                        qualityOfService += doctorSurvey.qualityOfService;
+                        overallHygiene += doctorSurvey.overallHygiene;
+                        areYouSatisfied += doctorSurvey.areYouSatisfied;
+                        wouldYouRecommend += doctorSurvey.wouldYouRecommend;
                         numOfAppointments += 1;
-                        comments += doctorSurvey.Comment1 + "\n";
+                        comments += doctorSurvey.comment + "\n";
+                   
                     }
                 }
 
@@ -54,10 +55,10 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             var comments = "";
             foreach (var survey in factory.HospitalSurveyManager.HospitalS)
             {
-                qualityOfService += survey.QualityOfService1;
-                overallHygiene += survey.OverallHygiene1;
-                wouldYouRecommend += survey.WouldYouRecommend1;
-                comments += survey.PatientEmail1 + ": " + survey.Comment + "\n";
+                qualityOfService += survey.qualityOfService;
+                overallHygiene += survey.overallHygiene;
+                wouldYouRecommend += survey.wouldYouRecommend;
+                comments += survey.patientEmail + ": " + survey.comment + "\n";
                 numOfGrades += 1;
             }
             numOfGrades= (numOfGrades == 0) ? 1 : numOfGrades; 
