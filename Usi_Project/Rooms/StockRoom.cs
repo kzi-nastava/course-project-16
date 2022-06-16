@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Usi_Project
 {
-    public class StockRoom : HospitalRoom
+    public class StockRoom : HospitalRoom, IViewerMedicalEquipments, IViewerSurgeryEquipments
     {
         private Dictionary<SurgeryTool, int> _surgeryEquipment;
         private Dictionary<MedicalTool, int> _medicalEquipment;
@@ -77,7 +77,7 @@ namespace Usi_Project
             Console.WriteLine("=========================");
         }
 
-        public void PrintMedicalEquipment(string equipment, int parameterOfSearch)
+        public void PrintMedicalEquipments(string equipment, int parameterOfSearch)
         {
             foreach (var dictionary in MedicalEquipment)
             {
@@ -100,7 +100,7 @@ namespace Usi_Project
             }
         }
 
-        public void PrintSurgeryEquipment(string equipment, int parameterOfSearch)
+        public void PrintSurgeryEquipments(string equipment, int parameterOfSearch)
         {
             foreach (var dictionary in SurgeryEquipment)
             {

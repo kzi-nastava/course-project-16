@@ -1,5 +1,5 @@
 using System;
-using Usi_Project.roomRepository.EntitiesRepository.DirectorRepository;
+using Usi_Project.Repository.EntitiesRepository.DirectorsRepository;
 
 namespace Usi_Project.Repository
 {
@@ -21,7 +21,7 @@ namespace Usi_Project.Repository
                         _repository.OverviewRooms.Remove(room);
                         break;
                     case "2":
-                        RoomChanger.ChangeOvRoom(_repository, room, _manager);
+                        RoomService.ChangeOvRoom(_repository, room, _manager);
                         break;
                     case "x":
                         return;
@@ -36,7 +36,7 @@ namespace Usi_Project.Repository
         {
             if (!operatingRoom.IsDateTimeOfRenovationDefault())
             {
-                DirectorsRepository.CheckIfRenovationIsEnded();
+                DirectorService.CheckIfRenovationIsEnded();
                 if (!operatingRoom.IsDateTimeOfRenovationDefault())
                 {
                     Console.WriteLine("The room is being renovated until  " + operatingRoom.TimeOfRenovation.Value);
@@ -52,7 +52,7 @@ namespace Usi_Project.Repository
                         _repository.OperatingRooms.Remove(operatingRoom);
                         break;
                     case "2":
-                        RoomChanger.ChangeOpRoom( _repository, operatingRoom, _manager);
+                        RoomService.ChangeOpRoom( _repository, operatingRoom, _manager);
                         break;
                     case "x":
                         return;
@@ -68,7 +68,7 @@ namespace Usi_Project.Repository
    
             if (!room.IsDateTimeOfRenovationDefault())
             {
-                DirectorsRepository.CheckIfRenovationIsEnded();
+                DirectorService.CheckIfRenovationIsEnded();
                 if (!room.IsDateTimeOfRenovationDefault())
                 {
                     Console.WriteLine("The room is being renovated until  " + room.TimeOfRenovation.Value);
@@ -84,7 +84,7 @@ namespace Usi_Project.Repository
                         _repository.RetiringRooms.Remove(room);
                         break;
                     case "2":
-                        RoomChanger.ChangeRetiringRoom(room);
+                        RoomService.ChangeRetiringRoom(room);
                         break;
                     case "x":
                         return;

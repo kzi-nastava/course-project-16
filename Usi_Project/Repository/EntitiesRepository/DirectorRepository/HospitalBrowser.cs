@@ -77,8 +77,8 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
 
         private static void SearchThroughStockRoom(RoomRepository repository, string eq, int option)
         {
-            repository.StockRoom.PrintMedicalEquipment(eq, option);
-            repository.StockRoom.PrintSurgeryEquipment(eq, option);
+            repository.StockRoom.PrintMedicalEquipments(eq, option);
+            repository.StockRoom.PrintSurgeryEquipments(eq, option);
             repository.StockRoom.PrintFurniture(eq, option);
         }
     }

@@ -87,13 +87,33 @@ namespace Usi_Project.Repository
         {
             _overviewRooms.Remove(room);
         }
+        
 
-
-        public void UpdateRetiringRoom(RetiringRoom room)
+        public HospitalRoom CreateRoom(Type type, string id, string name)
         {
-            var findRoom = GetRetiringRoomById(room.Id);
-            findRoom.Name = room.Name;
+            
+            if (type == typeof(OverviewRoom))
+            {
+                OverviewRoom overviewRoom = new OverviewRoom(id, name);
+                _overviewRooms.Add(overviewRoom);
+                return overviewRoom;
+
+            } else if (type == typeof(OperatingRoom))
+            {
+                OperatingRoom operatingRoom = new OperatingRoom(id, name); 
+                _operatingRooms.Add(operatingRoom);
+                return operatingRoom;
+            }
+            else if (type == typeof(RetiringRoom))
+            {
+                RetiringRoom retiringRoom = new RetiringRoom(id, name);
+                _retiringRooms.Add(retiringRoom);
+                return retiringRoom;
+            }
+
+            return null;
         }
+        
 
         public void LoadData()
         {
@@ -116,7 +136,7 @@ namespace Usi_Project.Repository
                 serializer.Serialize(file, _overviewRooms);
             }
             
-            using (StreamWriter file = File.CreateText(_fileSettings.OverviewRoomsFilename))
+            using (StreamWriter file = File.CreateText(_fileSettings.OperatingRoomsFilename))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Formatting = Formatting.Indented;

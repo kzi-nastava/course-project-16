@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace Usi_Project
 
 {
-    public class OperatingRoom : HospitalRoom
+    public class OperatingRoom : HospitalRoom, IViewerSurgeryEquipments
     {
         private Dictionary<SurgeryTool, int> _surgeryEquipments;
 
@@ -74,9 +74,5 @@ namespace Usi_Project
             }
         }
 
-        
-        
-        
-  
     }
 }

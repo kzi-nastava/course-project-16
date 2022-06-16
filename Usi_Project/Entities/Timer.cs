@@ -56,5 +56,20 @@ namespace Usi_Project
             get => _idRoom;
             set => _idRoom = value;
         }
+        
+        public static DateTime GetTime()
+        {
+            Console.WriteLine("Input year >> ");
+            int year = Int32.Parse(Console.ReadLine());
+            Console.WriteLine("Input month >> ");
+            int month = Int32.Parse(Console.ReadLine());
+            Console.WriteLine("Input day >> ");
+            int day= Int32.Parse(Console.ReadLine());
+            Console.WriteLine("Input hour >> ");
+            int hour = Int32.Parse(Console.ReadLine());
+            Console.WriteLine("Input minute >> ");
+            int minute = Int32.Parse(Console.ReadLine());
+            return new DateTime(year, month, day, hour, minute, 0);
+        }
     }
 }

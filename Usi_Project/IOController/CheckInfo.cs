@@ -2,7 +2,7 @@ using System;
 using Usi_Project.DataSaver;
 using Usi_Project.Repository;
 using Usi_Project.Repository.EntitiesRepository.DirectorRepository;
-using Usi_Project.roomRepository.EntitiesRepository.DirectorRepository;
+using Usi_Project.Repository.EntitiesRepository.DirectorsRepository;
 using Usi_Project.Users;
 
 namespace Usi_Project.IOController
@@ -19,7 +19,7 @@ namespace Usi_Project.IOController
         private void SaveData()
         {
             _factory.RoomRepository.SaveData();
-            _factory.DirectorsRepository.SaveData();
+            _factory.DirectorRepository.SaveData();
             _factory.Saver.SaveDoctors(_factory.DoctorsRepository.Doctors);
             Environment.Exit(0);
             
@@ -37,10 +37,11 @@ namespace Usi_Project.IOController
                 string enteredPassword = Console.ReadLine();
 
                 
-                Director director = _factory.DirectorsRepository.CheckPersonalInfo(enteredEmail, enteredPassword);
+                Director director = _factory.DirectorRepository.CheckPersonalInfo(enteredEmail, enteredPassword);
                 if (director != null)
                 {
-                    DirectorsRepository.Menu();
+                    DirectorService directorService = new DirectorService(_factory.DirectorRepository);
+                    directorService.Menu();
                     continue;
                 }
                 Doctor doctor = _factory.DoctorsRepository.CheckPersonalInfo(enteredEmail,enteredPassword);

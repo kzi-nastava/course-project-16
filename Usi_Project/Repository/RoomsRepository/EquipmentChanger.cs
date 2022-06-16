@@ -47,7 +47,7 @@ namespace Usi_Project.Repository
             int num = int.Parse(Console.ReadLine());
             if (_repository.StockRoom.MedicalEquipment[(MedicalTool) choice] >= num)
             {
-                var time = RoomChanger.GetTime();
+                var time = Timer.GetTime();
                 dict[(MedicalTool) choice] = num;
                 Timer timer = new Timer(time, overviewRoom.Id);
                 timer.MedicalDict = dict;
@@ -103,7 +103,7 @@ namespace Usi_Project.Repository
 
             if (repository.StockRoom.SurgeryEquipment[(SurgeryTool) choice] >= num)
             {
-                var time = RoomChanger.GetTime();
+                var time = Timer.GetTime();
                 dict[(SurgeryTool) choice] = num;
                 Timer timer = new Timer(time, operatingRoom.Id);
                 timer.SurgeryDict = dict;
@@ -146,7 +146,7 @@ namespace Usi_Project.Repository
            
             if (operatingRoom.SurgeryEquipments[checkDict[choice]] > num)
             {
-                var time = RoomChanger.GetTime();
+                var time = Timer.GetTime();
                 dict[(SurgeryTool) choice] = -num;
                 Timer timer = new Timer(time, operatingRoom.Id);
                 timer.SurgeryDict = dict;
@@ -168,7 +168,7 @@ namespace Usi_Project.Repository
             int num = int.Parse(Console.ReadLine());
             if (overviewRoom.Tools[(MedicalTool) choice] > num)
             {
-                var time = RoomChanger.GetTime();
+                var time = Timer.GetTime();
                 dict[(MedicalTool) choice] = -num;
                 Timer timer = new Timer(time, overviewRoom.Id);
                 timer.MedicalDict = dict;

@@ -15,7 +15,7 @@ namespace Usi_Project.Repository
         {
             Console.WriteLine("Enter the Email of the patient:");
             string patientEmail = Console.ReadLine();
-            if (SecretariesRepository._manager.DirectorsRepository.CheckEmail(patientEmail))
+            if (SecretariesRepository._manager.DirectorRepository.CheckEmail(patientEmail))
             {
                 Console.WriteLine("Entered mail already exists, try again.");
                 CreatingPatientProfile();
@@ -122,7 +122,7 @@ namespace Usi_Project.Repository
                             case "1":
                                 Console.WriteLine("Enter the new email of the patient: ");
                                 string changedEmail = Console.ReadLine();
-                                if (SecretariesRepository._manager.DirectorsRepository.CheckEmail(changedEmail))
+                                if (SecretariesRepository._manager.DirectorRepository.CheckEmail(changedEmail))
                                 {
                                     validEmail = 0;
 

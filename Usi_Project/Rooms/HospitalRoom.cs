@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 
 namespace Usi_Project
 {
+    
     public abstract class HospitalRoom
     {
         private string _id;
@@ -13,7 +15,7 @@ namespace Usi_Project
         private Dictionary<DynamicEquipment, int> _dynamicTool;
         private KeyValuePair<DateTime, DateTime> _timeOfRenovation;
 
-        public HospitalRoom()
+        protected HospitalRoom()
         {
             _id = "";
             _name = "";
@@ -23,7 +25,41 @@ namespace Usi_Project
             _timeOfRenovation = new KeyValuePair<DateTime, DateTime>();
 
         }
+        
+        protected HospitalRoom(string id, string name, Dictionary<Furniture, int> furniture, Dictionary<DynamicEquipment, int> dynamicTool)
+        {
+            _id = id;
+            _name = name;
+            _furniture = furniture;
+            _dynamicTool = dynamicTool;
+        }
 
+        protected HospitalRoom(string id, string name, Dictionary<Furniture, int> furniture)
+        {
+            _id = id;
+            _name = name;
+            _furniture = furniture;
+        }
+
+        protected HospitalRoom(string id, string name)
+        {
+            _id = id;
+            _name = name;
+            _furniture = new Dictionary<Furniture, int>();
+        }
+
+        public string Id
+        {
+            get => _id;
+            set =>_id = value;
+        }
+        
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
+        }
+        
         public KeyValuePair<DateTime, DateTime> TimeOfRenovation
         {
             get => _timeOfRenovation;
@@ -48,39 +84,6 @@ namespace Usi_Project
             set => _dynamicTool = value;
         }
 
-        public HospitalRoom(string id, string name, Dictionary<Furniture, int> furniture, Dictionary<DynamicEquipment, int> dynamicTool)
-        {
-            _id = id;
-            _name = name;
-            _furniture = furniture;
-            _dynamicTool = dynamicTool;
-        }
-
-        public HospitalRoom(string id, string name, Dictionary<Furniture, int> furniture)
-        {
-            _id = id;
-            _name = name;
-            _furniture = furniture;
-        }
-
-        public HospitalRoom(string id, string name)
-        {
-            _id = id;
-            _name = name;
-            _furniture = new Dictionary<Furniture, int>();
-        }
-
-        public string Id
-        {
-            get => _id;
-            set =>_id = value;
-        }
-        
-        public string Name
-        {
-            get => _name;
-            set => _name = value;
-        }
 
         public virtual void PrintRoom()
         {
@@ -138,7 +141,6 @@ namespace Usi_Project
             }
             return dict;
         }
-
         public List<string> PrintLowSupplyEquipment(List<string> IdOfRooms)
         {
             Console.WriteLine("-----------------------------------------");
@@ -157,16 +159,5 @@ namespace Usi_Project
 
         }
 
-        public void PrintEquipment()
-        {
-            Console.WriteLine("-----------------------------------------");
-            Console.WriteLine("Room: " + _id);
-            foreach (var dictionary in DynamicEquipment)
-            {
-                Console.WriteLine(dictionary.Key.ToString() + " : "  + dictionary.Value);
-            }
-
-        }
-       
     }
 }

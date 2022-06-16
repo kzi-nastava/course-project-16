@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Usi_Project.DataSaver;
 using Usi_Project.Manage;
 using Usi_Project.Repository.EntitiesRepository.Survey;
-using Usi_Project.roomRepository.EntitiesRepository.DirectorRepository;
+using Usi_Project.Repository.EntitiesRepository.DirectorsRepository;
 
 namespace Usi_Project.Repository
 {
@@ -13,7 +13,7 @@ namespace Usi_Project.Repository
     {
 
         private DynamicRequestManager _dynamicRequestManager;
-        private readonly DirectorsRepository _DirectorsRepository;
+        private readonly DirectorRepository _directorRepository;
         private readonly PatientsRepository _PatientsRepository;
         private readonly SecretariesRepository _SecretariesRepository;
         private readonly DoctorsRepository _DoctorsRepository;
@@ -49,7 +49,8 @@ namespace Usi_Project.Repository
             _DrugsRepository = new DrugsRepository(fileSettings.DrugsFilename, fileSettings.RejectedDrugsFilename);
             _hospitalSurveyManager = new HospitalSurveyManager(fileSettings.HospitalSurveyFilename, this);
             _DoctorsSurveyRepository = new DoctorsSurveyRepository(fileSettings.DoctorSurveyFilename, this);
-            _DirectorsRepository = new DirectorsRepository(fileSettings.DirectorFilename, _roomRepository, _hospitalSurveyManager, _DoctorsSurveyRepository, _timerManager, _DrugsRepository, _DoctorsRepository);
+            _directorRepository = new DirectorRepository(fileSettings.DirectorFilename, _roomRepository, _hospitalSurveyManager,
+                _DoctorsSurveyRepository, _timerManager, _DrugsRepository, _DoctorsRepository);
             _dayOffRepository = new DaysOffRepository(fileSettings.DayOffRequestsFilename, this);
             _notificationRepository =
                 new NotificationRepository.NotificationRepository(fileSettings.NotificationFilename, this);
@@ -58,7 +59,7 @@ namespace Usi_Project.Repository
         public void LoadData()
         {
 
-            _DirectorsRepository.LoadData();
+            _directorRepository.LoadData();
             _PatientsRepository.LoadData();
             _SecretariesRepository.LoadData();
             _DoctorsRepository.LoadData();
@@ -76,7 +77,7 @@ namespace Usi_Project.Repository
             _notificationRepository.LoadData();
         }
 
-        public DirectorsRepository DirectorsRepository1 => _DirectorsRepository;
+        public DirectorRepository DirectorRepository1 => _directorRepository;
 
         public PatientsRepository PatientsRepository1 => _PatientsRepository;
 
@@ -109,9 +110,9 @@ namespace Usi_Project.Repository
             get => _roomRepository;
         }
 
-        public DirectorsRepository DirectorsRepository
+        public DirectorRepository DirectorRepository
         {
-            get => _DirectorsRepository;
+            get => _directorRepository;
         }
 
         public PatientsRepository PatientsRepository

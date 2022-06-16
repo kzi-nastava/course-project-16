@@ -15,6 +15,8 @@
     "Thermometer": 45,
     "Xray": 15
   },
+  "Id": "MAG",
+  "Name": "Stock room",
   "TimeOfRenovation": {
     "Key": "0001-01-01T00:00:00",
     "Value": "0001-01-01T00:00:00"
@@ -32,7 +34,5 @@
     "Bandages": 1465,
     "Paper": 686,
     "Pencils": 306
-  },
-  "Id": "MAG",
-  "Name": "Stock room"
+  }
 }

@@ -16,21 +16,21 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             switch (choise)
             {
                 case 1:
-                   OperatingRoom operatingRoom = RoomsBrowser.FindOperatingRoom(repository.OperatingRooms);
+                   OperatingRoom operatingRoom = RoomService.FindOperatingRoom(repository.OperatingRooms);
                     var timeForRenovationRoom = CheckTimeForRenovationRoom(operatingRoom.Id);
                     if (timeForRenovationRoom.Item3)
                         operatingRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>(
                             timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
                     break;
                 case 2:
-                    OverviewRoom overviewRoom = RoomsBrowser.FindOverviewRoom(repository.OverviewRooms);
+                    OverviewRoom overviewRoom = RoomService.FindOverviewRoom(repository.OverviewRooms);
                     timeForRenovationRoom = CheckTimeForRenovationRoom(overviewRoom.Id);
                     if (timeForRenovationRoom.Item3)
                         overviewRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>(
                             timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
                     break;
                 case 3:
-                    RetiringRoom  retiringRoom = RoomsBrowser.FindRetiringRoom(repository.RetiringRooms);
+                    RetiringRoom  retiringRoom = RoomService.FindRetiringRoom(repository.RetiringRooms);
                     timeForRenovationRoom = CheckTimeForRenovationRoom(retiringRoom.Id);
                     if (timeForRenovationRoom.Item3)
                         retiringRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>(
@@ -39,7 +39,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             }
         }
         
-        public static void MultipleRoomRenovation(RoomRepository repository)
+        public static void MultipleRoomRenovation(RoomRepository repository,  RoomService roomService)
         {
             Console.WriteLine("Choose one of the renovation options below: ");
             Console.WriteLine("1) Dividing the room into two smaller rooms");
@@ -49,7 +49,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             switch (choise)
             {
                 case 1:
-                    ChooseRoomForDividing(repository);
+                    ChooseRoomForDividing(repository, roomService);
                     break;
                 case 2:
                     ChooseRoomsForMerging(repository);
@@ -68,31 +68,31 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                     break;
                 case 2:
                     Console.WriteLine("\nChoose operating room\n");
-                   OperatingRoom operatingRoom = RoomsBrowser.FindOperatingRoom(repository.OperatingRooms);
+                   OperatingRoom operatingRoom = RoomService.FindOperatingRoom(repository.OperatingRooms);
                     Console.WriteLine("\nChoose  retiring room\n");
-                    RetiringRoom retiringRoom = RoomsBrowser.FindRetiringRoom(repository.RetiringRooms);
+                    RetiringRoom retiringRoom = RoomService.FindRetiringRoom(repository.RetiringRooms);
                     if (IsBeingRenovated(operatingRoom) || IsBeingRenovated(retiringRoom))
                         return;
                     MergingRoomsOfDiffType.MergeOperatingAndRetiringRoom(repository, operatingRoom, retiringRoom);
                     break;
                 case 4:
                     Console.WriteLine("\nChoose  retiring room\n");
-                    retiringRoom = RoomsBrowser.FindRetiringRoom(repository.RetiringRooms);
+                    retiringRoom = RoomService.FindRetiringRoom(repository.RetiringRooms);
                     Console.WriteLine("\nChoose overview room\n");
-                    OverviewRoom overviewRoom = RoomsBrowser.FindOverviewRoom(repository.OverviewRooms);
+                    OverviewRoom overviewRoom = RoomService.FindOverviewRoom(repository.OverviewRooms);
                     MergingRoomsOfDiffType.MergeRetiringRoomAndOverviewRoom(repository, retiringRoom, overviewRoom);
                     break;
                 case 3:
                     Console.WriteLine("\nChoose  operating room\n");
-                    operatingRoom = RoomsBrowser.FindOperatingRoom(repository.OperatingRooms);
+                    operatingRoom = RoomService.FindOperatingRoom(repository.OperatingRooms);
                     Console.WriteLine("\nChoose overview room\n");
-                    overviewRoom = RoomsBrowser.FindOverviewRoom(repository .OverviewRooms);
+                    overviewRoom = RoomService.FindOverviewRoom(repository .OverviewRooms);
                     MergingRoomsOfDiffType.MergeOperatingAndOverviewRoom(repository, operatingRoom, overviewRoom);
                     break;
                 }
             }
         
-        private static void ChooseRoomForDividing(RoomRepository repository)
+        private static void ChooseRoomForDividing(RoomRepository repository, RoomService roomService)
 
         {
             Console.WriteLine("Choose type of hospital room: ");
@@ -104,16 +104,17 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             switch (choiseRoom)
             {
                 case 1:
-                    OperatingRoom room = RoomsBrowser.FindOperatingRoom(repository.OperatingRooms);
-                    SplitRooms.SplitOperatingRoom(repository, room);
+                    OperatingRoom room = RoomService.FindOperatingRoom(repository.OperatingRooms);
+                    
+                    SplitRooms.SplitOperatingRoom(repository, room, roomService);
                     break;
                 case 2:
-                    OverviewRoom overviewRoom = RoomsBrowser.FindOverviewRoom(repository.OverviewRooms);
-                    SplitRooms.SplitOverwievRoom(repository, overviewRoom);
+                    OverviewRoom overviewRoom = RoomService.FindOverviewRoom(repository.OverviewRooms);
+                    SplitRooms.SplitOverwievRoom(repository, overviewRoom, roomService);
                     break;
                 case 3:
-                    RetiringRoom retiringRoom = RoomsBrowser.FindRetiringRoom(repository.RetiringRooms);
-                    SplitRooms.SplitRetiringRoom(repository, retiringRoom);
+                    RetiringRoom retiringRoom = RoomService.FindRetiringRoom(repository.RetiringRooms);
+                    SplitRooms.SplitRetiringRoom(repository, retiringRoom, roomService);
                     break;
             }
         }

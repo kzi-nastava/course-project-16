@@ -6,6 +6,8 @@
       "Table": 6,
       "Defibrillator": 1
     },
+    "Id": "A2",
+    "Name": "Operating room 2",
     "TimeOfRenovation": {
       "Key": "2022-12-12T12:34:00",
       "Value": "2022-12-17T12:34:00"
@@ -21,9 +23,7 @@
       "Bandages": 12,
       "Paper": 2,
       "Pencils": 3
-    },
-    "Id": "A2",
-    "Name": "Operating room 2"
+    }
   },
   {
     "SurgeryEquipments": {
@@ -31,6 +31,8 @@
       "Table": 3,
       "Defibrillator": 1
     },
+    "Id": "A4",
+    "Name": "Operating room 4",
     "TimeOfRenovation": {
       "Key": "0001-01-01T00:00:00",
       "Value": "0001-01-01T00:00:00"
@@ -46,15 +48,15 @@
       "Bandages": 12,
       "Paper": 2,
       "Pencils": 3
-    },
-    "Id": "A4",
-    "Name": "Operating room 4"
+    }
   },
   {
     "SurgeryEquipments": {
       "Clamps": 4,
       "Table": 12
     },
+    "Id": "8",
+    "Name": "Operating room 8",
     "TimeOfRenovation": {
       "Key": "0001-01-01T00:00:00",
       "Value": "0001-01-01T00:00:00"
@@ -70,15 +72,15 @@
       "Bandages": 82,
       "Paper": 2,
       "Pencils": 1
-    },
-    "Id": "8",
-    "Name": "Operating room 8"
+    }
   },
   {
     "SurgeryEquipments": {
       "Lamp": 2,
       "Defibrillator": 1
     },
+    "Id": "9",
+    "Name": "Operating room 9",
     "TimeOfRenovation": {
       "Key": "0001-01-01T00:00:00",
       "Value": "0001-01-01T00:00:00"
@@ -91,8 +93,6 @@
       "Bandages": 12,
       "Paper": 2,
       "Pencils": 3
-    },
-    "Id": "9",
-    "Name": "Operating room 9"
+    }
   }
 ]

@@ -3,7 +3,7 @@ using System;
 namespace Usi_Project
 
 {
-    public class OverviewRoom : HospitalRoom
+    public class OverviewRoom : HospitalRoom, IViewerMedicalEquipments
     {
         private Dictionary<MedicalTool, int> _tools;
 

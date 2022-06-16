@@ -5,7 +5,7 @@ namespace Usi_Project.Repository
 {
     public class FurnitureChanger
     {
-      public static void ChangeFurnitureInOpRoom(RoomRepository repository, OperatingRoom operatingRoom, TimerManager _manager)
+      public static void ChangeFurnitureInOpRoom(RoomRepository repository, OperatingRoom operatingRoom, TimerManager manager)
           {
               while (true)
               {
@@ -16,7 +16,7 @@ namespace Usi_Project.Repository
                   switch (Console.ReadLine())
                   {
                       case "1":
-                          AddNewFurniture(repository, operatingRoom, _manager);
+                          AddNewFurniture(repository, operatingRoom, manager);
                           break;
                       case "2":
                           RemoveCurrentFurniture(operatingRoom);
@@ -30,7 +30,7 @@ namespace Usi_Project.Repository
               }
           }
         
-          public static void ChangeFurnitureInOvRoom(RoomRepository _repository, OverviewRoom overviewRoom, TimerManager _manager)
+          public static void ChangeFurnitureInOvRoom(RoomRepository repository, OverviewRoom overviewRoom, TimerManager manager)
           {
               while (true)
               {
@@ -41,7 +41,7 @@ namespace Usi_Project.Repository
                   switch (Console.ReadLine())
                   {
                       case "1":
-                          AddNewFurniture(_repository, overviewRoom, _manager);
+                          AddNewFurniture(repository, overviewRoom, manager);
                           break;
                       case "2":
                           RemoveCurrentFurniture(overviewRoom);
@@ -55,7 +55,7 @@ namespace Usi_Project.Repository
               }
           }
           
-          private static void AddNewFurniture(RoomRepository repository, OperatingRoom operatingRoom, TimerManager _manager)
+          private static void AddNewFurniture(RoomRepository repository, OperatingRoom operatingRoom, TimerManager manager)
           {
               Dictionary<Furniture, int> dict = new Dictionary<Furniture, int>();
               Console.WriteLine("Choose what you want to add: ");
@@ -72,11 +72,11 @@ namespace Usi_Project.Repository
             
               if (repository.StockRoom.Furniture[(Furniture) choice] >= num)
               {
-                  var time = RoomChanger.GetTime();
+                  var time = Timer.GetTime();
                   dict[(Furniture) choice] = num;
                   Timer timer = new Timer(time, operatingRoom.Id);
                   timer.FurnitureDict = dict;
-                  _manager.Timers.Add(timer);
+                  manager.Timers.Add(timer);
               }
               else
               {
@@ -110,7 +110,6 @@ namespace Usi_Project.Repository
                       break;
               }
           }
-          
           private static void RemoveCurrentFurniture(OperatingRoom operatingRoom)
           {
               Console.WriteLine("Choose what you want to remove: ");
@@ -151,7 +150,7 @@ namespace Usi_Project.Repository
             
               if ( _repository.StockRoom.Furniture[(Furniture) choice] >= num)
               {
-                  var time = RoomChanger.GetTime();
+                  var time = Timer.GetTime();
                   dict[(Furniture) choice] = num;
                   Timer timer = new Timer(time, overviewRoom.Id);
                   timer.FurnitureDict = dict;
