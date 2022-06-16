@@ -52,6 +52,16 @@ namespace Usi_Project.DataSaver
                 serializer.Serialize(file, dayOffRequests);
             }
         }
+        
+        public void SaveNotification(List<Notification> notifications)
+        {
+            using (StreamWriter file = File.CreateText(_fileSettings.NotificationFilename))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, notifications);
+            }
+        }
 
         public void SaveDoctorSurvey(List<DoctorSurvey> doctorSurveys)
         {

@@ -28,6 +28,7 @@ namespace Usi_Project.Repository
         private readonly HospitalSurveyManager _hospitalSurveyManager;
         private readonly DoctorsSurveyRepository _DoctorsSurveyRepository;
         private readonly DaysOffRepository _dayOffRepository;
+        private readonly NotificationRepository.NotificationRepository _notificationRepository;
         public Factory()
         {
         }
@@ -50,6 +51,8 @@ namespace Usi_Project.Repository
             _DoctorsSurveyRepository = new DoctorsSurveyRepository(fileSettings.DoctorSurveyFilename, this);
             _DirectorsRepository = new DirectorsRepository(fileSettings.DirectorFilename, _roomRepository, _hospitalSurveyManager, _DoctorsSurveyRepository, _timerManager, _DrugsRepository, _DoctorsRepository);
             _dayOffRepository = new DaysOffRepository(fileSettings.DayOffRequestsFilename, this);
+            _notificationRepository =
+                new NotificationRepository.NotificationRepository(fileSettings.NotificationFilename, this);
         }
         
         public void LoadData()
@@ -70,6 +73,7 @@ namespace Usi_Project.Repository
             _hospitalSurveyManager.LoadData();
             _DoctorsSurveyRepository.LoadData();
             _dayOffRepository.LoadData();
+            _notificationRepository.LoadData();
         }
 
         public DirectorsRepository DirectorsRepository1 => _DirectorsRepository;
@@ -89,6 +93,8 @@ namespace Usi_Project.Repository
         public DoctorsSurveyRepository DoctorsSurveyRepository1 => _DoctorsSurveyRepository;
 
         public DaysOffRepository DayOffRepository => _dayOffRepository;
+
+        public NotificationRepository.NotificationRepository NotificationRepository1 => _notificationRepository;
 
         public TimerManager TimerManager
         {

@@ -23,12 +23,13 @@ namespace Usi_Project.Settings
         private readonly string _hospitalSurveyFilename;
         private readonly string _doctorSurveyFilename;
         private readonly string _dayOffRequestsFilename;
+        private readonly string _notificationFilename;
         public FileSettings(string doctorFilename, string patientFilename, string directorFilename,
             string secretaryFilename, string operatingRoomsFilename, string overviewRoomsFilename, 
             string retiringRoomsFilename, string appointmentsFilename, string anamnesaFilename, 
             string requestedFilename, string stockRoomFilename, string timerFilename, string recipesFilename, 
             string dynamicReqFilename, string drugsFilename, string rejectedDrugsFilename, 
-            string hospitalSurveyFilename, string doctorSurveyFilename,string dayOffRequestsFilename)
+            string hospitalSurveyFilename, string doctorSurveyFilename,string dayOffRequestsFilename, string notificationFilename)
         {
             _doctorFilename = doctorFilename;
             _patientFilename = patientFilename;
@@ -49,7 +50,10 @@ namespace Usi_Project.Settings
             _hospitalSurveyFilename = hospitalSurveyFilename;
             _doctorSurveyFilename = doctorSurveyFilename;
             _dayOffRequestsFilename = dayOffRequestsFilename;
+            _notificationFilename = notificationFilename;
         }
+
+        public string NotificationFilename => _notificationFilename;
         public string DayOffRequestsFilename => _dayOffRequestsFilename;
         public string DoctorSurveyFilename => _doctorSurveyFilename;
 

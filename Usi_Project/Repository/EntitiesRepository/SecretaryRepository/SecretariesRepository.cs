@@ -70,6 +70,7 @@ namespace Usi_Project.Repository
             Console.WriteLine("8) - Emergency appointment.");
             Console.WriteLine("9) - Request dynamic equipment.");
             Console.WriteLine("10) - Deployment of dynamic equipment.");
+            Console.WriteLine("11) - Confirmation of days off requests.");
             Console.WriteLine("x) - Exit.");
             string chosenOption = Console.ReadLine();
             switch (chosenOption)
@@ -117,6 +118,10 @@ namespace Usi_Project.Repository
                 case "10":
                     DynamicEquipmentDeploymentService dEDS = new DynamicEquipmentDeploymentService();
                     dEDS.DeploymentOfDynamicEquipment();
+                    break;
+                case "11":
+                    DaysOffRequestsConfirmationService dORCS = new DaysOffRequestsConfirmationService();
+                    dORCS.DaysOffRequestsConfirmation();
                     break;
                 case "x":
                     break;

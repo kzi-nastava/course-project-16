@@ -44,6 +44,8 @@ namespace Usi_Project.Repository
 
          public void Menu(Doctor doctor)
          {
+             DaysOffRequestsConfirmationService dORCS = new DaysOffRequestsConfirmationService();
+             dORCS.NotifyTheDoctor(doctor);
              ValidationService validation = new ValidationService(_manager);
              FindService finder = new FindService(_manager);
             Console.WriteLine("Choose one of the options below: ");
