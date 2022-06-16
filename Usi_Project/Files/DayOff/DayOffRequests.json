@@ -1,0 +1,18 @@
+[
+  {
+    "doctorEmail": "veljkobubnjevic001@gmail.com",
+    "sdate": "2022-01-01T01:01:00",
+    "edate": "2022-02-02T02:02:00",
+    "reason": "dsadas",
+    "emergency": "dsd",
+    "verification": null
+  },
+  {
+    "doctorEmail": "veljkobubnjevic001@gmail.com",
+    "sdate": "2022-10-10T03:00:00",
+    "edate": "2022-10-15T01:01:00",
+    "reason": "Idk",
+    "emergency": "0",
+    "verification": "0"
+  }
+]
