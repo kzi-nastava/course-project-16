@@ -7,12 +7,13 @@ using System.Text;
 using System.Threading.Channels;
 using Usi_Project.Appointments;
 using Usi_Project.DoctorFuncions;
+using Usi_Project.Repository.EntitiesRepository.DoctorRepository;
 using Usi_Project.Settings;
 
 
 namespace Usi_Project.Repository
 {
-    public class DoctorManager
+    public class DoctorsRepository
     {
         
         public List<Doctor> Doctors
@@ -26,7 +27,7 @@ namespace Usi_Project.Repository
         private Factory _manager;
         private FileSettings file;
 
-        public DoctorManager(string doctorFilename, Factory manager)
+        public DoctorsRepository(string doctorFilename, Factory manager)
         {
             _doctorFilename = doctorFilename;
             _manager = manager;
@@ -53,6 +54,7 @@ namespace Usi_Project.Repository
             Console.WriteLine("5) - Cancel appointment");
             Console.WriteLine("6) - Overview or update medical record");
             Console.WriteLine("7) - Cure verification");
+            Console.WriteLine("8) - Day Off request");
             Console.WriteLine("x) - Exit");
             Console.WriteLine("Choose: ");
             string chosenOption = Console.ReadLine();
@@ -93,6 +95,16 @@ namespace Usi_Project.Repository
                     DrugService drugService = new DrugService(_manager, validation, finder);
                     drugService.DrugsVerification();
                     break;
+                    
+                case "8":
+                    DayOffRequestView dayoffReqView = new DayOffRequestView();
+                    DayOffRequest dayOff = dayoffReqView.RequestForDayOff(doctor);
+                    List<DayOffRequest> listDaysOff = _manager.DayOffRepository.DaysOff;
+                    listDaysOff.Add(dayOff);
+                    _manager.Saver.SaveDayOff(listDaysOff);
+                    Menu(doctor);
+
+                    break;
 
                 case "x":
                     break;
@@ -106,7 +118,7 @@ namespace Usi_Project.Repository
          
          public Doctor CheckPersonalInfo(string email, string password)
          {
-             foreach (Doctor doctor in _manager.DoctorManager.Doctors)
+             foreach (Doctor doctor in _manager.DoctorsRepository.Doctors)
              {
                  if (email == doctor.email && password == doctor.password)
                  {

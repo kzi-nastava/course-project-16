@@ -35,7 +35,7 @@ namespace Usi_Project.DoctorFuncions
         public void OverviewSchedule(Doctor doctor)
         {
             DateTime time = CreateDate();
-            foreach (var appointment in _doctorScheduleManager.AppointmentManager.Appointment)
+            foreach (var appointment in _doctorScheduleManager.AppointmentsRepository.Appointment)
             {
                 if (appointment.EmailDoctor == doctor.email && appointment.StartTime >= time &&
                     appointment.EndTime <= time.AddDays(3))
@@ -78,7 +78,7 @@ namespace Usi_Project.DoctorFuncions
             {
                 if (ValidationService.CheckTime(startTime, startTime.AddMinutes(15), doctor))
                 {
-                    List<Appointment> appointments = _doctorScheduleManager.AppointmentManager.Appointment;
+                    List<Appointment> appointments = _doctorScheduleManager.AppointmentsRepository.Appointment;
                     Appointment app= new Appointment(doctor.email, patientEmail, startTime,startTime.AddMinutes(15) , "OV", idRoom,"0");
                     appointments.Add(app);
                     _doctorScheduleManager.Saver.SaveAppointment(appointments);
@@ -99,7 +99,7 @@ namespace Usi_Project.DoctorFuncions
             {
                 if (ValidationService.CheckTime(startTime, endTime, doctor))
                 {
-                    List<Appointment> appointments = _doctorScheduleManager.AppointmentManager.Appointment;
+                    List<Appointment> appointments = _doctorScheduleManager.AppointmentsRepository.Appointment;
                     Appointment app= new Appointment(doctor.email, patientEmail, startTime,endTime , "OP", idRoom,"0");
                     appointments.Add(app);
                     _doctorScheduleManager.Saver.SaveAppointment(appointments);
@@ -134,7 +134,7 @@ namespace Usi_Project.DoctorFuncions
         {
             Console.WriteLine("Enter start time of appointment");
             var time = DateTime.Parse(Console.ReadLine());
-            List<Appointment> appList = _doctorScheduleManager.AppointmentManager.Appointment;
+            List<Appointment> appList = _doctorScheduleManager.AppointmentsRepository.Appointment;
             foreach (var app in appList)
             {
                 if (time == app.StartTime)
@@ -170,7 +170,7 @@ namespace Usi_Project.DoctorFuncions
         }
         public void PrintDoctorsAppointments(Doctor doctor)
         {
-            foreach (var app in _doctorScheduleManager.AppointmentManager.Appointment)
+            foreach (var app in _doctorScheduleManager.AppointmentsRepository.Appointment)
             {
                 if (app.EmailDoctor == doctor.email)
                 {
@@ -184,7 +184,7 @@ namespace Usi_Project.DoctorFuncions
             PrintDoctorsAppointments(doctor);
             Console.WriteLine("Enter start time of appointment");
             DateTime time = CreateDate();
-            List<Appointment> appointments = _doctorScheduleManager.AppointmentManager.Appointment;
+            List<Appointment> appointments = _doctorScheduleManager.AppointmentsRepository.Appointment;
             foreach (var appointment in appointments)
             {
                 if (appointment.StartTime == time)
@@ -197,7 +197,7 @@ namespace Usi_Project.DoctorFuncions
         }
         public void CancelAppointment(DateTime time)
         {
-            List<Appointment> list = _doctorScheduleManager.AppointmentManager.Appointment;
+            List<Appointment> list = _doctorScheduleManager.AppointmentsRepository.Appointment;
             foreach (var app in list)
             {
                 if (app.StartTime == time)

@@ -14,15 +14,15 @@ namespace Usi_Project.Repository
         public List<string> PrintLowSupplyEquipmentFromAllRooms()
         {
             List<string> roomsId = new List<string>();
-            foreach (OperatingRoom operatingRoom in SecretaryManager._manager.RoomRepository.OperatingRooms)
+            foreach (OperatingRoom operatingRoom in SecretariesRepository._manager.RoomRepository.OperatingRooms)
             {
                 roomsId =  operatingRoom.PrintLowSupplyEquipment(roomsId);
             }
-            foreach (OverviewRoom overviewRoom in SecretaryManager._manager.RoomRepository.OverviewRooms)
+            foreach (OverviewRoom overviewRoom in SecretariesRepository._manager.RoomRepository.OverviewRooms)
             {
                 roomsId = overviewRoom.PrintLowSupplyEquipment(roomsId);
             }
-            roomsId = SecretaryManager._manager.RoomRepository.StockRoom.PrintLowSupplyEquipment(roomsId);
+            roomsId = SecretariesRepository._manager.RoomRepository.StockRoom.PrintLowSupplyEquipment(roomsId);
             return roomsId;
         }
 
@@ -103,19 +103,19 @@ namespace Usi_Project.Repository
             DynamicEquipment chosen = dictionary[chosenDynamicEq];
             Console.WriteLine("Enter how much do you want to move: ");
             numberOfTools = Convert.ToInt32(Console.ReadLine());
-            foreach (OverviewRoom receivingRoom in SecretaryManager._manager.RoomRepository.OverviewRooms)
+            foreach (OverviewRoom receivingRoom in SecretariesRepository._manager.RoomRepository.OverviewRooms)
                 GiveEqToOvRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, chosen);
-            foreach (OperatingRoom receivingRoom in SecretaryManager._manager.RoomRepository.OperatingRooms)
+            foreach (OperatingRoom receivingRoom in SecretariesRepository._manager.RoomRepository.OperatingRooms)
                 GiveEqToOpRoom(receivingRoomId, numberOfTools, supplyingRoomId, receivingRoom, chosen);
-            GiveEqToStock(receivingRoomId, numberOfTools, supplyingRoomId, SecretaryManager._manager.RoomRepository.StockRoom,
+            GiveEqToStock(receivingRoomId, numberOfTools, supplyingRoomId, SecretariesRepository._manager.RoomRepository.StockRoom,
                         chosen);
-            SecretaryManager._manager.RoomRepository.SaveData();
-            SecretaryManager.Menu();
+            SecretariesRepository._manager.RoomRepository.SaveData();
+            SecretariesRepository.Menu();
         }
 
         OverviewRoom CheckIfIdInOVRoom(string supplyingRoomId)
         {
-            foreach (OverviewRoom supplyingRoom in SecretaryManager._manager.RoomRepository.OverviewRooms)
+            foreach (OverviewRoom supplyingRoom in SecretariesRepository._manager.RoomRepository.OverviewRooms)
             {
                 if (supplyingRoom.Id == supplyingRoomId)
                 {
@@ -127,7 +127,7 @@ namespace Usi_Project.Repository
         
         OperatingRoom CheckIfIdInOPRoom(string supplyingRoomId)
         {
-            foreach (OperatingRoom supplyingRoom in SecretaryManager._manager.RoomRepository.OperatingRooms)
+            foreach (OperatingRoom supplyingRoom in SecretariesRepository._manager.RoomRepository.OperatingRooms)
             {
                 if (supplyingRoom.Id == supplyingRoomId)
                 {
@@ -168,11 +168,11 @@ namespace Usi_Project.Repository
         
         public void TakeEqFromStockGiveToOv(string supplyingRoomId, int numberOfTools, OverviewRoom receivingRoom, DynamicEquipment chosen)
         {
-            if (SecretaryManager._manager.RoomRepository.StockRoom.Id == supplyingRoomId)
+            if (SecretariesRepository._manager.RoomRepository.StockRoom.Id == supplyingRoomId)
             {
-                if (SecretaryManager._manager.RoomRepository.StockRoom.DynamicEquipment[chosen] >= numberOfTools)
+                if (SecretariesRepository._manager.RoomRepository.StockRoom.DynamicEquipment[chosen] >= numberOfTools)
                 {
-                    SecretaryManager._manager.RoomRepository.StockRoom.DynamicEquipment[chosen] -= numberOfTools;
+                    SecretariesRepository._manager.RoomRepository.StockRoom.DynamicEquipment[chosen] -= numberOfTools;
                     receivingRoom.DynamicEquipment[chosen] += numberOfTools;
                 }
                 else
@@ -232,11 +232,11 @@ namespace Usi_Project.Repository
 
         public void TakeEqFromStockGiveToOp(string supplyingRoomId, int numberOfTools, OperatingRoom receivingRoom, DynamicEquipment chosen )
         {
-            if (SecretaryManager._manager.RoomRepository.StockRoom.Id == supplyingRoomId)
+            if (SecretariesRepository._manager.RoomRepository.StockRoom.Id == supplyingRoomId)
             {
-                if (SecretaryManager._manager.RoomRepository.StockRoom.DynamicEquipment[chosen] >= numberOfTools)
+                if (SecretariesRepository._manager.RoomRepository.StockRoom.DynamicEquipment[chosen] >= numberOfTools)
                 {
-                    SecretaryManager._manager.RoomRepository.StockRoom.DynamicEquipment[chosen] -= numberOfTools;
+                    SecretariesRepository._manager.RoomRepository.StockRoom.DynamicEquipment[chosen] -= numberOfTools;
                     receivingRoom.DynamicEquipment[chosen] += numberOfTools;
                 }
                 else

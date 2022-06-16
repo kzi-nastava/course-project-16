@@ -13,7 +13,7 @@ namespace Usi_Project.Repository
     {
         public void BlockingPatientProfile()
         {
-            foreach (Patient patient in SecretaryManager._manager.PatientManager.Patients)
+            foreach (Patient patient in SecretariesRepository._manager.PatientsRepository.Patients)
             {
                 if (patient.Blocked == 0)
                 {
@@ -25,16 +25,16 @@ namespace Usi_Project.Repository
             string enteredEmail = Console.ReadLine();
             if (enteredEmail == ("x"))
             {
-                SecretaryManager.Menu();
+                SecretariesRepository.Menu();
             }
-            else if (!SecretaryManager._manager.PatientManager.CheckEmail(enteredEmail))
+            else if (!SecretariesRepository._manager.PatientsRepository.CheckEmail(enteredEmail))
             {
                 Console.WriteLine("Invalid email entered, try again");
                 BlockingPatientProfile();
             }
             else
             {
-                foreach (Patient patient in SecretaryManager._manager.PatientManager.Patients)
+                foreach (Patient patient in SecretariesRepository._manager.PatientsRepository.Patients)
                 {
                     if (enteredEmail == patient.email && patient.Blocked == 0)
                     {
@@ -43,20 +43,20 @@ namespace Usi_Project.Repository
                     }
                 }
 
-                using (StreamWriter file = File.CreateText(SecretaryManager._manager.PatientManager.patientFileName))
+                using (StreamWriter file = File.CreateText(SecretariesRepository._manager.PatientsRepository.patientFileName))
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     serializer.Formatting = Formatting.Indented;
-                    serializer.Serialize(file, SecretaryManager._manager.PatientManager.Patients);
+                    serializer.Serialize(file, SecretariesRepository._manager.PatientsRepository.Patients);
                 }
 
-                SecretaryManager.Menu();
+                SecretariesRepository.Menu();
             }
         }
 
         public void UnblockingPatientProfile()
         {
-            foreach (Patient patient in SecretaryManager._manager.PatientManager.Patients)
+            foreach (Patient patient in SecretariesRepository._manager.PatientsRepository.Patients)
             {
                 if (patient.Blocked == 1)
                 {
@@ -72,16 +72,16 @@ namespace Usi_Project.Repository
             string enteredEmail = Console.ReadLine();
             if (enteredEmail == ("x"))
             {
-                SecretaryManager.Menu();
+                SecretariesRepository.Menu();
             }
-            else if (!SecretaryManager._manager.PatientManager.CheckEmail(enteredEmail))
+            else if (!SecretariesRepository._manager.PatientsRepository.CheckEmail(enteredEmail))
             {
                 Console.WriteLine("Invalid email entered, try again");
                 UnblockingPatientProfile();
             }
             else
             {
-                foreach (Patient patient in SecretaryManager._manager.PatientManager.Patients)
+                foreach (Patient patient in SecretariesRepository._manager.PatientsRepository.Patients)
                 {
                     if (enteredEmail == patient.email && patient.Blocked != 0)
                     {
@@ -89,14 +89,14 @@ namespace Usi_Project.Repository
                     }
                 }
 
-                using (StreamWriter file = File.CreateText(SecretaryManager._manager.PatientManager.patientFileName))
+                using (StreamWriter file = File.CreateText(SecretariesRepository._manager.PatientsRepository.patientFileName))
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     serializer.Formatting = Formatting.Indented;
-                    serializer.Serialize(file, SecretaryManager._manager.PatientManager.Patients);
+                    serializer.Serialize(file, SecretariesRepository._manager.PatientsRepository.Patients);
                 }
 
-                SecretaryManager.Menu();
+                SecretariesRepository.Menu();
             }
         }
     }

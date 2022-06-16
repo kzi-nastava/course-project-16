@@ -15,7 +15,7 @@ namespace Usi_Project.Repository
         }
         public static bool CheckTime(DateTime dateStart,DateTime dateEnd,Doctor doctor)
         {
-            foreach (var appointment in _validationManager.AppointmentManager.Appointment)
+            foreach (var appointment in _validationManager.AppointmentsRepository.Appointment)
             {
                 if ((dateStart>appointment.StartTime && dateStart<appointment.EndTime && doctor.email==appointment.EmailDoctor)||
                     (dateStart<appointment.StartTime && dateEnd>appointment.StartTime && doctor.email==appointment.EmailDoctor))
@@ -24,11 +24,22 @@ namespace Usi_Project.Repository
                 }
             }
             return true;
-        } 
+        }
+
+        public static bool CheckTimeForDaysOff(DateTime dateStart)
+        {
+
+            if (dateStart.Date < DateTime.Now.AddDays(2))
+            {
+                return false;
+            }
+            return true;
+            
+        }
         public static bool CheckRoom(DateTime dateStart,DateTime dateEnd,string roomId)
         {
             
-            foreach (var appointment in _validationManager.AppointmentManager.Appointment)
+            foreach (var appointment in _validationManager.AppointmentsRepository.Appointment)
             {
                 if ((dateStart>appointment.StartTime && dateEnd<appointment.EndTime && roomId==appointment.IdRoom)||
                     (dateStart<appointment.StartTime && dateEnd>appointment.StartTime && roomId==appointment.IdRoom))
@@ -44,7 +55,7 @@ namespace Usi_Project.Repository
             bool x = true;
             foreach (var room in _validationManager.RoomRepository.OverviewRooms)
             {
-                foreach (var appointment in _validationManager.AppointmentManager.Appointment)
+                foreach (var appointment in _validationManager.AppointmentsRepository.Appointment)
                 {
                     x = CheckRoom(dateStart, dateEnd, room.Id);
                 }
@@ -62,7 +73,7 @@ namespace Usi_Project.Repository
             bool x = true;
             foreach (var room in _validationManager.RoomRepository.OperatingRooms)
             {
-                foreach (var appointment in _validationManager.AppointmentManager.Appointment)
+                foreach (var appointment in _validationManager.AppointmentsRepository.Appointment)
                 {
                     x = CheckRoom(dateStart, dateEnd, room.Id);
                 }
@@ -78,7 +89,7 @@ namespace Usi_Project.Repository
             bool x = true;
             foreach (var room in _validationManager.RoomRepository.OperatingRooms)
             {
-                foreach (var appointment in _validationManager.AppointmentManager.Appointment)
+                foreach (var appointment in _validationManager.AppointmentsRepository.Appointment)
                 {
                     x = CheckRoom(dateStart, dateEnd, room.Id);
                 }
@@ -101,7 +112,7 @@ namespace Usi_Project.Repository
             {
                 Console.WriteLine("Enter the Email of the patient:");
                 patientEmail = Console.ReadLine();
-                if (!_validationManager.PatientManager.CheckEmail(patientEmail))
+                if (!_validationManager.PatientsRepository.CheckEmail(patientEmail))
                 {
                     Console.WriteLine("Entered mail doesn't exists, try again.");
                 }
@@ -114,7 +125,7 @@ namespace Usi_Project.Repository
         
         public static bool CheckEmail(string email)
         {
-            foreach (Doctor doctor in _validationManager.DoctorManager.Doctors)
+            foreach (Doctor doctor in _validationManager.DoctorsRepository.Doctors)
             {
                 if (email == doctor.email)
                 {

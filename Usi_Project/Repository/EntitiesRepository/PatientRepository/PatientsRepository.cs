@@ -7,18 +7,18 @@ using System;
 namespace Usi_Project.Repository
 
 {
-    public class PatientManager
+    public class PatientsRepository
     {
 
         private string _patientFileName;
         private List<Patient> _patients;
         public static Factory _factory;
 
-        public PatientManager()
+        public PatientsRepository()
         {
             _patients = new List<Patient>();
         }
-        public PatientManager(string patientFile, Factory manager)
+        public PatientsRepository(string patientFile, Factory manager)
         {
             _patientFileName = patientFile;
             _factory = manager;

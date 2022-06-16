@@ -13,12 +13,12 @@ namespace Usi_Project.Repository
     {
         public void PrintAllOutOfStockDynamicTool()
         {
-            Dictionary<DynamicEquipment, int> nekaList = SecretaryManager._manager.RoomRepository.StockRoom.DynamicEquipment;
-            foreach (OperatingRoom operatingRoom in SecretaryManager._manager.RoomRepository.OperatingRooms)
+            Dictionary<DynamicEquipment, int> nekaList = SecretariesRepository._manager.RoomRepository.StockRoom.DynamicEquipment;
+            foreach (OperatingRoom operatingRoom in SecretariesRepository._manager.RoomRepository.OperatingRooms)
             {
                 nekaList = operatingRoom.PrintDynamicTools(nekaList);
             }
-            foreach (OverviewRoom overviewRoom in SecretaryManager._manager.RoomRepository.OverviewRooms)
+            foreach (OverviewRoom overviewRoom in SecretariesRepository._manager.RoomRepository.OverviewRooms)
             {
                 nekaList = overviewRoom.PrintDynamicTools(nekaList);
             }
@@ -111,12 +111,12 @@ namespace Usi_Project.Repository
                 {
                     DateTime currentTime = DateTime.Now;
                     DynamicRequest rikvest = new DynamicRequest(currentTime.AddHours(24), nekaList2);
-                    SecretaryManager._manager.DynamicRequestManager.DynamicRequests.Add(rikvest);
-                    SecretaryManager._manager.Saver.SaveDynamicRequest(SecretaryManager._manager.DynamicRequestManager.DynamicRequests);
+                    SecretariesRepository._manager.DynamicRequestManager.DynamicRequests.Add(rikvest);
+                    SecretariesRepository._manager.Saver.SaveDynamicRequest(SecretariesRepository._manager.DynamicRequestManager.DynamicRequests);
                     break;
                 }
             }
-            SecretaryManager.Menu();
+            SecretariesRepository.Menu();
         }
         
     }

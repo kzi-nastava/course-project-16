@@ -7,14 +7,14 @@ using Usi_Project.Repository;
 
 namespace Usi_Project.Manage
 {
-    public class DrugRepository 
+    public class DrugsRepository 
     {
         private readonly string _drugsFilename;
         private readonly string _rejectedDrugsFilename;
         private List<Drug> _drugs;
         private List<RejectedDrug> _rejectedDrugs;
 
-        public DrugRepository(string drugsFilename, string rejectedDrugsFilename)
+        public DrugsRepository(string drugsFilename, string rejectedDrugsFilename)
         {
             _drugsFilename = drugsFilename;
             _rejectedDrugsFilename = rejectedDrugsFilename;

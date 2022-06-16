@@ -29,7 +29,7 @@ namespace Usi_Project.Repository
             
             int changed = 0, deleted = 0, created = 0;
              // Counting Changes, Deletion, Appointments
-            foreach (Requested req in PatientManager._factory.RequestManager.Requested)
+            foreach (Requested req in PatientsRepository._factory.RequestManager.Requested)
             {
                  if (req.EmailPatient == patient.email)
                  {

@@ -15,7 +15,7 @@ namespace Usi_Project.Repository
         {
             Console.WriteLine("Enter the Email of the patient:");
             string patientEmail = Console.ReadLine();
-            if (SecretaryManager._manager.DirectorManager.CheckEmail(patientEmail))
+            if (SecretariesRepository._manager.DirectorsRepository.CheckEmail(patientEmail))
             {
                 Console.WriteLine("Entered mail already exists, try again.");
                 CreatingPatientProfile();
@@ -29,14 +29,14 @@ namespace Usi_Project.Repository
                 }
                 else
                 {
-                    if (SecretaryManager._manager.SecretaryManager.CheckEmail(patientEmail))
+                    if (SecretariesRepository._manager.SecretariesRepository.CheckEmail(patientEmail))
                     {
                         Console.WriteLine("Entered mail already exists, try again.");
                         CreatingPatientProfile();
                     }
                     else
                     {
-                        if (SecretaryManager._manager.PatientManager.CheckEmail(patientEmail))
+                        if (SecretariesRepository._manager.PatientsRepository.CheckEmail(patientEmail))
                         {
                             Console.WriteLine("Entered mail already exists, try again.");
                             CreatingPatientProfile();
@@ -66,15 +66,15 @@ namespace Usi_Project.Repository
                                 patientWeight, patientDiseases, patientAllergens);
                             Patient patient = new Patient(patientEmail, patientPassword, patientName, patientLastname,
                                 patientAddress, patientPhone, 2, medicalRecord);
-                            SecretaryManager._manager.PatientManager.Patients.Add(patient);
-                            using (StreamWriter file = File.CreateText(SecretaryManager._manager.PatientManager.patientFileName))
+                            SecretariesRepository._manager.PatientsRepository.Patients.Add(patient);
+                            using (StreamWriter file = File.CreateText(SecretariesRepository._manager.PatientsRepository.patientFileName))
                             {
                                 JsonSerializer serializer = new JsonSerializer();
                                 serializer.Formatting = Formatting.Indented;
-                                serializer.Serialize(file, SecretaryManager._manager.PatientManager.Patients);
+                                serializer.Serialize(file, SecretariesRepository._manager.PatientsRepository.Patients);
                             }
 
-                            SecretaryManager.Menu();
+                            SecretariesRepository.Menu();
                         }
                     }
                 }
@@ -86,7 +86,7 @@ namespace Usi_Project.Repository
         {
             int noChanges = 0;
             int validEmail = 1;
-            foreach (Patient patient in SecretaryManager._manager.PatientManager.Patients)
+            foreach (Patient patient in SecretariesRepository._manager.PatientsRepository.Patients)
             {
                 Console.WriteLine("Email: " + patient.email);
             }
@@ -95,9 +95,9 @@ namespace Usi_Project.Repository
             string enteredEmail = Console.ReadLine();
             if (enteredEmail == "x")
             {
-                SecretaryManager.Menu();
+                SecretariesRepository.Menu();
             }
-            else if (!SecretaryManager._manager.PatientManager.CheckEmail(enteredEmail))
+            else if (!SecretariesRepository._manager.PatientsRepository.CheckEmail(enteredEmail))
             {
                 Console.WriteLine("Invalid email entered, try again");
                 ChangingPatientProfile();
@@ -113,7 +113,7 @@ namespace Usi_Project.Repository
                 Console.WriteLine("x) - Exit");
                 Console.WriteLine("Enter what information you want to change: ");
                 string enteredOption = Console.ReadLine();
-                foreach (Patient patient in SecretaryManager._manager.PatientManager.Patients)
+                foreach (Patient patient in SecretariesRepository._manager.PatientsRepository.Patients)
                 {
                     if (patient.email == enteredEmail)
                     {
@@ -122,7 +122,7 @@ namespace Usi_Project.Repository
                             case "1":
                                 Console.WriteLine("Enter the new email of the patient: ");
                                 string changedEmail = Console.ReadLine();
-                                if (SecretaryManager._manager.DirectorManager.CheckEmail(changedEmail))
+                                if (SecretariesRepository._manager.DirectorsRepository.CheckEmail(changedEmail))
                                 {
                                     validEmail = 0;
 
@@ -136,14 +136,14 @@ namespace Usi_Project.Repository
                                     }
                                     else
                                     {
-                                        if (SecretaryManager._manager.SecretaryManager.CheckEmail(changedEmail))
+                                        if (SecretariesRepository._manager.SecretariesRepository.CheckEmail(changedEmail))
                                         {
                                             validEmail = 0;
 
                                         }
                                         else
                                         {
-                                            if (SecretaryManager._manager.PatientManager.CheckEmail(changedEmail))
+                                            if (SecretariesRepository._manager.PatientsRepository.CheckEmail(changedEmail))
                                             {
                                                 validEmail = 0;
 
@@ -215,14 +215,14 @@ namespace Usi_Project.Repository
                 {
                     if (noChanges == 0)
                     {
-                        using (StreamWriter file = File.CreateText(SecretaryManager._manager.PatientManager.patientFileName))
+                        using (StreamWriter file = File.CreateText(SecretariesRepository._manager.PatientsRepository.patientFileName))
                         {
                             JsonSerializer serializer = new JsonSerializer();
                             serializer.Formatting = Formatting.Indented;
-                            serializer.Serialize(file, SecretaryManager._manager.PatientManager.Patients);
+                            serializer.Serialize(file, SecretariesRepository._manager.PatientsRepository.Patients);
                         }
 
-                        SecretaryManager.Menu();
+                        SecretariesRepository.Menu();
                     }
                 }
             }
@@ -230,7 +230,7 @@ namespace Usi_Project.Repository
 
         public void DeletingPatientProfile()
         {
-            foreach (Patient patient in SecretaryManager._manager.PatientManager.Patients)
+            foreach (Patient patient in SecretariesRepository._manager.PatientsRepository.Patients)
             {
                 Console.WriteLine("Email: " + patient.email);
             }
@@ -239,31 +239,31 @@ namespace Usi_Project.Repository
             string enteredEmail = Console.ReadLine();
             if (enteredEmail == "x")
             {
-                SecretaryManager.Menu();
+                SecretariesRepository.Menu();
             }
-            else if (!SecretaryManager._manager.PatientManager.CheckEmail(enteredEmail))
+            else if (!SecretariesRepository._manager.PatientsRepository.CheckEmail(enteredEmail))
             {
                 Console.WriteLine("Invalid email entered, try again");
                 DeletingPatientProfile();
             }
             else
             {
-                for (int i = 0; i < SecretaryManager._manager.PatientManager.Patients.Count; i++)
+                for (int i = 0; i < SecretariesRepository._manager.PatientsRepository.Patients.Count; i++)
                 {
-                    if (SecretaryManager._manager.PatientManager.Patients[i].email == enteredEmail)
+                    if (SecretariesRepository._manager.PatientsRepository.Patients[i].email == enteredEmail)
                     {
-                        SecretaryManager._manager.PatientManager.Patients.Remove(SecretaryManager._manager.PatientManager.Patients[i]);
+                        SecretariesRepository._manager.PatientsRepository.Patients.Remove(SecretariesRepository._manager.PatientsRepository.Patients[i]);
                     }
                 }
 
-                using (StreamWriter file = File.CreateText(SecretaryManager._manager.PatientManager.patientFileName))
+                using (StreamWriter file = File.CreateText(SecretariesRepository._manager.PatientsRepository.patientFileName))
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     serializer.Formatting = Formatting.Indented;
-                    serializer.Serialize(file, SecretaryManager._manager.PatientManager.Patients);
+                    serializer.Serialize(file, SecretariesRepository._manager.PatientsRepository.Patients);
                 }
 
-                SecretaryManager.Menu();
+                SecretariesRepository.Menu();
             }
         }
         

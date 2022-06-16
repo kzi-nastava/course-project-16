@@ -26,13 +26,13 @@ namespace Usi_Project.Repository
 
                     if (idRoom != null)
                     {
-                        List<Appointment> appointments = SecretaryManager._manager.AppointmentManager.Appointment;
+                        List<Appointment> appointments = SecretariesRepository._manager.AppointmentsRepository.Appointment;
                         Appointment appointment = new Appointment(refferedDoctor.email,
                             patientEmail,
                             startTime, endTime, "OP", idRoom, "0");
-                        SecretaryManager._manager.AppointmentManager.Appointment.Add(appointment);
+                        SecretariesRepository._manager.AppointmentsRepository.Appointment.Add(appointment);
 
-                        SecretaryManager._manager.Saver.SaveAppointment(appointments);
+                        SecretariesRepository._manager.Saver.SaveAppointment(appointments);
                         break;
                     }
                 }
@@ -55,8 +55,8 @@ namespace Usi_Project.Repository
                         Appointment app = new Appointment(refferedDoctor.email,
                             patientEmail,
                             startTime, endTime, "OV", idRoom, "0");
-                        SecretaryManager._manager.AppointmentManager.Appointment.Add(app);
-                        SecretaryManager._manager.Saver.SaveAppointment(SecretaryManager._manager.AppointmentManager.Appointment);
+                        SecretariesRepository._manager.AppointmentsRepository.Appointment.Add(app);
+                        SecretariesRepository._manager.Saver.SaveAppointment(SecretariesRepository._manager.AppointmentsRepository.Appointment);
                         break;
                     }
 
@@ -68,11 +68,11 @@ namespace Usi_Project.Repository
         
         public void DeleteReferal(string patientEmail)
         {
-            for (int i = 0; i < SecretaryManager._manager.PatientManager.Patients.Count; i++)
+            for (int i = 0; i < SecretariesRepository._manager.PatientsRepository.Patients.Count; i++)
             {
-                if (SecretaryManager._manager.PatientManager.Patients[i].email == patientEmail)
+                if (SecretariesRepository._manager.PatientsRepository.Patients[i].email == patientEmail)
                 {
-                    SecretaryManager._manager.PatientManager.Patients[i].MedicalRecord.referral = null;
+                    SecretariesRepository._manager.PatientsRepository.Patients[i].MedicalRecord.referral = null;
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace Usi_Project.Repository
             {
                 Console.WriteLine("Enter the Email of the patient:");
                 patientEmail = Console.ReadLine();
-                if (!SecretaryManager._manager.PatientManager.CheckEmail(patientEmail))
+                if (!SecretariesRepository._manager.PatientsRepository.CheckEmail(patientEmail))
                 {
                     Console.WriteLine("Entered mail doesn't exists, try again.");
                 }
@@ -101,7 +101,7 @@ namespace Usi_Project.Repository
         int PrintPatientsWithReferal()
         {
             int noReferals = 1;
-            foreach (Patient patient in SecretaryManager._manager.PatientManager.Patients)
+            foreach (Patient patient in SecretariesRepository._manager.PatientsRepository.Patients)
             {
                 if (patient.MedicalRecord.referral != null)
                 {
@@ -118,7 +118,7 @@ namespace Usi_Project.Repository
         {
             string doctorEmail = null;
             string doctorSpecialization = null;
-            foreach (Patient patient in SecretaryManager._manager.PatientManager.Patients)
+            foreach (Patient patient in SecretariesRepository._manager.PatientsRepository.Patients)
             {
                 if (patientEmail == patient.email)
                 {
@@ -128,7 +128,7 @@ namespace Usi_Project.Repository
             }
             if (doctorEmail == null)
             {
-                foreach (Doctor doctor in SecretaryManager._manager.DoctorManager.Doctors)
+                foreach (Doctor doctor in SecretariesRepository._manager.DoctorsRepository.Doctors)
                 {
                     if (doctorSpecialization == doctor.Specialisation)
                     {
@@ -147,7 +147,7 @@ namespace Usi_Project.Repository
            if (noReferals == 1)
             {
                 Console.WriteLine("No referals");
-                SecretaryManager.Menu();
+                SecretariesRepository.Menu();
             }
             else
             {
@@ -161,7 +161,7 @@ namespace Usi_Project.Repository
                 else
                 {
                     Doctor refferedDoctor = null;
-                    foreach (Doctor doctor in SecretaryManager._manager.DoctorManager.Doctors)
+                    foreach (Doctor doctor in SecretariesRepository._manager.DoctorsRepository.Doctors)
                     {
                         if (doctorEmail == doctor.email)
                         {
@@ -179,13 +179,13 @@ namespace Usi_Project.Repository
                         ReferalOpAppointment(refferedDoctor, patientEmail);
                     }
                     DeleteReferal(patientEmail);
-                    using (StreamWriter file = File.CreateText(SecretaryManager._manager.PatientManager.patientFileName))
+                    using (StreamWriter file = File.CreateText(SecretariesRepository._manager.PatientsRepository.patientFileName))
                     {
                         JsonSerializer serializer = new JsonSerializer();
                         serializer.Formatting = Formatting.Indented;
-                        serializer.Serialize(file, SecretaryManager._manager.PatientManager.Patients);
+                        serializer.Serialize(file, SecretariesRepository._manager.PatientsRepository.Patients);
                     }
-                    SecretaryManager.Menu();
+                    SecretariesRepository.Menu();
                 }
             }
        }

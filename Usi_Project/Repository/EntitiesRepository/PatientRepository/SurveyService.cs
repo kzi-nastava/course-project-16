@@ -34,17 +34,17 @@ namespace Usi_Project.Repository
             {
                 DoctorSurveysDoneByPatient(patient);
                 DoctorSurvey newSurvey = FillDoctorSurveyData(patient);
-                List<DoctorSurvey> doctorSurveys = PatientManager._factory.DoctorSurveyManager.DocotrS;
+                List<DoctorSurvey> doctorSurveys = PatientsRepository._factory.DoctorsSurveyRepository.DocotrS;
                 doctorSurveys.Add(newSurvey);
-                PatientManager._factory.Saver.SaveDoctorSurvey(doctorSurveys);
+                PatientsRepository._factory.Saver.SaveDoctorSurvey(doctorSurveys);
             }
             else if(opt == "2")
             {
                 HospitalSurveysDoneByPatient(patient);
                 HospitalSurvey newSurvey = FillHospitalSurveyData(patient);
-                List<HospitalSurvey> hospitalSurveys = PatientManager._factory.HospitalSurveyManager.HospitalS;
+                List<HospitalSurvey> hospitalSurveys = PatientsRepository._factory.HospitalSurveyManager.HospitalS;
                 hospitalSurveys.Add(newSurvey);
-                PatientManager._factory.Saver.SaveHospitalSurvey(hospitalSurveys);
+                PatientsRepository._factory.Saver.SaveHospitalSurvey(hospitalSurveys);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Usi_Project.Repository
         }
         /*private static List<DoctorSurvey> ResolveAlreadyGradedDoctors(Patient patient)
         {
-            List<DoctorSurvey> allSurveys = PatientManager._factory.DoctorSurveyManager.DocotrS;
+            List<DoctorSurvey> allSurveys = PatientsRepository._factory.DoctorsSurveyRepository.DocotrS;
             List<DoctorSurvey> validSurveys = new List<DoctorSurvey>();
             foreach (var survey in allSurveys)
             {
@@ -84,7 +84,7 @@ namespace Usi_Project.Repository
         }*/
         private static List<Appointment> ResolveAppointmentsForGrading(Patient patient)
         {
-            List<Appointment> allAppointments = PatientManager._factory.AppointmentManager.Appointment;
+            List<Appointment> allAppointments = PatientsRepository._factory.AppointmentsRepository.Appointment;
             //List<DoctorSurvey> alreadyGraded = ResolveAlreadyGradedDoctors(patient);
             List<Appointment> forGrading = new List<Appointment>();
             foreach (var appointment in allAppointments)
@@ -119,7 +119,7 @@ namespace Usi_Project.Repository
         }
         private static void DoctorSurveysDoneByPatient(Patient patient)
         {
-            List<DoctorSurvey> doctorSurveys = PatientManager._factory.DoctorSurveyManager.DocotrS;
+            List<DoctorSurvey> doctorSurveys = PatientsRepository._factory.DoctorsSurveyRepository.DocotrS;
             Console.WriteLine("\nYour Recent Feedback: ");
             foreach (var doctorSurvey in doctorSurveys)
             {
@@ -132,7 +132,7 @@ namespace Usi_Project.Repository
         }
         private static void HospitalSurveysDoneByPatient(Patient patient)
         {
-            List<HospitalSurvey> hospitalSurveys = PatientManager._factory.HospitalSurveyManager.HospitalS;
+            List<HospitalSurvey> hospitalSurveys = PatientsRepository._factory.HospitalSurveyManager.HospitalS;
             Console.WriteLine("\nYour Recent Feedback: ");
             foreach (var hospitalSurvey in hospitalSurveys)
             {

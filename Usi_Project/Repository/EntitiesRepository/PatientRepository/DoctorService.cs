@@ -8,7 +8,7 @@ namespace Usi_Project.Repository
     {
         public static void SearchDoctors(Patient patient)
         {
-            List<Doctor> docList = PatientManager._factory.DoctorManager.Doctors;
+            List<Doctor> docList = PatientsRepository._factory.DoctorsRepository.Doctors;
             List<Doctor> toSortList = new List<Doctor>();
             while (true)
             {

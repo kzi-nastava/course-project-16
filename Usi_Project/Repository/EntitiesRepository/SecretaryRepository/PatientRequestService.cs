@@ -38,7 +38,7 @@ namespace Usi_Project.Repository
             switch (inp)
             {
                 case "1":
-                    foreach (Requested req in SecretaryManager._manager.RequestManager.Requested)
+                    foreach (Requested req in SecretariesRepository._manager.RequestManager.Requested)
                     {
                         if (req.Operation == "1")
                         {
@@ -60,7 +60,7 @@ namespace Usi_Project.Repository
                     ResolveApproved(forChanging);
                     break;
                 case "2":
-                    foreach (Requested req in SecretaryManager._manager.RequestManager.Requested)
+                    foreach (Requested req in SecretariesRepository._manager.RequestManager.Requested)
                     {
                         if (req.Operation == "2")
                         {
@@ -90,7 +90,7 @@ namespace Usi_Project.Repository
         // 0-Zakazan, 1-Odradjen, 2-Obrisan
         public void ResolveApproved(List<Requested> approved)
         {
-            List<Appointment> appointmentList = SecretaryManager._manager.AppointmentManager.Appointment;
+            List<Appointment> appointmentList = SecretariesRepository._manager.AppointmentsRepository.Appointment;
             foreach (Requested request in approved)
             {
                 foreach (Appointment appointment in appointmentList)
@@ -108,8 +108,8 @@ namespace Usi_Project.Repository
         // 0-Zakazan, 1-Odradjen, 2-Obrisan
         public void ResolveDeleted(List<Requested> deleted)
         {
-            List<Appointment> appointmentList = SecretaryManager._manager.AppointmentManager.Appointment;
-            foreach (Requested request in SecretaryManager._manager.RequestManager.Requested)
+            List<Appointment> appointmentList = SecretariesRepository._manager.AppointmentsRepository.Appointment;
+            foreach (Requested request in SecretariesRepository._manager.RequestManager.Requested)
             {
                 foreach (Appointment appointment in appointmentList)
                 {

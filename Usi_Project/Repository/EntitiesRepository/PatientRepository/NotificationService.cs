@@ -8,7 +8,7 @@ namespace Usi_Project.Repository
     {
         public static void UpdateNotificationsTimer(Patient patient)
         {
-            List<Patient> patientsList = PatientManager._factory.PatientManager.Patients;
+            List<Patient> patientsList = PatientsRepository._factory.PatientsRepository.Patients;
             Console.Write("Enter New Notification Timer: ");
             int newNotificationTimer = Convert.ToInt32(Console.ReadLine());
             foreach (var pat in patientsList)
@@ -18,12 +18,12 @@ namespace Usi_Project.Repository
                     pat.NotificationTimer = newNotificationTimer;
                 }
             }
-            PatientManager._factory.Saver.SavePatient(patientsList);
+            PatientsRepository._factory.Saver.SavePatient(patientsList);
         }
 
         private static List<Recipes> RecipesForPatient(Patient patient)
         {
-            List<Recipes> recipesList = PatientManager._factory.RecipesManager.Recipes;
+            List<Recipes> recipesList = PatientsRepository._factory.RecipesManager.Recipes;
             List<Recipes> recipesForCurrentPatient = new List<Recipes>();
             foreach (var recipe in recipesList)
             {

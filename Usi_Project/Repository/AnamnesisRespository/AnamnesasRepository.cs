@@ -8,25 +8,25 @@ using System.Runtime.InteropServices;
 
 namespace Usi_Project.Repository
 {
-    public class AnamnesaManager
+    public class AnamnesasRepository
     {
         private string _anamnesaFn;
         private List<Anamnesa> _anamnesa;
         private Factory _manager;
         
-        public AnamnesaManager()
+        public AnamnesasRepository()
         {
             _anamnesa = new List<Anamnesa>();
         }
 
-        public AnamnesaManager(string anamnesaFn, List<Anamnesa> anamnesa, Factory manager)
+        public AnamnesasRepository(string anamnesaFn, List<Anamnesa> anamnesa, Factory manager)
         {
             _anamnesaFn = anamnesaFn;
             _anamnesa = anamnesa;
             _manager = manager;
         }
 
-        public AnamnesaManager(string anamnesaFn, Factory manager)
+        public AnamnesasRepository(string anamnesaFn, Factory manager)
         {
             _anamnesaFn = anamnesaFn;
             _anamnesa = new List<Anamnesa>();

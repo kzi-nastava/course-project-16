@@ -34,7 +34,8 @@ namespace Usi_Project
                  "../../../Files/Drugs/drugs.json",
                  "../../../Files/Drugs/rejectedDrugs.json",
                  "../../../Files/Archive/hospitalSurvey.json",
-                 "../../../Files/Archive/doctorSurvey.json");
+                 "../../../Files/Archive/doctorSurvey.json",
+                 "../../../Files/DayOff/DayOffRequests.json");
 
 
             Saver saver = new Saver(fileSettings);

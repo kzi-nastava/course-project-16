@@ -31,7 +31,7 @@ namespace Usi_Project.Repository
 
                     Console.WriteLine("\nEnter Date & Time Of Appoint " +
                                       "You Want To Change");
-                    startTime = PatientManager.ShowDateTimeUserInput();
+                    startTime = PatientsRepository.ShowDateTimeUserInput();
                     DateTime currentDate = DateTime.Now;
                     if (startTime < currentDate.AddDays(2))
                     {
@@ -43,7 +43,7 @@ namespace Usi_Project.Repository
                         if (opt != "2")
                         {
                             Console.WriteLine("\nEnter NEW Date & Time Of an Appoint ");
-                            newTime = PatientManager.ShowDateTimeUserInput();
+                            newTime = PatientsRepository.ShowDateTimeUserInput();
                         }
                         else
                         {
@@ -52,7 +52,7 @@ namespace Usi_Project.Repository
 
                         Console.WriteLine("Filing request...");
                         Requested requested = new Requested(patient.email, startTime, newTime, opt);
-                        PatientManager._factory.RequestManager.Serialize(requested);
+                        PatientsRepository._factory.RequestManager.Serialize(requested);
                     }
                 }
             }

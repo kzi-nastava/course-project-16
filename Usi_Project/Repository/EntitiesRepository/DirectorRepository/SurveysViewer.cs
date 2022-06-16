@@ -9,9 +9,9 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
 {
     public class SurveysViewer
     {
-        public static void PrintResultsOfDoctorsSurvey(DoctorSurveyManager doctorSurveyManager, DoctorManager doctorManager)
+        public static void PrintResultsOfDoctorsSurvey(DoctorsSurveyRepository DoctorsSurveyRepository, DoctorsRepository DoctorsRepository)
         {
-            foreach (var doctor in doctorManager.Doctors)
+            foreach (var doctor in DoctorsRepository.Doctors)
             {
                 double qualityOfService = 0;
                 double overallHygiene = 0;
@@ -19,7 +19,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                 double wouldYouRecommend = 0;
                 double numOfAppointments = 0;
                 var comments = "";
-                foreach (var doctorSurvey in doctorSurveyManager.DocotrS)
+                foreach (var doctorSurvey in DoctorsSurveyRepository.DocotrS)
                 {
                     if (doctor.email == doctorSurvey.doctorEmail)
                     {

@@ -43,6 +43,15 @@ namespace Usi_Project.DataSaver
                 serializer.Serialize(file, hospitalSurveys);
             }
         }
+        public void SaveDayOff(List<DayOffRequest> dayOffRequests)
+        {
+            using (StreamWriter file = File.CreateText(_fileSettings.DayOffRequestsFilename))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, dayOffRequests);
+            }
+        }
 
         public void SaveDoctorSurvey(List<DoctorSurvey> doctorSurveys)
         {

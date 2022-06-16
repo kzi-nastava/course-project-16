@@ -22,7 +22,7 @@ namespace Usi_Project.DoctorFuncions
         
         public void AddReferralForSpecialist(Referral refferal,Patient patient)
         {
-            List<Patient> patientList = _referalManager.PatientManager.Patients;
+            List<Patient> patientList = _referalManager.PatientsRepository.Patients;
             foreach (var p in patientList)
 
             {

@@ -9,7 +9,7 @@ namespace Usi_Project.Repository
     public class ResolveAppointmentDataService
     {
         
-        public ValidationService Validation = new ValidationService(PatientManager._factory);
+        public ValidationService Validation = new ValidationService(PatientsRepository._factory);
         public static Doctor ResolveDoctorForAppointment(int autoFlag=0)
         {
             
@@ -19,7 +19,7 @@ namespace Usi_Project.Repository
                 int i = 1, inp;
                 while (true)
                 {
-                    foreach (Doctor doctor in PatientManager._factory.DoctorManager.Doctors)
+                    foreach (Doctor doctor in PatientsRepository._factory.DoctorsRepository.Doctors)
                     {
                         Console.WriteLine("----------------------------------");
                         Console.WriteLine("[" + i + "]" + doctor);
@@ -39,7 +39,7 @@ namespace Usi_Project.Repository
                 }
 
                 int j = 0;
-                foreach (Doctor doctor in PatientManager._factory.DoctorManager.Doctors)
+                foreach (Doctor doctor in PatientsRepository._factory.DoctorsRepository.Doctors)
                 {
                     if (j == inp - 1) 
                     {
@@ -52,18 +52,18 @@ namespace Usi_Project.Repository
 
                 if (doctorForAppoint is null)
                 {
-                    doctorForAppoint = PatientManager._factory.DoctorManager.Doctors[0];
+                    doctorForAppoint = PatientsRepository._factory.DoctorsRepository.Doctors[0];
                 }
             }
             else
             {
                 Random random = new Random(); 
-                int i = PatientManager._factory.DoctorManager.Doctors.Count;
+                int i = PatientsRepository._factory.DoctorsRepository.Doctors.Count;
 
 
                 int num = random.Next(0, i);
                 int j = 0;
-                foreach (Doctor doctor in PatientManager._factory.DoctorManager.Doctors)
+                foreach (Doctor doctor in PatientsRepository._factory.DoctorsRepository.Doctors)
                 {
                     if (j == num - 1) 
                     {
@@ -71,10 +71,10 @@ namespace Usi_Project.Repository
                     }
 
                 }
-                doctorForAppoint = PatientManager._factory.DoctorManager.Doctors[0];
+                doctorForAppoint = PatientsRepository._factory.DoctorsRepository.Doctors[0];
                 /*if (doctorForAppoint is null)
                 {
-                    doctorForAppoint = PatientManager._factory.DoctorManager.Doctors[0];
+                    doctorForAppoint = PatientsRepository._factory.DoctorsRepository.Doctors[0];
                 }*/
             }
 
@@ -165,7 +165,7 @@ namespace Usi_Project.Repository
             DateTime appointTime;
             while (true)
             {
-                appointTime = PatientManager.ShowDateTimeUserInput();
+                appointTime = PatientsRepository.ShowDateTimeUserInput();
                 DateTime currentDate = DateTime.Now;
                 if (appointTime < currentDate.AddHours(12))
                 {
@@ -189,7 +189,7 @@ namespace Usi_Project.Repository
             string roomId;
             while (true)
             {
-                roomId = PatientManager._factory.RoomRepository.OverviewRooms[0].Id;
+                roomId = PatientsRepository._factory.RoomRepository.OverviewRooms[0].Id;
                 //roomId = ValidationService.GetIfFreeOverviewRoom(appointTime, appointTime.AddMinutes(15));
                 if (roomId != null)
                 {

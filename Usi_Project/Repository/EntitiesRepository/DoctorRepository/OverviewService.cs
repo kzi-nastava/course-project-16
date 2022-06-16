@@ -28,7 +28,7 @@ namespace Usi_Project.DoctorFuncions
         
         public void UpdateMedicalRecord(string email)
         {
-            List<Patient> patients = _overviewManager.PatientManager.Patients;
+            List<Patient> patients = _overviewManager.PatientsRepository.Patients;
             foreach (var patient in patients)
             {
                 if (patient.email == email)
@@ -66,7 +66,7 @@ namespace Usi_Project.DoctorFuncions
         } 
         public void WriteAnamnesa(Appointment appointment)
         {
-            List<Anamnesa> listAnamnesa = _overviewManager.AnamnesaManager.Anamnesa;
+            List<Anamnesa> listAnamnesa = _overviewManager.AnamnesasRepository.Anamnesa;
             Console.WriteLine("Write Anamnesa");
             string anamnesaString = Console.ReadLine();
             string id = FindService.GenerateRandomString();

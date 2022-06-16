@@ -36,7 +36,7 @@ namespace Usi_Project.Repository
         {
             if (!operatingRoom.IsDateTimeOfRenovationDefault())
             {
-                DirectorManager.CheckIfRenovationIsEnded();
+                DirectorsRepository.CheckIfRenovationIsEnded();
                 if (!operatingRoom.IsDateTimeOfRenovationDefault())
                 {
                     Console.WriteLine("The room is being renovated until  " + operatingRoom.TimeOfRenovation.Value);
@@ -68,7 +68,7 @@ namespace Usi_Project.Repository
    
             if (!room.IsDateTimeOfRenovationDefault())
             {
-                DirectorManager.CheckIfRenovationIsEnded();
+                DirectorsRepository.CheckIfRenovationIsEnded();
                 if (!room.IsDateTimeOfRenovationDefault())
                 {
                     Console.WriteLine("The room is being renovated until  " + room.TimeOfRenovation.Value);

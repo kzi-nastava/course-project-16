@@ -7,25 +7,25 @@ using Usi_Project.Appointments;
 
 namespace Usi_Project.Repository
 {
-    public class AppointmentManager
+    public class AppointmentsRepository
     {
         private string _appointmentFilename;
         private List<Appointment> _appointment;
         private Factory _manager;
 
-        public AppointmentManager()
+        public AppointmentsRepository()
         {
             _appointment = new List<Appointment>();
         }
 
-        public AppointmentManager(string appointmentFilename, List<Appointment> appointment, Factory manager)
+        public AppointmentsRepository(string appointmentFilename, List<Appointment> appointment, Factory manager)
         {
             _appointmentFilename = appointmentFilename;
             _appointment = appointment;
             _manager = manager;
         }
 
-        public AppointmentManager(string appointmentFilename, Factory manager)
+        public AppointmentsRepository(string appointmentFilename, Factory manager)
         {
             _appointmentFilename = appointmentFilename;
             _appointment = new List<Appointment>();

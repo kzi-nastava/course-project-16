@@ -36,7 +36,7 @@ namespace Usi_Project.DoctorFuncions
         }
         public Appointment FindAppointment(DateTime time, Doctor doctor)
         {
-            foreach (var appointment in _findManager.AppointmentManager.Appointment)
+            foreach (var appointment in _findManager.AppointmentsRepository.Appointment)
             {
                 if (appointment.EmailDoctor == doctor.email && appointment.StartTime == time)
                 {
@@ -49,7 +49,7 @@ namespace Usi_Project.DoctorFuncions
         }
         public Patient FindPatient(string patientEmail)
         {
-            foreach (var patient in _findManager.PatientManager.Patients)
+            foreach (var patient in _findManager.PatientsRepository.Patients)
             {
                 if (patient.email == patientEmail)
                 {
@@ -75,7 +75,7 @@ namespace Usi_Project.DoctorFuncions
         
         public void UpdateStatus(DateTime time)
         {
-            List<Appointment> list = _findManager.AppointmentManager.Appointment;
+            List<Appointment> list = _findManager.AppointmentsRepository.Appointment;
             foreach (var app in list)
             {
                 if (app.StartTime == time)

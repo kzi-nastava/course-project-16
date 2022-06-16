@@ -42,13 +42,13 @@ namespace Usi_Project.Repository
         }
         public static void PatientHistory(Patient patient)
         {
-            List<Anamnesa> li = PatientManager._factory.AnamnesaManager.ResolveAnamnesisForEmail(patient.email, 1);
+            List<Anamnesa> li = PatientsRepository._factory.AnamnesasRepository.ResolveAnamnesisForEmail(patient.email, 1);
             Console.WriteLine("**************************");
             Console.WriteLine("List of Anamnesis:");
             Console.WriteLine("#############################################");
             foreach (Anamnesa anamnesa in li)
             {
-                Console.WriteLine(PatientManager._factory.AnamnesaManager.FormatAnamnesis(anamnesa));
+                Console.WriteLine(PatientsRepository._factory.AnamnesasRepository.FormatAnamnesis(anamnesa));
                 Console.WriteLine("#############################################");
             }
 
@@ -60,14 +60,14 @@ namespace Usi_Project.Repository
                 li.Sort(delegate(Anamnesa x, Anamnesa y) { return x.EmailDoctor.CompareTo(y.EmailDoctor);});
                 foreach (Anamnesa anamnesa in li)
                 {
-                    Console.WriteLine(PatientManager._factory.AnamnesaManager.FormatAnamnesis(anamnesa));
+                    Console.WriteLine(PatientsRepository._factory.AnamnesasRepository.FormatAnamnesis(anamnesa));
                 }
             }
         }
 
         public static void SearchPatientHistory(Patient patient)
         {
-            List<Anamnesa> li = PatientManager._factory.AnamnesaManager.ResolveAnamnesisForEmail(patient.email, 1);
+            List<Anamnesa> li = PatientsRepository._factory.AnamnesasRepository.ResolveAnamnesisForEmail(patient.email, 1);
             while (true)
             {
                 string inp;
@@ -77,7 +77,7 @@ namespace Usi_Project.Repository
                 {
                     if (anamnesa.Anamnesa1.Contains(inp))
                     {
-                        Console.WriteLine(PatientManager._factory.AnamnesaManager.FormatAnamnesis(anamnesa));
+                        Console.WriteLine(PatientsRepository._factory.AnamnesasRepository.FormatAnamnesis(anamnesa));
                     }
                 }
                 Console.Write("Do You Wish To Continue Search[Y/N]: ");

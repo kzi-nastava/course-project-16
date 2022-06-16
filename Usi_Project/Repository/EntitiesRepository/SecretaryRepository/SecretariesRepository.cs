@@ -9,13 +9,13 @@ using Usi_Project.DoctorFuncions;
 
 namespace Usi_Project.Repository
 {
-    public class SecretaryManager
+    public class SecretariesRepository
     {
         private string _secretaryFilename;
         private List<Secretary> _secretaries;
         public static Factory _manager;
 
-        public SecretaryManager(string secretaryFilename, Factory factory)
+        public SecretariesRepository(string secretaryFilename, Factory factory)
         {
             _secretaryFilename = secretaryFilename;
             _manager = factory;

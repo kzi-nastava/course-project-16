@@ -5,13 +5,13 @@ using Usi_Project.Users;
 
 namespace Usi_Project.Repository.EntitiesRepository.Survey
 {
-    public class DoctorSurveyManager
+    public class DoctorsSurveyRepository
     {
         private readonly string _doctorSurveyFN;
         private List<DoctorSurvey> _docotrS;
         public static Factory _factory;
 
-        public DoctorSurveyManager(string doctorSurveyFn, Factory factory)
+        public DoctorsSurveyRepository(string doctorSurveyFn, Factory factory)
         {
             _doctorSurveyFN = doctorSurveyFn;
             _factory = factory;

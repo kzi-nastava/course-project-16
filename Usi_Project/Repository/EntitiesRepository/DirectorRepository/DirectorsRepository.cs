@@ -11,29 +11,29 @@ using Usi_Project.Users;
 
 namespace Usi_Project.roomRepository.EntitiesRepository.DirectorRepository
 {
-    public class DirectorManager
+    public class DirectorsRepository
     {
         private readonly string _directorFilename;
         private Director _director;
         private static RoomRepository _roomRepository;
         private static HospitalSurveyManager _hospitalSurvey;
-        private static DoctorSurveyManager _doctorSurvey;
+        private static DoctorsSurveyRepository _doctorSurvey;
         private static TimerManager _timerManager;
-        private static DrugRepository _drugRepository;
-        private static DoctorManager _doctorManager;
+        private static DrugsRepository _DrugsRepository;
+        private static DoctorsRepository _DoctorsRepository;
 
-        public DirectorManager(string directorFilename, RoomRepository roomRepository,
-                                HospitalSurveyManager hospitalSurvey, DoctorSurveyManager doctorSurvey,
-                                TimerManager timerManager, DrugRepository drugRepository, DoctorManager doctorManager)
+        public DirectorsRepository(string directorFilename, RoomRepository roomRepository,
+                                HospitalSurveyManager hospitalSurvey, DoctorsSurveyRepository doctorSurvey,
+                                TimerManager timerManager, DrugsRepository DrugsRepository, DoctorsRepository DoctorsRepository)
                                 
         {
             _directorFilename = directorFilename;
             _roomRepository = roomRepository;
             _hospitalSurvey = hospitalSurvey;
             _doctorSurvey = doctorSurvey;
-            _doctorManager = doctorManager;
+            _DoctorsRepository = DoctorsRepository;
             _timerManager = timerManager;
-            _drugRepository = drugRepository;
+            _DrugsRepository = DrugsRepository;
         }
 
         public void LoadData()
@@ -71,7 +71,7 @@ namespace Usi_Project.roomRepository.EntitiesRepository.DirectorRepository
                         RoomRenovation.MultipleRoomRenovation(_roomRepository);
                         break;
                     case "7":
-                        _drugRepository.GetOptions();
+                        _DrugsRepository.GetOptions();
                         break;
                     case "8": 
                         ViewSurveysResults();
@@ -100,13 +100,13 @@ namespace Usi_Project.roomRepository.EntitiesRepository.DirectorRepository
                         SurveysViewer.PrintResultsOfHospitalSurvey(_hospitalSurvey);
                         break;
                     case "2":
-                        SurveysViewer.PrintResultsOfDoctorsSurvey(_doctorSurvey, _doctorManager);
+                        SurveysViewer.PrintResultsOfDoctorsSurvey(_doctorSurvey, _DoctorsRepository);
                         break;
                     case "3":
-                        SurveysViewer.ViewThreeBestDoctors(_doctorManager.Doctors);
+                        SurveysViewer.ViewThreeBestDoctors(_DoctorsRepository.Doctors);
                         break;
                     case "4":
-                        SurveysViewer.ViewThreeWorseDoctors(_doctorManager.Doctors);
+                        SurveysViewer.ViewThreeWorseDoctors(_DoctorsRepository.Doctors);
                         break;
                     case "x":
                         return;
