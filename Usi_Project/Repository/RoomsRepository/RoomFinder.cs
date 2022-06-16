@@ -5,11 +5,11 @@ using Usi_Project.Repository.EntitiesRepository.DirectorsRepository;
 
 namespace Usi_Project.Repository
 {
-    public class RoomService
+    public class RoomFinder
     {
         private static RoomRepository _roomRepository;
 
-        public RoomService(RoomRepository roomRepository)
+        public RoomFinder(RoomRepository roomRepository)
         {
             _roomRepository = roomRepository;
         }

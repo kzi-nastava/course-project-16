@@ -174,19 +174,7 @@ namespace Usi_Project.Repository
                 }
             }
         }
-
-
-        // public void serialize()
-        // {
-        //
-        //     using (StreamWriter file = File.CreateText("../../../Files/times.json"))
-        //     {
-        //         JsonSerializer serializer = new JsonSerializer();
-        //         serializer.Formatting = Formatting.Indented;
-        //         serializer.Serialize(file, _timers );
-        //     }
-        // }
-
+        
         public string TimerFilename
         {
             get => _timerFilename;

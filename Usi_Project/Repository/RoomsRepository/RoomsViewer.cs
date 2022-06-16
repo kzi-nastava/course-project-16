@@ -21,7 +21,7 @@ namespace Usi_Project.Repository
                         _repository.OverviewRooms.Remove(room);
                         break;
                     case "2":
-                        RoomService.ChangeOvRoom(_repository, room, _manager);
+                        RoomFinder.ChangeOvRoom(_repository, room, _manager);
                         break;
                     case "x":
                         return;
@@ -52,7 +52,7 @@ namespace Usi_Project.Repository
                         _repository.OperatingRooms.Remove(operatingRoom);
                         break;
                     case "2":
-                        RoomService.ChangeOpRoom( _repository, operatingRoom, _manager);
+                        RoomFinder.ChangeOpRoom( _repository, operatingRoom, _manager);
                         break;
                     case "x":
                         return;
@@ -84,7 +84,7 @@ namespace Usi_Project.Repository
                         _repository.RetiringRooms.Remove(room);
                         break;
                     case "2":
-                        RoomService.ChangeRetiringRoom(room);
+                        RoomFinder.ChangeRetiringRoom(room);
                         break;
                     case "x":
                         return;

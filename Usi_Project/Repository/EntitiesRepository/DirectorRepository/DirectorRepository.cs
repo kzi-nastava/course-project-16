@@ -19,7 +19,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorsRepository
         private static TimerManager _timerManager;
         private static DrugsRepository _drugsRepository;
         private static DoctorsRepository _doctorsRepository;
-        private static RoomService _roomService;
+        private static RoomFinder _roomFinder;
 
         public DirectorRepository(string directorFilename, RoomRepository roomRepository,
                                 HospitalSurveyManager hospitalSurvey, DoctorsSurveyRepository doctorSurvey,
@@ -33,7 +33,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorsRepository
             _doctorsRepository = DoctorsRepository;
             _timerManager = timerManager;
             _drugsRepository = DrugsRepository;
-            _roomService = new RoomService(roomRepository);
+            _roomFinder = new RoomFinder(roomRepository);
         }
         
         public void LoadData()
@@ -57,9 +57,9 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorsRepository
             set => _roomRepository = value;
         }
         
-        public RoomService RoomService
+        public RoomFinder RoomFinder
         {
-            get => _roomService;
+            get => _roomFinder;
         }
 
 

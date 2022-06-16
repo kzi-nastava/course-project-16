@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
 
 namespace Usi_Project.Repository
 {
-    public class InputRoomsInfo
+    public static class InputRoomsInfo
     {
         public static string GetInfoForCreatingNewRoom()
         {
@@ -22,5 +23,15 @@ namespace Usi_Project.Repository
             string name = Console.ReadLine();
             return name;
         }
+
+        public static string GetOptionForChangingFurniture()
+        {
+            Console.WriteLine("Choose option or x for exit: ");
+            Console.WriteLine("1) Add new furniture");
+            Console.WriteLine("2) Remove current furniture");
+            Console.Write(">> ");
+            return Console.ReadLine();
+        }
+        
     }
 }

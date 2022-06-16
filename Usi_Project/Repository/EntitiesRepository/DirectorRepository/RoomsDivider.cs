@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
 {
-    public class SplitRooms
+    public static class SplitRooms
     {
         
  
-         public  static  void SplitOperatingRoom(RoomRepository factory, OperatingRoom room, RoomService roomService)
+         public  static  void SplitOperatingRoom(RoomRepository factory, OperatingRoom room, RoomFinder roomFinder)
         {
             if (!room.IsDateTimeOfRenovationDefault())
             {
@@ -22,10 +22,10 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                     timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
 
             Console.WriteLine("Create first operating room");
-            OperatingRoom firstRoom = (OperatingRoom) roomService.CreateRoom(typeof(OperatingRoom));
+            OperatingRoom firstRoom = (OperatingRoom) roomFinder.CreateRoom(typeof(OperatingRoom));
             Console.WriteLine("Create second operating room");
 
-            OperatingRoom secondRoom = (OperatingRoom) roomService.CreateRoom(typeof(OperatingRoom));
+            OperatingRoom secondRoom = (OperatingRoom) roomFinder.CreateRoom(typeof(OperatingRoom));
             foreach (var equipment in room.SurgeryEquipments)
             {
                 Console.WriteLine("Choose one of the options below: ");
@@ -55,7 +55,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
 
         }
          
-         public static void SplitOverwievRoom(RoomRepository factory, OverviewRoom room, RoomService roomService)
+         public static void SplitOverwievRoom(RoomRepository factory, OverviewRoom room, RoomFinder roomFinder)
         {
             if (!room.IsDateTimeOfRenovationDefault())
             {
@@ -70,9 +70,9 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                     timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
 
             Console.WriteLine("Create first overview room");
-            OverviewRoom firstRoom = (OverviewRoom)  roomService.CreateRoom(typeof(OverviewRoom));
+            OverviewRoom firstRoom = (OverviewRoom)  roomFinder.CreateRoom(typeof(OverviewRoom));
             Console.WriteLine("Create second operating room");
-            OverviewRoom secondRoom = (OverviewRoom)  roomService.CreateRoom(typeof(OverviewRoom));
+            OverviewRoom secondRoom = (OverviewRoom)  roomFinder.CreateRoom(typeof(OverviewRoom));
             foreach (var equipment in room.Tools)
             {
                 Console.WriteLine("Choose one of the options below: ");
@@ -101,7 +101,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
 
         }
             
-        public static void SplitRetiringRoom(RoomRepository factory, RetiringRoom room, RoomService roomService)
+        public static void SplitRetiringRoom(RoomRepository factory, RetiringRoom room, RoomFinder roomFinder)
             {
                 if (!room.IsDateTimeOfRenovationDefault())
                 {
@@ -116,8 +116,8 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
                         timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);
 
 
-                RetiringRoom firstRoom = (RetiringRoom) roomService.CreateRoom(typeof(RoomRepository));
-                RetiringRoom secondRoom = (RetiringRoom) roomService.CreateRoom(typeof(RoomRepository));
+                RetiringRoom firstRoom = (RetiringRoom) roomFinder.CreateRoom(typeof(RoomRepository));
+                RetiringRoom secondRoom = (RetiringRoom) roomFinder.CreateRoom(typeof(RoomRepository));
 
                 firstRoom.TimeOfRenovation = new KeyValuePair<DateTime, DateTime>(
                     timeForRenovationRoom.Item1, timeForRenovationRoom.Item2);

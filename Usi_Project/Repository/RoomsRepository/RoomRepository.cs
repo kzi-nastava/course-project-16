@@ -98,13 +98,14 @@ namespace Usi_Project.Repository
                 _overviewRooms.Add(overviewRoom);
                 return overviewRoom;
 
-            } else if (type == typeof(OperatingRoom))
+            } 
+            if (type == typeof(OperatingRoom))
             {
                 OperatingRoom operatingRoom = new OperatingRoom(id, name); 
                 _operatingRooms.Add(operatingRoom);
                 return operatingRoom;
             }
-            else if (type == typeof(RetiringRoom))
+            if (type == typeof(RetiringRoom))
             {
                 RetiringRoom retiringRoom = new RetiringRoom(id, name);
                 _retiringRooms.Add(retiringRoom);

@@ -1,9 +1,18 @@
 using System;
+using Usi_Project.Manage;
+using Usi_Project.Repository.DrugRepository;
 
 namespace Usi_Project.Repository
 {
     public class DrugViewer
     {
+        private DrugsRepository _drugsRepository;
+        private DrugService _drugService;
+        public DrugViewer(DrugsRepository drugsRepository, DrugService drugService)
+        {
+            _drugsRepository = drugsRepository;
+            _drugService = drugService;
+        }
         public static string PrintMenu()
         {
             while (true)
@@ -20,5 +29,35 @@ namespace Usi_Project.Repository
                 return option;
             }
         }
+        public  void ViewDrugs()
+        {
+            Drug chosen = _drugService.GetDrug();
+            chosen.Print();
+            Console.Write("Do you want to change some ingredients ? y/n  >> ");
+            string answer = Console.ReadLine();
+            if (answer == "y")
+                chosen.ChangeIngredients();
+        }
+
+        public void ViewRejectedDrugs()
+        {
+            Console.WriteLine("Rejected drugs:");
+            RejectedDrug rejectedDrug = _drugService.GetRejectedDrugs();
+            if (rejectedDrug == null)
+                return;
+            
+            rejectedDrug.Print();
+            Console.Write("Do you want to change some ingredients ? y/n  >> ");
+            string answer = Console.ReadLine();
+            if (answer == "y")
+            {
+                rejectedDrug.ChangeIngredients();
+                _drugsRepository.AddDrug(new Drug(rejectedDrug));
+                _drugsRepository.RemoveRejectedDrug(rejectedDrug);
+                _drugsRepository.SaveData();
+                
+            }
+        }
+
     }
 }

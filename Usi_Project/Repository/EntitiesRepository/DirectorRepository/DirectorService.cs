@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System;
+using Usi_Project.Repository.DrugRepository;
 using Usi_Project.Repository.EntitiesRepository.DirectorRepository;
 
 
@@ -8,9 +9,11 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorsRepository
     public class DirectorService
     {
         private static DirectorRepository _directorRepository;
+        private static DrugService _drugService;
         public DirectorService(DirectorRepository directorRepository)
         {
             _directorRepository = directorRepository;
+            _drugService = new DrugService(_directorRepository.DrugsRepository);
         }
         
         public void Menu()
@@ -38,19 +41,17 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorsRepository
                         RoomRenovation.Renovation(_directorRepository.RoomRepository);
                         break;
                     case "6":
-                        RoomRenovation.MultipleRoomRenovation(_directorRepository.RoomRepository, _directorRepository.RoomService);
+                        RoomRenovation.MultipleRoomRenovation(_directorRepository.RoomRepository, _directorRepository.RoomFinder);
                         break;
                     case "7":
-                        _directorRepository.DrugsRepository.GetOptions();
+                        _drugService.GetOptions();
                         break;
                     case "8": 
                         ViewSurveysResults();
                         break;
                     case "x":
-                        Console.WriteLine("Logging out...");
                         return;
                     default:
-                        Console.WriteLine("Invalid option entered, try again");
                         Menu();
                         break;
                 }
@@ -78,13 +79,10 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorsRepository
                     case "4":
                         SurveysViewer.ViewThreeWorseDoctors(_directorRepository.DoctorsRepository.Doctors);
                         break;
-                    case "x":
-                        return;
                     default:
-                    {
-                        Console.WriteLine("Wrong input.");
-                        continue;
-                    }
+                        return;
+
+                    
                 }
                 
             }
@@ -97,25 +95,22 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorsRepository
             while (true)
             {
                 DirectorMenus.PrintCreatingRoomsOptions();
-                RoomService roomService = new RoomService(_directorRepository.RoomRepository);
+                RoomFinder roomFinder = new RoomFinder(_directorRepository.RoomRepository);
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        roomService.CreateRoom(typeof(OverviewRoom));
+                        roomFinder.CreateRoom(typeof(OverviewRoom));
                         break;
                     case "2":
-                        roomService.CreateRoom(typeof(OperatingRoom));
+                        roomFinder.CreateRoom(typeof(OperatingRoom));
                         break;
                     case "3":
-                        roomService.CreateRoom(typeof(RetiringRoom));
+                        roomFinder.CreateRoom(typeof(RetiringRoom));
                         break;
                     case "x":
                         return;
                     default:
-                    {
-                        Console.WriteLine("Wrong input.");
-                        continue;
-                    }
+                        return;
                 }
             }
 
@@ -123,8 +118,8 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorsRepository
          
          public static void CheckIfRenovationIsEnded()
          {
-             RoomService roomService = new RoomService(_directorRepository.RoomRepository);
-             roomService.CheckIfRenovationIsEnded();
+             RoomFinder roomFinder = new RoomFinder(_directorRepository.RoomRepository);
+             roomFinder.CheckIfRenovationIsEnded();
          }
 
         private static void ViewHospitalRooms()
@@ -134,15 +129,15 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorsRepository
             switch (option)
             {
                 case "1":
-                   RoomsViewer.ViewOperatingRooms(_directorRepository.RoomRepository, RoomService.FindOperatingRoom(_directorRepository.RoomRepository.OperatingRooms),
+                   RoomsViewer.ViewOperatingRooms(_directorRepository.RoomRepository, RoomFinder.FindOperatingRoom(_directorRepository.RoomRepository.OperatingRooms),
                        _directorRepository.TimerManager);
                     break;
                 case "2":
-                    RoomsViewer.ViewOverviewRooms(_directorRepository.RoomRepository, RoomService.FindOverviewRoom(_directorRepository.RoomRepository.OverviewRooms), 
+                    RoomsViewer.ViewOverviewRooms(_directorRepository.RoomRepository, RoomFinder.FindOverviewRoom(_directorRepository.RoomRepository.OverviewRooms), 
                         _directorRepository.TimerManager);
                     break;
                 case "3":
-                    RoomsViewer.ViewRetiringRoom(_directorRepository.RoomRepository, RoomService.FindRetiringRoom(_directorRepository.RoomRepository.RetiringRooms));
+                    RoomsViewer.ViewRetiringRoom(_directorRepository.RoomRepository, RoomFinder.FindRetiringRoom(_directorRepository.RoomRepository.RetiringRooms));
                     break;
                 case "4":
                     RoomsViewer.ViewStockRoom(_directorRepository.RoomRepository);

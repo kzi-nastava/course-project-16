@@ -7,11 +7,11 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
     public class MergingRooms
     {
 
-        private static RoomService _roomService;
+        private static RoomFinder _roomFinder;
 
-        public MergingRooms(RoomService roomService)
+        public MergingRooms(RoomFinder roomFinder)
         {
-            _roomService = roomService;
+            _roomFinder = roomFinder;
         }
         public static void MergeRoomsOfSameType(RoomRepository repository)
         {
@@ -37,9 +37,9 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
         private static void MergeRetiringRooms(RoomRepository repository)
         {
             Console.WriteLine("\nChoose first overview room\n");
-            RetiringRoom first = RoomService.FindRetiringRoom(repository.RetiringRooms);
+            RetiringRoom first = RoomFinder.FindRetiringRoom(repository.RetiringRooms);
             Console.WriteLine("\nChoose second overview room\n");
-            RetiringRoom second = RoomService.FindRetiringRoom(repository.RetiringRooms);
+            RetiringRoom second = RoomFinder.FindRetiringRoom(repository.RetiringRooms);
             if (first.Id == second.Id)
             {
                 Console.WriteLine("Input two different rooms!");
@@ -53,7 +53,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             SetTimeForRenovation(second, timeForRenovation.Item1, timeForRenovation.Item2);
 
             Console.WriteLine("\nCreating new overview room\n");
-            RetiringRoom newRetiringRoom = (RetiringRoom)_roomService.CreateRoom(typeof(RoomRepository));
+            RetiringRoom newRetiringRoom = (RetiringRoom)_roomFinder.CreateRoom(typeof(RoomRepository));
             newRetiringRoom.Furniture = MergeEquipments.MergeFurniture(first, second);
             SetTimeForRenovation(newRetiringRoom, timeForRenovation.Item1, timeForRenovation.Item2);
             first.ForRemove = true;
@@ -64,9 +64,9 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
         private static void MergeOverviewRooms(RoomRepository repository)
         {
             Console.WriteLine("\nChoose first overview room\n");
-            OverviewRoom first = RoomService.FindOverviewRoom(repository.OverviewRooms);
+            OverviewRoom first = RoomFinder.FindOverviewRoom(repository.OverviewRooms);
             Console.WriteLine("\nChoose second overview room\n");
-            OverviewRoom second = RoomService.FindOverviewRoom(repository.OverviewRooms);
+            OverviewRoom second = RoomFinder.FindOverviewRoom(repository.OverviewRooms);
             if (first.Id == second.Id)
             {
                 Console.WriteLine("Input two different rooms!");
@@ -80,7 +80,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             SetTimeForRenovation(second, timeForRenovation.Item1, timeForRenovation.Item2);
 
             Console.WriteLine("\nCreating new overview room\n");
-            OverviewRoom newOverviewRoom = (OverviewRoom) _roomService.CreateRoom(typeof(OverviewRoom));
+            OverviewRoom newOverviewRoom = (OverviewRoom) _roomFinder.CreateRoom(typeof(OverviewRoom));
             newOverviewRoom.Tools = MergeEquipments.MergeMedicalEquipments(first, second);
             newOverviewRoom.Furniture = MergeEquipments.MergeFurniture(first, second);
             SetTimeForRenovation(newOverviewRoom, timeForRenovation.Item1, timeForRenovation.Item2);
@@ -93,9 +93,9 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
         {
 
             Console.WriteLine("\nChoose first operating room\n");
-            OperatingRoom first = RoomService.FindOperatingRoom(repository.OperatingRooms);
+            OperatingRoom first = RoomFinder.FindOperatingRoom(repository.OperatingRooms);
             Console.WriteLine("\nChoose second operating room\n");
-            OperatingRoom second = RoomService.FindOperatingRoom(repository.OperatingRooms);
+            OperatingRoom second = RoomFinder.FindOperatingRoom(repository.OperatingRooms);
             if (first.Id == second.Id)
             {
                 Console.WriteLine("Input two different rooms!");
@@ -109,7 +109,7 @@ namespace Usi_Project.Repository.EntitiesRepository.DirectorRepository
             SetTimeForRenovation(second, timeForRenovation.Item1, timeForRenovation.Item2);
 
             Console.WriteLine("\nCreating new operating room\n");
-            OperatingRoom newOperatingRoom = (OperatingRoom)_roomService.CreateRoom(typeof(OperatingRoom));
+            OperatingRoom newOperatingRoom = (OperatingRoom)_roomFinder.CreateRoom(typeof(OperatingRoom));
             newOperatingRoom.SurgeryEquipments = MergeEquipments.MergeSurgeryEquipments(first, second);
             newOperatingRoom.Furniture = MergeEquipments.MergeFurniture(first, second);
             SetTimeForRenovation(newOperatingRoom, timeForRenovation.Item1, timeForRenovation.Item2);

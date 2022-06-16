@@ -9,11 +9,8 @@ namespace Usi_Project.Repository
           {
               while (true)
               {
-                  Console.WriteLine("Choose option or x for exit: ");
-                  Console.WriteLine("1) Add new furniture");
-                  Console.WriteLine("2) Remove current furniture");
-                  Console.Write(">> ");
-                  switch (Console.ReadLine())
+                  var option = InputRoomsInfo.GetOptionForChangingFurniture();
+                  switch (option)
                   {
                       case "1":
                           AddNewFurniture(repository, operatingRoom, manager);
@@ -21,11 +18,8 @@ namespace Usi_Project.Repository
                       case "2":
                           RemoveCurrentFurniture(operatingRoom);
                           break;
-                      case "x":
-                          return;
                       default:
-                          Console.WriteLine("Wrong input!");
-                          break;
+                          return;
                   }
               }
           }
@@ -34,11 +28,8 @@ namespace Usi_Project.Repository
           {
               while (true)
               {
-                  Console.WriteLine("Choose option or x for exit: ");
-                  Console.WriteLine("1) Add new furniture");
-                  Console.WriteLine("2) Remove current furniture");
-                  Console.Write(">> ");
-                  switch (Console.ReadLine())
+                  var option = InputRoomsInfo.GetOptionForChangingFurniture();
+                  switch (option)
                   {
                       case "1":
                           AddNewFurniture(repository, overviewRoom, manager);
@@ -46,11 +37,8 @@ namespace Usi_Project.Repository
                       case "2":
                           RemoveCurrentFurniture(overviewRoom);
                           break;
-                      case "x":
-                          return;
                       default:
-                          Console.WriteLine("Wrong input!");
-                          break;
+                          return;
                   }
               }
           }
